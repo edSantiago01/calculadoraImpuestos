@@ -1,4 +1,4 @@
-package com.mozama.impuestos
+package com.mozama.impuestos.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
