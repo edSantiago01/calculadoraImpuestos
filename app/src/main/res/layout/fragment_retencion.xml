@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.RetencionFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/botton_h">
+
+        <LinearLayout
+            android:padding="@dimen/margin_double"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fieldSubtotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_fragment"
+                android:hint="@string/subtotal">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtSubtotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:textSize="@dimen/sp_2"
+                    android:gravity="right"
+                    android:inputType="numberDecimal"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_fragment"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinIva"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/margin_min"
+                    android:spinnerMode="dialog"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fieldIva"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_min"
+                    android:hint="@string/iva">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtIva"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:textSize="@dimen/sp_2"
+                        android:gravity="right"
+                        android:inputType="numberDecimal"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_fragment"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:visibility="invisible"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/margin_min"
+                    android:spinnerMode="dialog"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fieldIsrR"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_min"
+                    android:hint="@string/isr_r">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtIsrR"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:textSize="@dimen/sp_2"
+                        android:gravity="right"
+                        android:inputType="numberDecimal"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_fragment"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:visibility="invisible"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/margin_min"
+                    android:spinnerMode="dialog"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fieldIvaR"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_min"
+                    android:hint="@string/iva_r">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtIvaR"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:textSize="@dimen/sp_2"
+                        android:gravity="right"
+                        android:inputType="numberDecimal"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fieldTotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_fragment"
+                android:hint="@string/total">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:gravity="right"
+                    android:textSize="@dimen/sp_1"
+                    android:inputType="numberDecimal"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/margin_double"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnLimpiar"
+            android:layout_weight=".5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/limpiar"
+            android:layout_marginEnd="@dimen/margin_fragment"
+            style="?attr/materialButtonOutlinedStyle"
+            />
+        <Button
+            android:id="@+id/btnCalcular"
+            android:layout_weight=".5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_fragment"
+            android:text="@string/calcular"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
+
+</RelativeLayout>

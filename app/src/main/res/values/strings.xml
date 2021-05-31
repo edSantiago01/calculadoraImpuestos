@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Impuestos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="retenciones">Retenciones</string>
+    <string name="iva">IVA</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="total">Total</string>
+    <string name="isr_r">ISR Retenido</string>
+    <string name="iva_r">IVA Retenido</string>
+
+    <string name="calcular">Calcular</string>
+    <string name="limpiar">Limpiar</string>
+
+</resources>
