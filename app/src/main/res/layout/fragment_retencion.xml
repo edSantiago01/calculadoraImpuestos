@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
                     android:textSize="@dimen/sp_2"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:inputType="numberDecimal"
                     />
             </com.google.android.material.textfield.TextInputLayout>
@@ -60,8 +60,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
-                        android:textSize="@dimen/sp_2"
-                        android:gravity="right"
+                        android:textSize="@dimen/sp_3"
+                        android:gravity="end"
                         android:inputType="numberDecimal"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -95,8 +95,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
-                        android:textSize="@dimen/sp_2"
-                        android:gravity="right"
+                        android:textSize="@dimen/sp_3"
+                        android:gravity="end"
                         android:inputType="numberDecimal"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -130,8 +130,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
-                        android:textSize="@dimen/sp_2"
-                        android:gravity="right"
+                        android:textSize="@dimen/sp_3"
+                        android:gravity="end"
                         android:inputType="numberDecimal"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -149,44 +149,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:textSize="@dimen/sp_1"
                     android:inputType="numberDecimal"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
         </LinearLayout>
 
     </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/margin_double"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnLimpiar"
-            android:layout_weight=".5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/limpiar"
-            android:layout_marginEnd="@dimen/margin_fragment"
-            style="?attr/materialButtonOutlinedStyle"
-            />
-        <Button
-            android:id="@+id/btnCalcular"
-            android:layout_weight=".5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_fragment"
-            android:text="@string/calcular"
-            tools:ignore="ButtonStyle" />
-    </LinearLayout>
 
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.impuestos
+package com.mozama.impuestos
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

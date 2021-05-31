@@ -1,9 +1,9 @@
-package com.example.impuestos
+package com.mozama.impuestos
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.impuestos.fragments.IvaFragment
-import com.example.impuestos.fragments.RetencionFragment
+import com.mozama.impuestos.fragments.IvaFragment
+import com.mozama.impuestos.fragments.RetencionFragment
 
 class ViewPageAdapter (fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {

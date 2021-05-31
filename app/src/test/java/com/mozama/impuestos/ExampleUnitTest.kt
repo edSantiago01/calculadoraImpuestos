@@ -1,4 +1,4 @@
-package com.example.impuestos
+package com.mozama.impuestos
 
 import org.junit.Test
 
