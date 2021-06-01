@@ -18,17 +18,12 @@ import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RetencionFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RetencionFragment : Fragment() {
-    private lateinit var fieldSubtotal: TextInputLayout
+//    private lateinit var fieldSubtotal: TextInputLayout
     private lateinit var txtSubtotal: EditText
     private lateinit var fieldIva : TextInputLayout    
     private lateinit var txtIva: EditText
-    private lateinit var fieldIsrR: TextInputLayout
+//    private lateinit var fieldIsrR: TextInputLayout
     private lateinit var txtIsrR: EditText
     private lateinit var fieldIvaR: TextInputLayout
     private lateinit var txtIvaR: EditText    
@@ -104,6 +99,7 @@ class RetencionFragment : Fragment() {
         txtTotal.tag = TAG_USER
 
         txtSubtotal.addTextChangedListener(generalTextWatcher)
+        txtTotal.addTextChangedListener(generalTextWatcher)
     }
 
     fun calc( option:Int ){
@@ -111,7 +107,29 @@ class RetencionFragment : Fragment() {
         val percentIva = UtilsGraphic().getIvaSpinner(spinIva)
         when (IN_OPTION){
             IN_SUBTOTAL ->calcInputSubtotal( percentIva )
+            IN_TOTAL -> cacInputTotal(percentIva)
         }
+    }
+
+    private fun cacInputTotal(percentIva: Double) {
+        //IVA retenido a 2/3
+        val percentIvaRetenido = ( percentIva / 3 ) * 2
+        val percentIsrRetenido = 0.10
+
+        if(txtTotal.text.toString().isNotEmpty() ){
+            val text = txtTotal.text.toString()
+            val textNotComma = UtilsGraphic().deleteComma(text)
+            val temp = textNotComma.toDoubleOrNull()
+            if( temp != null){
+                total = temp
+                val map = Operations().calSubtotalRetencionesTotal(total, percentIva, percentIvaRetenido, percentIsrRetenido )
+                iva = map?.get("iva")!!
+                ivaR = map["ivaR"]!!
+                isrR = map["isrR"]!!
+                subtotal = map["subtotal"]!!
+                setValuesEditText()
+            }else cleaner()
+        }else cleaner()
     }
 
     private fun calcInputSubtotal( percentIva:Double ){
