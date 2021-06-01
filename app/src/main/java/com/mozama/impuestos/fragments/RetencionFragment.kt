@@ -125,10 +125,11 @@ class RetencionFragment : Fragment() {
             val temp = textNotComma.toDoubleOrNull()
             if( temp != null){
                 subtotal = temp
-                iva = Operations().calcValPercentTotal( subtotal, percentIva )
-                ivaR = Operations().calcValPercentTotal( subtotal, percentIvaRetenido )
-                isrR = Operations().calcValPercentTotal( subtotal, percentIsrRetenido )
-                total = subtotal + iva - ivaR - isrR
+                val map = Operations().calcAllRetenciones(subtotal, percentIva, percentIvaRetenido, percentIsrRetenido )
+                iva = map["iva"]!!
+                ivaR = map["ivaR"]!!
+                isrR = map["isrR"]!!
+                total = map["total"]!!
                 setValuesEditText()
             }else cleaner()
         }else cleaner()
