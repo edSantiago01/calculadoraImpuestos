@@ -61,6 +61,12 @@ class IvaFragment : Fragment() {
 
         setItemIva()
         setChangeElements()
+        hideKeyboard()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideKeyboard()
     }
 
     private fun setChangeElements() {

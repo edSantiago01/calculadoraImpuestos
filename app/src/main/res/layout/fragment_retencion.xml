@@ -28,6 +28,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
                     android:textSize="@dimen/sp_2"
+                    android:maxLength="15"
                     android:gravity="end"
                     android:inputType="numberDecimal"
                     />
@@ -43,7 +44,7 @@
                     android:id="@+id/spinIva"
                     style="@style/Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="0dp"
-                    android:layout_weight=".5"
+                    android:layout_weight=".4"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/margin_min"
                     android:spinnerMode="dialog"/>
@@ -51,7 +52,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fieldIva"
                     android:layout_width="0dp"
-                    android:layout_weight=".5"
+                    android:layout_weight=".6"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_min"
                     android:hint="@string/iva">
@@ -62,6 +63,7 @@
                         android:imeOptions="actionDone"
                         android:textSize="@dimen/sp_3"
                         android:gravity="end"
+                        android:enabled="false"
                         android:inputType="numberDecimal"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -78,7 +80,7 @@
                     android:visibility="invisible"
                     style="@style/Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="0dp"
-                    android:layout_weight=".5"
+                    android:layout_weight=".4"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/margin_min"
                     android:spinnerMode="dialog"/>
@@ -86,7 +88,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fieldIsrR"
                     android:layout_width="0dp"
-                    android:layout_weight=".5"
+                    android:layout_weight=".6"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_min"
                     android:hint="@string/isr_r">
@@ -97,6 +99,7 @@
                         android:imeOptions="actionDone"
                         android:textSize="@dimen/sp_3"
                         android:gravity="end"
+                        android:enabled="false"
                         android:inputType="numberDecimal"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -113,7 +116,7 @@
                     android:visibility="invisible"
                     style="@style/Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="0dp"
-                    android:layout_weight=".5"
+                    android:layout_weight=".4"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/margin_min"
                     android:spinnerMode="dialog"/>
@@ -121,7 +124,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fieldIvaR"
                     android:layout_width="0dp"
-                    android:layout_weight=".5"
+                    android:layout_weight=".6"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_min"
                     android:hint="@string/iva_r">
@@ -132,6 +135,7 @@
                         android:imeOptions="actionDone"
                         android:textSize="@dimen/sp_3"
                         android:gravity="end"
+                        android:enabled="false"
                         android:inputType="numberDecimal"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -151,6 +155,7 @@
                     android:imeOptions="actionDone"
                     android:gravity="end"
                     android:textSize="@dimen/sp_1"
+                    android:maxLength="22"
                     android:inputType="numberDecimal"
                     />
             </com.google.android.material.textfield.TextInputLayout>

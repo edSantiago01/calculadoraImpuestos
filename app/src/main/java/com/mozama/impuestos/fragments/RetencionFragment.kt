@@ -77,8 +77,13 @@ class RetencionFragment : Fragment() {
 
         setItemIva()
         changeElements()
+        hideKeyboard()
     }
 
+    override fun onResume() {
+        super.onResume()
+        hideKeyboard()
+    }
 
 
     private fun changeElements() {
