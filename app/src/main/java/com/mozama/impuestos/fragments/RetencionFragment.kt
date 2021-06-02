@@ -92,10 +92,12 @@ class RetencionFragment : Fragment() {
                 if (position == 2) hideIva()
                 else showIva()
                 calc(IN_OPTION)
+                hideKeyboard()
             }
             override fun onNothingSelected(parent: AdapterView<*>?) { //Another interface callback
             }
         }
+
 
         txtSubtotal.tag = TAG_USER
         txtIva.tag = TAG_USER
@@ -105,6 +107,10 @@ class RetencionFragment : Fragment() {
 
         txtSubtotal.addTextChangedListener(generalTextWatcher)
         txtTotal.addTextChangedListener(generalTextWatcher)
+
+        txtIva.setOnClickListener{hideKeyboard()}
+        txtIsrR.setOnClickListener{hideKeyboard()}
+        txtIvaR.setOnClickListener{hideKeyboard()}
     }
 
     fun calc( option:Int ){

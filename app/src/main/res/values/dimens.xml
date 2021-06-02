@@ -4,9 +4,9 @@
     <dimen name="margin_double">16dp</dimen>
     <dimen name="margin_min">4dp</dimen>
 
-    <dimen name="sp_1">22sp</dimen>
-    <dimen name="sp_2">20sp</dimen>
-    <dimen name="sp_3">16sp</dimen>
+    <dimen name="sp_1">20sp</dimen>
+    <dimen name="sp_2">18sp</dimen>
+    <dimen name="sp_3">15sp</dimen>
 
     <dimen name="botton_h">62dp</dimen>
 </resources>

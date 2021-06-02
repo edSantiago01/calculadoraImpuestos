@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.RetencionFragment">
 
     <ScrollView
@@ -17,6 +18,8 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconDrawable="@drawable/ic_dollar"
                 android:id="@+id/fieldSubtotal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,6 +53,8 @@
                     android:spinnerMode="dialog"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:startIconDrawable="@drawable/ic_dollar"
                     android:id="@+id/fieldIva"
                     android:layout_width="0dp"
                     android:layout_weight=".6"
@@ -63,8 +68,8 @@
                         android:imeOptions="actionDone"
                         android:textSize="@dimen/sp_3"
                         android:gravity="end"
-                        android:enabled="false"
-                        android:inputType="numberDecimal"
+                        android:focusable="false"
+                        android:inputType="none"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,6 +91,8 @@
                     android:spinnerMode="dialog"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:startIconDrawable="@drawable/ic_dollar"
                     android:id="@+id/fieldIsrR"
                     android:layout_width="0dp"
                     android:layout_weight=".6"
@@ -99,8 +106,8 @@
                         android:imeOptions="actionDone"
                         android:textSize="@dimen/sp_3"
                         android:gravity="end"
-                        android:enabled="false"
-                        android:inputType="numberDecimal"
+                        android:focusable="false"
+                        android:inputType="none"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,6 +129,8 @@
                     android:spinnerMode="dialog"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:startIconDrawable="@drawable/ic_dollar"
                     android:id="@+id/fieldIvaR"
                     android:layout_width="0dp"
                     android:layout_weight=".6"
@@ -135,14 +144,16 @@
                         android:imeOptions="actionDone"
                         android:textSize="@dimen/sp_3"
                         android:gravity="end"
-                        android:enabled="false"
-                        android:inputType="numberDecimal"
+                        android:focusable="false"
+                        android:inputType="none"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconDrawable="@drawable/ic_dollar"
                 android:id="@+id/fieldTotal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

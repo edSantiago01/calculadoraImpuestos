@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.IvaFragment">
     
     <ScrollView
@@ -17,10 +18,12 @@
             android:layout_margin="@dimen/margin_double">
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/fieldSubtotalI"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/margin_fragment"
+                app:startIconDrawable="@drawable/ic_dollar"
                 android:hint="@string/subtotal">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtSubtotalI"
@@ -50,11 +53,13 @@
                     android:spinnerMode="dialog"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/fieldIvaI"
                     android:layout_width="0dp"
                     android:layout_weight=".6"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_min"
+                    app:startIconDrawable="@drawable/ic_dollar"
                     android:hint="@string/iva">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtIvaI"
@@ -71,10 +76,12 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/fieldTotalI"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/margin_fragment"
+                app:startIconDrawable="@drawable/ic_dollar"
                 android:hint="@string/total">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtTotalI"
