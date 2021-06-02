@@ -185,7 +185,7 @@ class RetencionFragment : Fragment() {
 
     }
 
-    fun setValuesEditText(){
+    private fun setValuesEditText(){
 
         if(IN_OPTION != IN_SUBTOTAL){
             val subtotalStrig = Operations().round2Dec(subtotal)

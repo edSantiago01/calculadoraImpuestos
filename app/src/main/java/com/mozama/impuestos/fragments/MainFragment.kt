@@ -1,7 +1,6 @@
 package com.mozama.impuestos.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -17,8 +16,8 @@ import com.google.android.material.tabs.TabLayoutMediator
  */
 class MainFragment : Fragment() {
 
-    lateinit var tabView: TabLayout
-    lateinit var viewPager: ViewPager2
+    private lateinit var tabView: TabLayout
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

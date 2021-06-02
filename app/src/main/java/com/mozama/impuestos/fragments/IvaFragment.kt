@@ -105,7 +105,7 @@ class IvaFragment : Fragment() {
     }
     
 
-    fun calc( option:Int,){
+    fun calc( option:Int){
         IN_OPTION = option
         percentIva = UtilsGraphic().getIvaSpinner(spinIva)
         when (IN_OPTION){
@@ -162,7 +162,7 @@ class IvaFragment : Fragment() {
 
 
 
-    fun setValuesEditText(){
+    private fun setValuesEditText(){
         if(IN_OPTION != IN_SUBTOTAL){
             val subtotalStrig = Operations().round2Dec(subtotal)
             txtSubtotal.tag = TAG_SYSTEM

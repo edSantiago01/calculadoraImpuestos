@@ -3,7 +3,6 @@ package com.mozama.impuestos.utils
 import android.content.Context
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import com.mozama.impuestos.R
 
 class UtilsGraphic {
 

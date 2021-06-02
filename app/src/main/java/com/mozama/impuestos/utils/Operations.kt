@@ -1,8 +1,6 @@
 package com.mozama.impuestos.utils
 
-import android.util.Log
 import java.text.DecimalFormat
-import kotlin.math.absoluteValue
 
 class Operations {
 
