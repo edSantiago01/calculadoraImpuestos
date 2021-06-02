@@ -1,13 +1,11 @@
 package com.mozama.impuestos.fragments
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.EditText
@@ -31,11 +29,12 @@ class RetencionFragment : Fragment() {
     private lateinit var spinIva : Spinner
 
     private var IN_OPTION = 0
-    private val IN_SUBTOTAL = 0
-    private val IN_IVA = 1
-    private val IN_ISR_R = 2
-    private val IN_IVA_R = 3
-    private val IN_TOTAL = 4
+    private val IN_SUBTOTAL = 1
+    private val IN_IVA = 2
+    private val IN_ISR_R = 3
+    private val IN_IVA_R = 4
+    private val IN_TOTAL = 5
+    private var percentIva = 0.0
 
     private var subtotal = 0.0
     private var iva = 0.0
@@ -52,6 +51,8 @@ class RetencionFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
+        //recibir devoluciones de llamada relacionadas con el menú.
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -79,6 +80,25 @@ class RetencionFragment : Fragment() {
         changeElements()
         hideKeyboard()
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Detectar la opción del menú seleccionado
+        return when (item.itemId) {
+            R.id.menu_delete -> {
+                IN_OPTION = 0
+                hideKeyboard()
+                cleaner()
+                true
+            }
+            R.id.menu_share -> {
+                shareInfo()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
 
     override fun onResume() {
         super.onResume()
@@ -115,14 +135,14 @@ class RetencionFragment : Fragment() {
 
     fun calc( option:Int ){
         IN_OPTION = option
-        val percentIva = UtilsGraphic().getIvaSpinner(spinIva)
+        percentIva = UtilsGraphic().getIvaSpinner(spinIva)
         when (IN_OPTION){
-            IN_SUBTOTAL ->calcInputSubtotal( percentIva )
-            IN_TOTAL -> cacInputTotal(percentIva)
+            IN_SUBTOTAL ->calcInputSubtotal()
+            IN_TOTAL -> cacInputTotal()
         }
     }
 
-    private fun cacInputTotal(percentIva: Double) {
+    private fun cacInputTotal() {
         //IVA retenido a 2/3
         val percentIvaRetenido = ( percentIva / 3 ) * 2
         val percentIsrRetenido = 0.10
@@ -143,7 +163,7 @@ class RetencionFragment : Fragment() {
         }else cleaner()
     }
 
-    private fun calcInputSubtotal( percentIva:Double ){
+    private fun calcInputSubtotal( ){
         //IVA retenido a 2/3
         val percentIvaRetenido = ( percentIva / 3 ) * 2
         val percentIsrRetenido = 0.10
@@ -250,6 +270,7 @@ class RetencionFragment : Fragment() {
     }
 
     private val generalTextWatcher: TextWatcher = object : TextWatcher {
+        //Detectar el cambio de contenido en los EditText
         override fun onTextChanged( s: CharSequence, start: Int, before: Int,count: Int) {
         }
         override fun beforeTextChanged( s: CharSequence, start: Int, count: Int,after: Int ) {
@@ -264,6 +285,27 @@ class RetencionFragment : Fragment() {
             }*/
 
         }
+    }
+
+    private fun shareInfo(){
+        //compartir el contenido de texto
+        val valIva = percentIva * 100
+        val valIvaInt = valIva.toInt()
+        val subtotalRound = Operations().round2Dec(subtotal)
+        val ivaRound = Operations().round2Dec(iva)
+        val isrRRound = Operations().round2Dec(isrR)
+        val ivaRRound = Operations().round2Dec(ivaR)
+        val totalRound = Operations().round2Dec(total)
+
+        val text = "Subtotal: $ $subtotalRound \n\n IVA $valIvaInt%: $ $ivaRound \n ISR ret:   $ $isrRRound \n IVA ret:   $ $ivaRRound\n\n TOTAL:  $ $totalRound"
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, text)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     private fun Fragment.hideKeyboard() {

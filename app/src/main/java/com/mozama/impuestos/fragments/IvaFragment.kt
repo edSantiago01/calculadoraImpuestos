@@ -1,13 +1,11 @@
 package com.mozama.impuestos.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.EditText
@@ -25,11 +23,12 @@ class IvaFragment : Fragment() {
     private lateinit var spinIva : Spinner
 
     private var IN_OPTION = 0
-    private val IN_SUBTOTAL = 0
-    private val IN_IVA = 1
-    private val IN_TOTAL = 2
+    private val IN_SUBTOTAL = 1
+    private val IN_IVA = 2
+    private val IN_TOTAL = 3
 
     private var subtotal = 0.0
+    private var percentIva = 0.0
     private var iva = 0.0
     private var total = 0.0
 
@@ -42,6 +41,7 @@ class IvaFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -62,6 +62,23 @@ class IvaFragment : Fragment() {
         setItemIva()
         setChangeElements()
         hideKeyboard()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Detectar la opción del menú seleccionado
+        return when (item.itemId) {
+            R.id.menu_delete -> {
+                IN_OPTION = 0
+                hideKeyboard()
+                cleaner()
+                true
+            }
+            R.id.menu_share -> {
+                shareInfo()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onResume() {
@@ -90,15 +107,15 @@ class IvaFragment : Fragment() {
 
     fun calc( option:Int,){
         IN_OPTION = option
-        val percentIva = UtilsGraphic().getIvaSpinner(spinIva)
+        percentIva = UtilsGraphic().getIvaSpinner(spinIva)
         when (IN_OPTION){
-            IN_SUBTOTAL ->calcInputSubtotal( percentIva )
-            IN_IVA -> calcInputIva(percentIva)
-            IN_TOTAL -> calcInputTotal(percentIva)
+            IN_SUBTOTAL ->calcInputSubtotal()
+            IN_IVA -> calcInputIva()
+            IN_TOTAL -> calcInputTotal()
         }
     }
 
-    private fun calcInputSubtotal( percentIva:Double ){
+    private fun calcInputSubtotal(){
         if (txtSubtotal.text.isNotEmpty()){
             val text = txtSubtotal.text.toString()
             val textNotComma = UtilsGraphic().deleteComma(text)
@@ -113,7 +130,7 @@ class IvaFragment : Fragment() {
         }else cleaner()
     }
 
-    private fun calcInputIva( percentIva:Double ){
+    private fun calcInputIva(){
         if (txtIva.text.isNotEmpty()){
             val text = txtIva.text.toString()
             val textNotComma = UtilsGraphic().deleteComma(text)
@@ -128,7 +145,7 @@ class IvaFragment : Fragment() {
         }else cleaner()
     }
 
-    private fun calcInputTotal(percentIva: Double) {
+    private fun calcInputTotal() {
         if (txtTotal.text.isNotEmpty()){
             val text = txtTotal.text.toString()
             val subNotComma = UtilsGraphic().deleteComma(text)
@@ -207,6 +224,25 @@ class IvaFragment : Fragment() {
             }
 
         }
+    }
+
+    private fun shareInfo(){
+        //compartir el contenido de texto
+        val valIva = percentIva * 100
+        val valIvaInt = valIva.toInt()
+        val subtotalRound = Operations().round2Dec(subtotal)
+        val ivaRound = Operations().round2Dec(iva)
+        val totalRound = Operations().round2Dec(total)
+
+        val text = "Subtotal: $ $subtotalRound \n IVA $valIvaInt%:  $ $ivaRound \n\n TOTAL:  $ $totalRound"
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, text)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     private fun Fragment.hideKeyboard() {

@@ -2,6 +2,10 @@ package com.mozama.impuestos
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import com.mozama.impuestos.fragments.MainFragment
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +19,12 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.container_main, fragmentMain)
         transaction.commit()
     }
+
+        override fun onCreateOptionsMenu(menu: Menu): Boolean {
+                val inflater: MenuInflater = menuInflater
+                inflater.inflate(R.menu.menu, menu)
+                return true
+        }
 
 
 }
