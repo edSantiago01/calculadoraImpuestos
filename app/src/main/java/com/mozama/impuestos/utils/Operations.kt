@@ -43,10 +43,10 @@ class Operations {
         var subtotal = total + 1
         var map: Map<String, Double>? = null
         var totalCiclo = 0.0
-        var diferencia = 0.0
+        var diferencia: Double
         var diferenciaAnterior = 0.0
         var flag = 0
-        var dif = 0.0
+        var dif: Double
 
         while ( total != totalCiclo  && flag == 0){
 

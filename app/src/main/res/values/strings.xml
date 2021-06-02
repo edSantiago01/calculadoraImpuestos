@@ -10,4 +10,8 @@
     <string name="limpiar">Limpiar</string>
     <string name="compartir">Compartir</string>
 
+    <string name="ad_retenciones">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ad_iva">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ad_id_app">ca-app-pub-3940256099942544~3347511713</string>
+
 </resources>
