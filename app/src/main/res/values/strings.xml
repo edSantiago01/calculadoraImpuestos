@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Impuestos</string>
+    <string name="app_name">Calculadora Impuestos</string>
     <string name="retenciones">Retenciones</string>
     <string name="iva">IVA</string>
     <string name="subtotal">Subtotal</string>
@@ -10,8 +10,7 @@
     <string name="limpiar">Limpiar</string>
     <string name="compartir">Compartir</string>
 
-    <string name="ad_retenciones">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ad_iva">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ad_id_app">ca-app-pub-3940256099942544~3347511713</string>
-
+    <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ads_iva">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ads_id_app">ca-app-pub-3940256099942544~3347511713</string>
 </resources>

@@ -11,9 +11,9 @@ import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
+//import com.google.android.gms.ads.AdRequest
+//import com.google.android.gms.ads.AdView
+//import com.google.android.gms.ads.MobileAds
 import com.google.android.material.textfield.TextInputLayout
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.Operations
@@ -30,7 +30,7 @@ class RetencionFragment : Fragment() {
     private lateinit var txtIvaR: EditText    
     private lateinit var txtTotal: EditText
     private lateinit var spinIva : Spinner
-    private lateinit var mAdView : AdView
+//    private lateinit var mAdView : AdView
 
     private var IN_OPTION = 0
     private val IN_SUBTOTAL = 1
@@ -83,11 +83,11 @@ class RetencionFragment : Fragment() {
         setItemIva()
         changeElements()
         hideKeyboard()
-
-        MobileAds.initialize(requireContext()) {}
-        mAdView = view.findViewById(R.id.adRetenciones)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+//
+//        MobileAds.initialize(requireContext()) {}
+//        mAdView = view.findViewById(R.id.adRetenciones)
+//        val adRequest = AdRequest.Builder().build()
+//        mAdView.loadAd(adRequest)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
