@@ -1,7 +1,17 @@
+/*
+ * This is the source code of Calculadora de Impuestos v. 1.x.x.
+ * It is licensed under GNU GPL v. 3 or later.
+ * You should have received a copy of the license in this archive (see LICENSE).
+ *
+ * Copyright Edgar Santiago, 2021.
+ */
+
 package com.mozama.impuestos.fragments
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.mozama.impuestos.R
@@ -10,14 +20,13 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 /**
- * A simple [Fragment] subclass.
- * Use the [MainFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Fragment principal para visualizar el ViewPager2 y TabLayout
  */
 class MainFragment : Fragment() {
 
     private lateinit var tabView: TabLayout
     private lateinit var viewPager: ViewPager2
+    private lateinit var viewPageAdapter: ViewPageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +48,7 @@ class MainFragment : Fragment() {
         viewPager = activity?.findViewById(R.id.viewPage)!!
         tabView = activity?.findViewById(R.id.tabView)!!
 
-        val viewPageAdapter = ViewPageAdapter(this)
+        viewPageAdapter = ViewPageAdapter(this)
         viewPager.adapter = viewPageAdapter
 
         TabLayoutMediator(tabView, viewPager) { tab, position ->
@@ -47,10 +56,7 @@ class MainFragment : Fragment() {
                 0 ->tab.text = resources.getString(R.string.retenciones)
                 1 ->tab.text = resources.getString(R.string.iva)
             }
-
         }.attach()
-
-
     }
 
     companion object {

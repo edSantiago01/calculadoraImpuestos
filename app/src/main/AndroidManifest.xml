@@ -9,10 +9,12 @@
         android:supportsRtl="true"
         android:fullBackupContent="true"
         android:theme="@style/Theme.Impuestos">
-        <activity android:name="com.mozama.impuestos.MainActivity">
+        <activity
+            android:name="com.mozama.impuestos.MainActivity"
+            android:configChanges="orientation|screenSize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -1,3 +1,10 @@
+/*
+ * This is the source code of Calculadora de Impuestos v. 1.x.x.
+ * It is licensed under GNU GPL v. 3 or later.
+ * You should have received a copy of the license in this archive (see LICENSE).
+ *
+ * Copyright Edgar Santiago, 2021.
+ */
 package com.mozama.impuestos
 
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +30,4 @@ class MainActivity : AppCompatActivity() {
                 inflater.inflate(R.menu.menu, menu)
                 return true
         }
-
-
 }

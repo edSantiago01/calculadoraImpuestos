@@ -1,16 +1,21 @@
+/*
+ * This is the source code of Calculadora de Impuestos v. 1.x.x.
+ * It is licensed under GNU GPL v. 3 or later.
+ * You should have received a copy of the license in this archive (see LICENSE).
+ *
+ * Copyright Edgar Santiago, 2021.
+ */
 package com.mozama.impuestos.utils
 
-import java.text.DecimalFormat
+
+/**
+ * Clase con la lógica y operaciones matemáticas para obtener los montos
+ */
 
 class Operations {
 
     fun calcValPercentTotal(total: Double, percent: Double): Double {
         return total * percent
-    }
-
-    fun round2Dec(valor: Double): String {
-        val formato = DecimalFormat("###,###,###,###,###,###,##0.00")
-        return formato.format(valor)
     }
 
     fun calcValSubtotalTotal(total: Double, percent: Double): Double {

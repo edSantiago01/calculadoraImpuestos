@@ -1,3 +1,11 @@
+/*
+ * This is the source code of Calculadora de Impuestos v. 1.x.x.
+ * It is licensed under GNU GPL v. 3 or later.
+ * You should have received a copy of the license in this archive (see LICENSE).
+ *
+ * Copyright Edgar Santiago, 2021.
+ */
+
 package com.mozama.impuestos.fragments
 
 import android.content.Context
@@ -5,7 +13,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.EditText
@@ -18,6 +30,11 @@ import androidx.fragment.app.Fragment
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
+
+/**
+ * Fragment principal para procesar los elementos del segundo elelemto del TabLayout
+ * IVA
+ */
 
 class IvaFragment : Fragment() {
     private lateinit var txtSubtotal: EditText
@@ -36,7 +53,7 @@ class IvaFragment : Fragment() {
     private var iva = 0.0
     private var total = 0.0
 
-    //Para identificar quien modifica el valor de los EditText
+    //Para identificar quién modifica el valor de los EditText
     //evitar ciclo infinito en addTextChangedListener
     private val TAG_SYSTEM = "system"
     private val TAG_USER = "user"
@@ -102,7 +119,7 @@ class IvaFragment : Fragment() {
                 hideKeyboard()
                 calc(IN_OPTION)
             }
-            override fun onNothingSelected(parent: AdapterView<*>?) { //Another interface callback
+            override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
         txtSubtotal.tag = TAG_USER
@@ -174,19 +191,19 @@ class IvaFragment : Fragment() {
 
     private fun setValuesEditText(){
         if(IN_OPTION != IN_SUBTOTAL){
-            val subtotalStrig = Operations().round2Dec(subtotal)
+            val subtotalStrig = UtilsGraphic().round2Dec(subtotal)
             txtSubtotal.tag = TAG_SYSTEM
             txtSubtotal.setText( subtotalStrig )
             txtSubtotal.tag = TAG_USER
         }
         if(IN_OPTION != IN_IVA){
-            val ivaStrig    = Operations().round2Dec(iva)
+            val ivaStrig    = UtilsGraphic().round2Dec(iva)
             txtIva.tag = TAG_SYSTEM
             txtIva.setText( ivaStrig )
             txtIva.tag = TAG_USER
         }
         if(IN_OPTION != IN_TOTAL ) {
-            val totalString = Operations().round2Dec(total)
+            val totalString = UtilsGraphic().round2Dec(total)
             txtTotal.tag = TAG_SYSTEM
             txtTotal.setText( totalString )
             txtTotal.tag = TAG_USER
@@ -196,9 +213,9 @@ class IvaFragment : Fragment() {
     private fun cleaner(){
         if(IN_OPTION != IN_SUBTOTAL){
             subtotal = 0.0
-            txtSubtotal.tag = TAG_SYSTEM //La app es quien modifica valor
+            txtSubtotal.tag = TAG_SYSTEM //La app es quien modifica el valor
             txtSubtotal.setText( "" )
-            txtSubtotal.tag = TAG_USER // Supuesto en el que el usuario modificará el siguiente valor
+            txtSubtotal.tag = TAG_USER // Regresa al supuesto de que el usuario modificará el siguiente valor
         }
         if(IN_OPTION != IN_IVA){
             iva = 0.0
@@ -240,9 +257,9 @@ class IvaFragment : Fragment() {
         //compartir el contenido de texto
         val valIva = percentIva * 100
         val valIvaInt = valIva.toInt()
-        val subtotalRound = Operations().round2Dec(subtotal)
-        val ivaRound = Operations().round2Dec(iva)
-        val totalRound = Operations().round2Dec(total)
+        val subtotalRound = UtilsGraphic().round2Dec(subtotal)
+        val ivaRound = UtilsGraphic().round2Dec(iva)
+        val totalRound = UtilsGraphic().round2Dec(total)
 
         val text = "Subtotal: $ $subtotalRound \n IVA $valIvaInt%:  $ $ivaRound \n\n TOTAL:  $ $totalRound"
         val sendIntent: Intent = Intent().apply {

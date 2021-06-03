@@ -1,9 +1,20 @@
+/*
+ * This is the source code of Calculadora de Impuestos v. 1.x.x.
+ * It is licensed under GNU GPL v. 3 or later.
+ * You should have received a copy of the license in this archive (see LICENSE).
+ *
+ * Copyright Edgar Santiago, 2021.
+ */
 package com.mozama.impuestos.utils
 
 import android.content.Context
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import java.text.DecimalFormat
 
+/**
+ * Clase con funciones para modificar elementos visuales
+ */
 class UtilsGraphic {
 
     fun setItemSpin(context: Context, array:Int, spin: Spinner){
@@ -29,5 +40,10 @@ class UtilsGraphic {
 
     fun deleteComma(value:String):String{
         return value.replace(",", "")
+    }
+
+    fun round2Dec(valor: Double): String {
+        val formato = DecimalFormat("###,###,###,###,###,###,##0.00")
+        return formato.format(valor)
     }
 }

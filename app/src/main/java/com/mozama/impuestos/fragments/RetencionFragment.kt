@@ -1,10 +1,22 @@
+/*
+ * This is the source code of Calculadora de Impuestos v. 1.x.x.
+ * It is licensed under GNU GPL v. 3 or later.
+ * You should have received a copy of the license in this archive (see LICENSE).
+ *
+ * Copyright Edgar Santiago, 2021.
+ */
+
 package com.mozama.impuestos.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
@@ -19,18 +31,21 @@ import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
 
+/**
+ * Fragment principal para procesar los elementos del primer elelemto del TabLayout
+ * Retenciones
+ */
+
 class RetencionFragment : Fragment() {
-//    private lateinit var fieldSubtotal: TextInputLayout
     private lateinit var txtSubtotal: EditText
     private lateinit var fieldIva : TextInputLayout    
     private lateinit var txtIva: EditText
-//    private lateinit var fieldIsrR: TextInputLayout
     private lateinit var txtIsrR: EditText
     private lateinit var fieldIvaR: TextInputLayout
     private lateinit var txtIvaR: EditText    
     private lateinit var txtTotal: EditText
     private lateinit var spinIva : Spinner
-//    private lateinit var mAdView : AdView
+    //    private lateinit var mAdView : AdView
 
     private var IN_OPTION = 0
     private val IN_SUBTOTAL = 1
@@ -46,7 +61,7 @@ class RetencionFragment : Fragment() {
     private var ivaR = 0.0
     private var total = 0.0
 
-    //Para identificar quien modifica el valor de los EditText
+    //Para identificar quién modifica el valor de los EditText
     //evitar ciclo infinito en addTextChangedListener
     private val TAG_SYSTEM = "system"
     private val TAG_USER = "user"
@@ -91,7 +106,7 @@ class RetencionFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Detectar la opción del menú seleccionado
+        // Detectar la opción del menú seleccionado por el usuario
         return when (item.itemId) {
             R.id.menu_delete -> {
                 IN_OPTION = 0
@@ -197,31 +212,31 @@ class RetencionFragment : Fragment() {
     private fun setValuesEditText(){
 
         if(IN_OPTION != IN_SUBTOTAL){
-            val subtotalStrig = Operations().round2Dec(subtotal)
+            val subtotalStrig = UtilsGraphic().round2Dec(subtotal)
             txtSubtotal.tag = TAG_SYSTEM
             txtSubtotal.setText( subtotalStrig )
             txtSubtotal.tag = TAG_USER
         }
         if(IN_OPTION != IN_IVA){
-            val ivaStrig    = Operations().round2Dec(iva)
+            val ivaStrig    = UtilsGraphic().round2Dec(iva)
             txtIva.tag = TAG_SYSTEM
             txtIva.setText( ivaStrig )
             txtIva.tag = TAG_USER
         }
         if(IN_OPTION != IN_ISR_R){
-            val isrRStrig   = Operations().round2Dec(isrR)
+            val isrRStrig   = UtilsGraphic().round2Dec(isrR)
             txtIsrR.tag = TAG_SYSTEM
             txtIsrR.setText( isrRStrig )
             txtIsrR.tag = TAG_USER
         }
         if(IN_OPTION != IN_IVA_R){
-            val ivaRStrig   = Operations().round2Dec(ivaR)
+            val ivaRStrig   = UtilsGraphic().round2Dec(ivaR)
             txtIvaR.tag = TAG_SYSTEM
             txtIvaR.setText( ivaRStrig )
             txtIvaR.tag = TAG_USER
         }
         if(IN_OPTION != IN_TOTAL ) {
-            val totalString = Operations().round2Dec(total)
+            val totalString = UtilsGraphic().round2Dec(total)
             txtTotal.tag = TAG_SYSTEM
             txtTotal.setText( totalString )
             txtTotal.tag = TAG_USER
@@ -300,11 +315,11 @@ class RetencionFragment : Fragment() {
         //compartir el contenido de texto
         val valIva = percentIva * 100
         val valIvaInt = valIva.toInt()
-        val subtotalRound = Operations().round2Dec(subtotal)
-        val ivaRound = Operations().round2Dec(iva)
-        val isrRRound = Operations().round2Dec(isrR)
-        val ivaRRound = Operations().round2Dec(ivaR)
-        val totalRound = Operations().round2Dec(total)
+        val subtotalRound = UtilsGraphic().round2Dec(subtotal)
+        val ivaRound = UtilsGraphic().round2Dec(iva)
+        val isrRRound = UtilsGraphic().round2Dec(isrR)
+        val ivaRRound = UtilsGraphic().round2Dec(ivaR)
+        val totalRound = UtilsGraphic().round2Dec(total)
 
         val text = "Subtotal: $ $subtotalRound \n\n IVA $valIvaInt%: $ $ivaRound \n ISR ret:   $ $isrRRound \n IVA ret:   $ $ivaRRound\n\n TOTAL:  $ $totalRound"
         val sendIntent: Intent = Intent().apply {
