@@ -32,7 +32,7 @@ import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
 
 /**
- * Fragment principal para procesar los elementos del segundo elelemto del TabLayout
+ * Fragment principal para procesar los elementos del segundo elemento del TabLayout
  * IVA
  */
 

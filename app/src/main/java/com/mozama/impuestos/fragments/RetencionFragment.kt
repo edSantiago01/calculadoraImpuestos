@@ -32,7 +32,7 @@ import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
 
 /**
- * Fragment principal para procesar los elementos del primer elelemto del TabLayout
+ * Fragment principal para procesar los elementos del primer elemento del TabLayout
  * Retenciones
  */
 
