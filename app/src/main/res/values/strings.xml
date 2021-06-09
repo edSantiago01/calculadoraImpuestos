@@ -9,9 +9,15 @@
 
     <string name="limpiar">Limpiar</string>
     <string name="compartir">Compartir</string>
+    <string name="aceptar">Aceptar</string>
+
+    <string name="retencion_info">Si eres persona física con actividad empresarial - profesional y emites factura a una persona moral. \n \nNota: valor de la tasa del ISR retenido: 0.106667 </string>
+    <string name="iva_info">Si eres persona física y emites factura a otra persona física. </string>
+    <string name="titulo_dialog">Utiliza esta sección</string>
 
     <string name="ads_id_app">ca-app-pub-3940256099942544~3347511713</string>
     <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ads_iva">ca-app-pub-3940256099942544/6300978111</string>
+
     
 </resources>

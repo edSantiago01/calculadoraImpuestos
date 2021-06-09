@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdRequest
@@ -28,6 +29,7 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.textfield.TextInputLayout
 import com.mozama.impuestos.R
+import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
 
@@ -46,6 +48,7 @@ class RetencionFragment : Fragment() {
     private lateinit var txtTotal: EditText
     private lateinit var spinIva : Spinner
     private lateinit var mAdView : AdView
+    private lateinit var icInfoRetenciones: ImageView
 
     private var IN_OPTION = 0
     private val IN_SUBTOTAL = 1
@@ -94,6 +97,7 @@ class RetencionFragment : Fragment() {
         txtIvaR = view.findViewById(R.id.txtIvaR)
         txtTotal = view.findViewById(R.id.txtTotal)
         spinIva = view.findViewById(R.id.spinIva)
+        icInfoRetenciones = view.findViewById(R.id.icInfoRetenciones)
 
         setItemIva()
         changeElements()
@@ -155,6 +159,8 @@ class RetencionFragment : Fragment() {
         txtIva.setOnClickListener{hideKeyboard()}
         txtIsrR.setOnClickListener{hideKeyboard()}
         txtIvaR.setOnClickListener{hideKeyboard()}
+
+        icInfoRetenciones.setOnClickListener{ showDialogInfo() }
     }
 
     fun calc( option:Int ){
@@ -168,7 +174,8 @@ class RetencionFragment : Fragment() {
 
     private fun cacInputTotal() {
         //IVA retenido a 2/3
-        val percentIvaRetenido = ( percentIva / 3 ) * 2
+        //val percentIvaRetenido = ( percentIva / 3 ) * 2
+        val percentIvaRetenido = percentIva  * 0.6667
         val percentIsrRetenido = 0.10
 
         if(txtTotal.text.toString().isNotEmpty() ){
@@ -274,6 +281,15 @@ class RetencionFragment : Fragment() {
             txtTotal.tag = TAG_SYSTEM
             txtTotal.setText( "" )
             txtTotal.tag = TAG_USER
+        }
+    }
+
+    private fun showDialogInfo(){
+        val tit = resources.getString(R.string.titulo_dialog)
+        val mensaje = resources.getString(R.string.retencion_info)
+
+        context?.let {
+            DialogFragment().showDialogNeutral(it, tit, mensaje)
         }
     }
 

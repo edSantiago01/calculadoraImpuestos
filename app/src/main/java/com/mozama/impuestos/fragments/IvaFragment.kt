@@ -21,6 +21,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -28,6 +29,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.mozama.impuestos.R
+import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
 
@@ -42,6 +44,7 @@ class IvaFragment : Fragment() {
     private lateinit var txtTotal: EditText
     private lateinit var spinIva : Spinner
     private lateinit var mAdView : AdView
+    private lateinit var icInfoIva: ImageView
 
     private var IN_OPTION = 0
     private val IN_SUBTOTAL = 1
@@ -79,6 +82,7 @@ class IvaFragment : Fragment() {
         txtTotal = view.findViewById(R.id.txtTotalI)
         txtIva = view.findViewById(R.id.txtIvaI)
         spinIva = view.findViewById(R.id.spinIvaI)
+        icInfoIva = view.findViewById(R.id.icInfoIva)
 
         setItemIva()
         setChangeElements()
@@ -129,6 +133,8 @@ class IvaFragment : Fragment() {
         txtSubtotal.addTextChangedListener(generalTextWatcher)
         txtTotal.addTextChangedListener(generalTextWatcher)
         txtIva.addTextChangedListener(generalTextWatcher)
+
+        icInfoIva.setOnClickListener{ showDialogInfo() }
     }
     
 
@@ -228,6 +234,15 @@ class IvaFragment : Fragment() {
             txtTotal.tag = TAG_SYSTEM
             txtTotal.setText( "" )
             txtTotal.tag = TAG_USER
+        }
+    }
+
+    private fun showDialogInfo(){
+        val tit = resources.getString(R.string.titulo_dialog)
+        val mensaje = resources.getString(R.string.iva_info)
+
+        context?.let {
+            DialogFragment().showDialogNeutral(it, tit, mensaje)
         }
     }
 

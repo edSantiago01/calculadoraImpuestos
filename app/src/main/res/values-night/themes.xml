@@ -14,5 +14,6 @@
         <!-- Customize your theme here. -->
         <item name="android:textColorPrimary">@color/white_2</item>
         <item name="android:textColor">@color/white_2</item>
+
     </style>
 </resources>
