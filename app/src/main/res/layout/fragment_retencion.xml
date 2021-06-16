@@ -12,8 +12,8 @@
 
         <LinearLayout
             android:paddingHorizontal="@dimen/margin_double"
-            android:paddingTop="@dimen/margin_double"
-            android:paddingBottom="@dimen/banner_h"
+            android:paddingBottom="@dimen/margin_double"
+            android:paddingTop="@dimen/banner_h"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
@@ -187,7 +187,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         ads:adSize="BANNER"
         ads:adUnitId="@string/ads_retenciones">
     </com.google.android.gms.ads.AdView>

@@ -15,8 +15,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginHorizontal="@dimen/margin_double"
-            android:paddingTop="@dimen/margin_double"
-            android:paddingBottom="@dimen/banner_h"
+            android:paddingBottom="@dimen/margin_double"
+            android:paddingTop="@dimen/banner_h"
             >
 
             <com.google.android.material.textfield.TextInputLayout
@@ -111,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         ads:adSize="BANNER"
         ads:adUnitId= "@string/ads_iva">
     </com.google.android.gms.ads.AdView>
