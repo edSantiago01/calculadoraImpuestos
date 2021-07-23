@@ -70,4 +70,12 @@ class Operations {
         }
         return map
     }
+
+    fun calPesosUma(nUma:Double, valorUma:Double):Double{
+        return nUma * valorUma
+    }
+
+    fun calUmaPesos(pesos:Double, valorUma:Double):Double{
+        return pesos / valorUma
+    }
 }

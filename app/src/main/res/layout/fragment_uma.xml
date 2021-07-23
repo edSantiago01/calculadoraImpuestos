@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.IvaFragment">
-    
+    tools:context=".fragments.UmaFragment">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,106 +15,66 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginHorizontal="@dimen/margin_double"
-            android:paddingBottom="@dimen/margin_double"
             android:paddingTop="@dimen/banner_h"
-            >
+            android:paddingBottom="@dimen/margin_double">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/margin_fragment"
-                app:startIconDrawable="@drawable/ic_dollar"
-                android:hint="@string/subtotal">
+                android:layout_marginStart="@dimen/margin_min"
+                android:hint="@string/uma">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtSubtotalI"
+                    android:id="@+id/txtUma"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
-                    android:textSize="@dimen/sp_2"
+                    android:textSize="@dimen/sp_3"
+                    android:maxLength="21"
                     android:gravity="end"
-                    android:maxLength="15"
                     android:inputType="numberDecimal"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/margin_fragment"
-                android:orientation="horizontal">
-
-                <Spinner
-                    android:id="@+id/spinIvaI"
-                    style="@style/Widget.AppCompat.Spinner.Underlined"
-                    android:layout_width="0dp"
-                    android:layout_weight=".4"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/margin_min"
-                    android:spinnerMode="dialog"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
-                    android:layout_weight=".6"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_min"
-                    app:startIconDrawable="@drawable/ic_dollar"
-                    android:hint="@string/iva">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtIvaI"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionDone"
-                        android:textSize="@dimen/sp_3"
-                        android:maxLength="21"
-                        android:gravity="end"
-                        android:inputType="numberDecimal"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/margin_fragment"
+                android:layout_marginStart="@dimen/margin_min"
                 app:startIconDrawable="@drawable/ic_dollar"
-                android:hint="@string/total">
+                android:hint="@string/eq_pesos">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtTotalI"
+                    android:id="@+id/txtPesos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
+                    android:textSize="@dimen/sp_3"
+                    android:maxLength="21"
                     android:gravity="end"
-                    android:textSize="@dimen/sp_1"
-                    android:maxLength="22"
                     android:inputType="numberDecimal"
                     />
             </com.google.android.material.textfield.TextInputLayout>
-
             <ImageView
-                android:id="@+id/icInfoIva"
+                android:id="@+id/icInfo"
                 android:layout_gravity="end"
                 android:layout_marginVertical="@dimen/margin_fragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_info" />
-
         </LinearLayout>
     </ScrollView>
-
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adIva"
+        android:id="@+id/adUma"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="4dp"
         ads:adSize="BANNER"
-        ads:adUnitId= "@string/ads_iva">
+        ads:adUnitId="@string/ads_uma">
     </com.google.android.gms.ads.AdView>
-
 </RelativeLayout>

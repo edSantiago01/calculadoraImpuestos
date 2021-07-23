@@ -8,5 +8,5 @@
     <dimen name="sp_2">18sp</dimen>
     <dimen name="sp_3">15sp</dimen>
 
-    <dimen name="banner_h">60dp</dimen>
+    <dimen name="banner_h">64dp</dimen>
 </resources>

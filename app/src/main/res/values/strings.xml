@@ -6,11 +6,22 @@
     <string name="total">Total</string>
     <string name="isr_r">ISR Retenido</string>
     <string name="iva_r">IVA Retenido</string>
+    <string name="uma">UMA</string>
+    <string name="unidad_ma">Unidad de Medida y Actualización</string>
+    <string name="eq_pesos">Equivalencia en pesos</string>
 
     <string name="limpiar">Limpiar</string>
     <string name="compartir">Compartir</string>
     <string name="aceptar">Aceptar</string>
+    <string name="mas_herramientas">Más herramientas</string>
+    <string name="calificar">Calificar aplicación</string>
+    <string name="compartir_app">Compartir aplicación</string>
 
+    <string name="hexatext">Cifrado HexaText</string>
+    <string name="trigonometria">Calculadora Trigonométrica</string>
+    <string name="recta">Línea Recta</string>
+
+    <string name="uma_info">Referencia en pesos para determinar la cuantía del pago de obligaciones previstas en las leyes federales, como multas o impuestos. \n \nValor de UMA diario 2021: \n\n $%1$s</string>
     <string name="retencion_info">Si eres persona física con actividad empresarial - profesional y emites factura a una persona moral. \n \nNota: valor de la tasa del ISR retenido: 0.106667 </string>
     <string name="iva_info">Si eres persona física y emites factura a otra persona física. </string>
     <string name="titulo_dialog">Utiliza esta sección</string>
@@ -18,8 +29,9 @@
     <string name="ads_id_app">ca-app-pub-3940256099942544~3347511713</string>
     <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ads_iva">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ads_uma">ca-app-pub-3940256099942544/6300978111</string>
 
 
 
-    
+
 </resources>
