@@ -21,13 +21,9 @@ class MainActivity : AppCompatActivity() {
 
         val transaction = this.supportFragmentManager.beginTransaction()
         val fragmentMain = MainFragment.newInstance()
-        transaction.replace(R.id.container_main, fragmentMain)
+        val tag = resources.getString(R.string.principal)
+        transaction.replace(R.id.container_main, fragmentMain, tag)
         transaction.commit()
     }
 
-        override fun onCreateOptionsMenu(menu: Menu): Boolean {
-                val inflater: MenuInflater = menuInflater
-                inflater.inflate(R.menu.menu, menu)
-                return true
-        }
 }

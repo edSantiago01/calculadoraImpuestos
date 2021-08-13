@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Calculadora Impuestos</string>
+    <string name="app_name_v">📑 Calculadora de Impuestos v2.1</string>
+    <string name="preference_file_key">com.mozama.impuestos</string>
+    <string name="copyright">© 2021 Mozama </string>
+
     <string name="retenciones">Retenciones</string>
     <string name="iva">IVA</string>
     <string name="subtotal">Subtotal</string>
@@ -16,6 +20,11 @@
     <string name="mas_herramientas">Más herramientas</string>
     <string name="calificar">Calificar aplicación</string>
     <string name="compartir_app">Compartir aplicación</string>
+    <string name="ajustes">Ajustes</string>
+    <string name="principal">principal</string>
+    <string name="imp_locales">Impuestos locales</string>
+    <string name="imp_cedulares">Impuestos cedulares u otros</string>
+    <string name="imp_config">IMP_LOCALES</string>
 
     <string name="hexatext">Cifrado HexaText</string>
     <string name="trigonometria">Calculadora Trigonométrica</string>
@@ -30,8 +39,4 @@
     <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ads_iva">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ads_uma">ca-app-pub-3940256099942544/6300978111</string>
-
-
-
-
 </resources>

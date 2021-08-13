@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_share"
-        android:icon="@drawable/ic_share"
-        android:title="@string/compartir"
-        app:showAsAction="ifRoom" />
-    <item android:id="@+id/menu_delete"
-        android:icon="@drawable/ic_delete"
-        android:title="@string/limpiar"
-        app:showAsAction="ifRoom" />
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/calificar"
         android:title="@string/calificar" />
     <item android:id="@+id/comparirApp"
@@ -25,6 +15,4 @@
                 android:title="@string/recta" />
         </menu>
     </item>
-    <item android:id="@+id/menu_ajustes"
-        android:title="@string/ajustes" />
 </menu>

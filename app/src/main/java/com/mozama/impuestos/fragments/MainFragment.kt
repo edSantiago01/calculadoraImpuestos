@@ -1,9 +1,20 @@
-/*
- * This is the source code of Calculadora de Impuestos v. 1.x.x.
- * It is licensed under GNU GPL v. 3 or later.
- * You should have received a copy of the license in this archive (see LICENSE).
+/**
+ * This is the source code of Calculadora de Impuestos v. 2.2
  *
- * Copyright Edgar Santiago, 2021.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * Copyright (C) 2021  Edgar Santiago
  */
 
 package com.mozama.impuestos.fragments
@@ -69,6 +80,8 @@ class MainFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_main, menu)
     }
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Detectar la opción del menú seleccionado
         return when (item.itemId) {
@@ -92,8 +105,27 @@ class MainFragment : Fragment() {
                 abrirEnlacePlay("com.mozama.lineaRecta")
                 true
             }
+            R.id.menu_ajustes->{
+                mostrarAjustes()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun mostrarAjustes() {
+        val transaction = parentFragmentManager.beginTransaction()
+        val fragmentAjustes = AjustesFragment.newInstance()
+        val tagAjustes = resources.getString(R.string.ajustes)
+
+        val tagActual = resources.getString(R.string.principal)
+        val fragmentActual = parentFragmentManager.findFragmentByTag(tagActual)
+
+        transaction
+            .hide(fragmentActual!!)
+            .add(R.id.container_main, fragmentAjustes, tagAjustes)
+
+        transaction.commit()
     }
 
     private fun abrirEnlacePlay(idApp:String) {
