@@ -22,6 +22,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdRequest
@@ -44,7 +45,12 @@ class RetencionFragment : Fragment() {
     private lateinit var txtIva: EditText
     private lateinit var txtIsrR: EditText
     private lateinit var fieldIvaR: TextInputLayout
-    private lateinit var txtIvaR: EditText    
+    private lateinit var txtIvaR: EditText
+    private lateinit var lyCedular: LinearLayout
+    private lateinit var spinCedular : Spinner
+    private lateinit var fieldCedular: TextInputLayout
+    private lateinit var fieldPercentCedular: TextInputLayout
+    private lateinit var txtPercentCedular: EditText
     private lateinit var txtTotal: EditText
     private lateinit var spinIva : Spinner
     private lateinit var mAdView : AdView
@@ -57,11 +63,13 @@ class RetencionFragment : Fragment() {
     private val IN_IVA_R = 4
     private val IN_TOTAL = 5
     private var percentIva = 0.0
+    private var percentCedular = 0.0
 
     private var subtotal = 0.0
     private var iva = 0.0
     private var isrR = 0.0
     private var ivaR = 0.0
+    private var cedular = 0.0
     private var total = 0.0
 
     //Para identificar quién modifica el valor de los EditText
@@ -99,9 +107,18 @@ class RetencionFragment : Fragment() {
         spinIva = view.findViewById(R.id.spinIva)
         icInfoRetenciones = view.findViewById(R.id.icInfoRetenciones)
 
+        lyCedular    = view.findViewById(R.id.lyCedular)
+        spinCedular  = view.findViewById(R.id.spinCedular)
+        fieldCedular = view.findViewById(R.id.fieldCedular)
+        fieldPercentCedular = view.findViewById(R.id.fieldPercentCedular)
+        txtPercentCedular = view.findViewById(R.id.txtPercentCedular)
+
         setItemIva()
+        setItemCedular()
         changeElements()
         hideKeyboard()
+
+        verificViewCedular()
 
         MobileAds.initialize(requireContext()) {}
         mAdView = view.findViewById(R.id.adRetenciones)
@@ -126,17 +143,28 @@ class RetencionFragment : Fragment() {
         }
     }
 
-
-
     override fun onResume() {
         super.onResume()
         hideKeyboard()
     }
 
+    private fun verificViewCedular(){
+        val sharedPref = activity?.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val configKeyLocales = resources.getString(R.string.imp_config)
+
+        val configLocales = sharedPref?.getInt(configKeyLocales, 0)
+        if(configLocales == 0){
+            lyCedular.visibility = View.GONE
+        }else{
+            lyCedular.visibility = View.VISIBLE
+        }
+    }
+
 
     private fun changeElements() {
         spinIva.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (position == 2) hideIva()
                 else showIva()
                 calc(IN_OPTION)
@@ -146,6 +174,23 @@ class RetencionFragment : Fragment() {
             }
         }
 
+        spinCedular.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                when (position) {
+                    0 -> {
+                        UtilsGraphic().hideCedular( fieldPercentCedular, fieldCedular)
+                        cedular = 0.0
+                        percentCedular = 0.0
+                    }
+                    5 -> UtilsGraphic().showOtroCedular( fieldPercentCedular, fieldCedular )
+                    else -> UtilsGraphic().showCedular( fieldPercentCedular, fieldCedular )
+                }
+                calc(IN_OPTION)
+                hideKeyboard()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
 
         txtSubtotal.tag = TAG_USER
         txtIva.tag = TAG_USER
@@ -307,6 +352,10 @@ class RetencionFragment : Fragment() {
 
     private fun setItemIva(){
         UtilsGraphic().setItemSpin(requireContext(), R.array.item_iva_r, spinIva)
+    }
+
+    private fun setItemCedular(){
+        UtilsGraphic().setItemSpin(requireContext(), R.array.item_cedular, spinCedular)
     }
 
     private val generalTextWatcher: TextWatcher = object : TextWatcher {

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Calculadora Impuestos</string>
-    <string name="app_name_v">📑 Calculadora de Impuestos v2.1</string>
     <string name="preference_file_key">com.mozama.impuestos</string>
     <string name="copyright">© 2021 Mozama </string>
 
@@ -11,6 +10,7 @@
     <string name="isr_r">ISR Retenido</string>
     <string name="iva_r">IVA Retenido</string>
     <string name="uma">UMA</string>
+    <string name="Cedular">Cedular</string>
     <string name="unidad_ma">Unidad de Medida y Actualización</string>
     <string name="eq_pesos">Equivalencia en pesos</string>
 
@@ -34,6 +34,8 @@
     <string name="retencion_info">Si eres persona física con actividad empresarial - profesional y emites factura a una persona moral. \n \nNota: valor de la tasa del ISR retenido: 0.106667 </string>
     <string name="iva_info">Si eres persona física y emites factura a otra persona física. </string>
     <string name="titulo_dialog">Utiliza esta sección</string>
+
+    <string name="app_name_v">📑 Calculadora de Impuestos v2.1</string>
 
     <string name="ads_id_app">ca-app-pub-3940256099942544~3347511713</string>
     <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>

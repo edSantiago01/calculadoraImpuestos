@@ -19,6 +19,7 @@
 
 package com.mozama.impuestos.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -114,17 +115,22 @@ class MainFragment : Fragment() {
     }
 
     private fun mostrarAjustes() {
+//        val transaction = parentFragmentManager.beginTransaction()
+//        val fragmentAjustes = AjustesFragment.newInstance()
+//        val tagAjustes = resources.getString(R.string.ajustes)
+//
+//        val tagActual = resources.getString(R.string.principal)
+//        val fragmentActual = parentFragmentManager.findFragmentByTag(tagActual)
+//
+//        transaction
+//            .hide(fragmentActual!!)
+//            .add(R.id.container_main, fragmentAjustes, tagAjustes)
+//
+//        transaction.commit()
         val transaction = parentFragmentManager.beginTransaction()
         val fragmentAjustes = AjustesFragment.newInstance()
-        val tagAjustes = resources.getString(R.string.ajustes)
-
-        val tagActual = resources.getString(R.string.principal)
-        val fragmentActual = parentFragmentManager.findFragmentByTag(tagActual)
-
-        transaction
-            .hide(fragmentActual!!)
-            .add(R.id.container_main, fragmentAjustes, tagAjustes)
-
+        transaction.replace(R.id.container_main, fragmentAjustes)
+        transaction.addToBackStack(null)
         transaction.commit()
     }
 
@@ -145,8 +151,6 @@ class MainFragment : Fragment() {
             type = "text/plain"
         }, null)
         startActivity(share)
-
-
     }
 
     companion object {

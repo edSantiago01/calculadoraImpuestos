@@ -13,6 +13,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -22,16 +23,32 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.google.android.material.textfield.TextInputLayout
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
+
+/*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Spinner
+ */
 
 /**
  * Fragment principal para procesar los elementos del segundo elemento del TabLayout
@@ -43,6 +60,11 @@ class IvaFragment : Fragment() {
     private lateinit var txtIva: EditText
     private lateinit var txtTotal: EditText
     private lateinit var spinIva : Spinner
+    private lateinit var lyCedular: LinearLayout
+    private lateinit var spinCedular : Spinner
+    private lateinit var fieldCedular: TextInputLayout
+    private lateinit var fieldPercentCedular: TextInputLayout
+    private lateinit var txtPercentCedular: EditText
     private lateinit var mAdView : AdView
     private lateinit var icInfoIva: ImageView
 
@@ -53,6 +75,8 @@ class IvaFragment : Fragment() {
 
     private var subtotal = 0.0
     private var percentIva = 0.0
+    private var percentCedular = 0.0
+    private var cedular = 0.0
     private var iva = 0.0
     private var total = 0.0
 
@@ -79,15 +103,22 @@ class IvaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         txtSubtotal = view.findViewById(R.id.txtSubtotalI)
-        txtTotal = view.findViewById(R.id.txtTotalI)
-        txtIva = view.findViewById(R.id.txtIvaI)
+        txtTotal    = view.findViewById(R.id.txtTotalI)
+        txtIva  = view.findViewById(R.id.txtIvaI)
         spinIva = view.findViewById(R.id.spinIvaI)
+        lyCedular    = view.findViewById(R.id.lyCedularI)
+        spinCedular  = view.findViewById(R.id.spinCedularI)
+        fieldCedular = view.findViewById(R.id.fieldCedularI)
+        fieldPercentCedular = view.findViewById(R.id.fieldPercentCedularI)
+        txtPercentCedular = view.findViewById(R.id.txtPercentCedularI)
         icInfoIva = view.findViewById(R.id.icInfoIva)
 
         setItemIva()
+        setItemCedular()
         setChangeElements()
         hideKeyboard()
 
+        verificViewCedular()
 
         MobileAds.initialize(requireContext()) {}
         mAdView = view.findViewById(R.id.adIva)
@@ -117,15 +148,46 @@ class IvaFragment : Fragment() {
         hideKeyboard()
     }
 
+    private fun verificViewCedular(){
+        val sharedPref = activity?.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val configKeyLocales = resources.getString(R.string.imp_config)
+
+        val configLocales = sharedPref?.getInt(configKeyLocales, 0)
+        if(configLocales == 0){
+            lyCedular.visibility = View.GONE
+        }else{
+            lyCedular.visibility = View.VISIBLE
+        }
+    }
+
     private fun setChangeElements() {
         spinIva.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 hideKeyboard()
                 calc(IN_OPTION)
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+        spinCedular.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                when (position) {
+                    0 -> {
+                        UtilsGraphic().hideCedular( fieldPercentCedular, fieldCedular)
+                        cedular = 0.0
+                        percentCedular = 0.0
+                    }
+                    5 -> UtilsGraphic().showOtroCedular( fieldPercentCedular, fieldCedular )
+                    else -> UtilsGraphic().showCedular( fieldPercentCedular, fieldCedular )
+                }
+                calc(IN_OPTION)
+                hideKeyboard()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
         txtSubtotal.tag = TAG_USER
         txtTotal.tag = TAG_USER
         txtIva.tag = TAG_USER
@@ -136,7 +198,7 @@ class IvaFragment : Fragment() {
 
         icInfoIva.setOnClickListener{ showDialogInfo() }
     }
-    
+
 
     fun calc( option:Int){
         IN_OPTION = option
@@ -250,11 +312,13 @@ class IvaFragment : Fragment() {
         UtilsGraphic().setItemSpin(requireContext(), R.array.item_iva, spinIva)
     }
 
+    private fun setItemCedular(){
+        UtilsGraphic().setItemSpin(requireContext(), R.array.item_cedular, spinCedular)
+    }
 
     private val generalTextWatcher: TextWatcher = object : TextWatcher {
         override fun onTextChanged( s: CharSequence, start: Int, before: Int,count: Int) {
-        }
-        override fun beforeTextChanged( s: CharSequence, start: Int, count: Int,after: Int ) {
+        }        override fun beforeTextChanged( s: CharSequence, start: Int, count: Int,after: Int ) {
         }
         override fun afterTextChanged(s: Editable) {
             if (txtSubtotal.text.hashCode() == s.hashCode() && txtSubtotal.tag == TAG_USER) {

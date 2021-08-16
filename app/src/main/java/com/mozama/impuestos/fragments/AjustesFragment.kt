@@ -3,7 +3,11 @@ package com.mozama.impuestos.fragments
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SwitchCompat
@@ -45,11 +49,11 @@ class AjustesFragment : Fragment() {
         configLocales = sharedPref?.getInt(configKeyLocales, 0)!!
 
         activity?.setTitle(R.string.ajustes)
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                regresarFragment()
-            }
-        })
+//        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                regresarFragment()
+//            }
+//        })
         setHasOptionsMenu(true)
     }
 
@@ -83,20 +87,21 @@ class AjustesFragment : Fragment() {
     }
 
 
-    fun regresarFragment(){
-        val tagActual = resources.getString(R.string.ajustes)
-        val tagPrincipal = resources.getString(R.string.principal)
-
-        val principalFragment = parentFragmentManager.findFragmentByTag(tagPrincipal)
-        val ajustesFragment = parentFragmentManager.findFragmentByTag(tagActual)
-
-        if (principalFragment != null && ajustesFragment != null){
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.remove(ajustesFragment).show(principalFragment)
-            transaction.commit()
-            activity?.setTitle(R.string.app_name)
-        }
-    }
+//    fun regresarFragment(){
+//        val tagActual = resources.getString(R.string.ajustes)
+//        val tagPrincipal = resources.getString(R.string.principal)
+//
+//        val principalFragment = parentFragmentManager.findFragmentByTag(tagPrincipal)
+//        val ajustesFragment = parentFragmentManager.findFragmentByTag(tagActual)
+//
+//        if (principalFragment != null && ajustesFragment != null){
+//            principalFragment.onResume()
+//            val transaction = parentFragmentManager.beginTransaction()
+//            transaction.remove(ajustesFragment).show(principalFragment)
+//            transaction.commit()
+//            activity?.setTitle(R.string.app_name)
+//        }
+//    }
 
     companion object {
         @JvmStatic

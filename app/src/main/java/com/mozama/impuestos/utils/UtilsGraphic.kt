@@ -8,8 +8,10 @@
 package com.mozama.impuestos.utils
 
 import android.content.Context
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import com.google.android.material.textfield.TextInputLayout
 import java.text.DecimalFormat
 
 /**
@@ -36,6 +38,23 @@ class UtilsGraphic {
         else if ( position == 1 ) porcentaje = 0.08
 
         return porcentaje
+    }
+
+
+
+    fun hideCedular(fieldPercentCedular:TextInputLayout, fieldCedular:TextInputLayout){  //is active but dont use
+        fieldPercentCedular.visibility = View.GONE
+        fieldCedular.visibility = View.GONE
+    }
+
+    fun showCedular(fieldPercentCedular:TextInputLayout, fieldCedular:TextInputLayout){
+        fieldPercentCedular.visibility = View.GONE
+        fieldCedular.visibility = View.VISIBLE
+    }
+
+    fun showOtroCedular(fieldPercentCedular:TextInputLayout, fieldCedular:TextInputLayout){
+        fieldPercentCedular.visibility = View.VISIBLE
+        fieldCedular.visibility = View.VISIBLE
     }
 
     fun deleteComma(value:String):String{

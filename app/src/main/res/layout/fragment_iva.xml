@@ -43,7 +43,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/margin_fragment"
                 android:orientation="horizontal">
-
                 <Spinner
                     android:id="@+id/spinIvaI"
                     style="@style/Widget.AppCompat.Spinner.Underlined"
@@ -52,7 +51,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/margin_min"
                     android:spinnerMode="dialog"/>
-
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
@@ -72,8 +70,67 @@
                         android:inputType="numberDecimal"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+<!--cedular-->
+            <LinearLayout
+                android:id="@+id/lyCedularI"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_fragment"
+                android:orientation="horizontal">
+                <Spinner
+                    android:id="@+id/spinCedularI"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="0dp"
+                    android:layout_weight=".4"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/margin_min"
+                    android:spinnerMode="dialog"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/fieldPercentCedularI"
+                    android:layout_width="0dp"
+                    android:layout_weight=".3"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_min"
+                    android:layout_marginEnd="@dimen/margin_min"
+                    android:hint="%">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtPercentCedularI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:textSize="@dimen/sp_3"
+                        android:maxLength="21"
+                        android:gravity="end"
+                        android:inputType="numberDecimal"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/fieldCedularI"
+                    android:layout_width="0dp"
+                    android:layout_weight=".6"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_min"
+                    app:startIconDrawable="@drawable/ic_dollar"
+                    android:hint="@string/Cedular">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtCedular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:textSize="@dimen/sp_3"
+                        android:enabled="false"
+                        android:maxLength="21"
+                        android:gravity="end"
+                        android:inputType="numberDecimal"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
