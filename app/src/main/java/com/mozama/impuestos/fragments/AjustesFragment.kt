@@ -80,7 +80,7 @@ class AjustesFragment : Fragment() {
         inflater.inflate(R.menu.menu_ajustes, menu)
     }
 
-    fun saveConfigLocal(valor: Boolean){
+    private fun saveConfigLocal(valor: Boolean){
         val editSharePreferences = sharedPref?.edit()
         val valorLocal = if(valor) 1 else 0
         editSharePreferences?.putInt(configKeyLocales, valorLocal)

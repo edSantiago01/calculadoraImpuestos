@@ -114,7 +114,7 @@ class UtilsGraphic {
         return formato.format(valor)
     }
 
-    fun round0Dec(valor: Double): String {
+    private fun round0Dec(valor: Double): String {
         val formato = DecimalFormat("###,###,###,###,###,###,##0.##")
         return formato.format(valor)
     }

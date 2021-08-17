@@ -23,7 +23,7 @@ class Operations {
         return iva * constant
     }
 
-    fun calcAllIva(subtotal:Double, percentIva:Double, percentCedular:Double): Map<String,Double>{
+    private fun calcAllIva(subtotal:Double, percentIva:Double, percentCedular:Double): Map<String,Double>{
         val iva = calcValPercentTotal( subtotal, percentIva )
         val cedular = calcValPercentTotal( subtotal, percentCedular )
         val total = subtotal + iva - cedular

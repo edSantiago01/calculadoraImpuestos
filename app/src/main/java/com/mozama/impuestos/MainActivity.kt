@@ -7,10 +7,8 @@
  */
 package com.mozama.impuestos
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
+import androidx.appcompat.app.AppCompatActivity
 import com.mozama.impuestos.fragments.MainFragment
 
 class MainActivity : AppCompatActivity() {
