@@ -214,6 +214,8 @@ class IvaFragment : Fragment() {
         txtTotal.addTextChangedListener(generalTextWatcher)
         txtIva.addTextChangedListener(generalTextWatcher)
 
+        txtCedular.setOnClickListener{hideKeyboard()}
+
         icInfoIva.setOnClickListener{ showDialogInfo() }
     }
 
@@ -256,7 +258,8 @@ class IvaFragment : Fragment() {
             if( temp != null){
                 iva = temp
                 subtotal = Operations().calcValSubtotalIva( iva, percentIva )
-                total = subtotal + iva
+                cedular = Operations().calcValPercentTotal( subtotal, percentCedular )
+                total = subtotal + iva - cedular
                 setValuesEditText()
             }
             else cleaner()

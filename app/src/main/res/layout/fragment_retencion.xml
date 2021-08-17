@@ -200,10 +200,10 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:textSize="@dimen/sp_3"
-                        android:enabled="false"
+                        android:focusable="false"
+                        android:inputType="none"
                         android:maxLength="21"
                         android:gravity="end"
-                        android:inputType="numberDecimal"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>

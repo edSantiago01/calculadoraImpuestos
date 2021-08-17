@@ -36,11 +36,12 @@
     <string name="iva_info">Si eres persona física y emites factura a otra persona física. </string>
     <string name="titulo_dialog">Utiliza esta sección</string>
 
-    <string name="app_version">v2.1</string>
+    <string name="app_version">v2.11</string>
 
     <string name="ads_id_app">ca-app-pub-3940256099942544~3347511713</string>
     <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ads_iva">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ads_uma">ca-app-pub-3940256099942544/6300978111</string>
+
 
 </resources>

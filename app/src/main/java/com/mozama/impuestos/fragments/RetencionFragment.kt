@@ -230,6 +230,7 @@ class RetencionFragment : Fragment() {
         txtIva.setOnClickListener{hideKeyboard()}
         txtIsrR.setOnClickListener{hideKeyboard()}
         txtIvaR.setOnClickListener{hideKeyboard()}
+        txtCedular.setOnClickListener{hideKeyboard()}
 
         icInfoRetenciones.setOnClickListener{ showDialogInfo() }
     }
