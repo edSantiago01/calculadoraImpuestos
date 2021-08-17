@@ -19,7 +19,6 @@
 
 package com.mozama.impuestos.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -38,7 +37,23 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 /**
  * Fragment principal para visualizar el ViewPager2 y TabLayout
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * Copyright (C) 2021  Edgar Santiago
  */
+
 class MainFragment : Fragment() {
 
     private lateinit var tabView: TabLayout
@@ -50,6 +65,7 @@ class MainFragment : Fragment() {
         arguments?.let {
         }
         setHasOptionsMenu(true)
+        activity?.title = resources.getString(R.string.app_name)
     }
 
     override fun onCreateView(
@@ -78,10 +94,14 @@ class MainFragment : Fragment() {
         }.attach()
     }
 
+    override fun onResume() {
+        super.onResume()
+        activity?.title = resources.getString(R.string.app_name)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_main, menu)
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Detectar la opción del menú seleccionado
@@ -115,18 +135,6 @@ class MainFragment : Fragment() {
     }
 
     private fun mostrarAjustes() {
-//        val transaction = parentFragmentManager.beginTransaction()
-//        val fragmentAjustes = AjustesFragment.newInstance()
-//        val tagAjustes = resources.getString(R.string.ajustes)
-//
-//        val tagActual = resources.getString(R.string.principal)
-//        val fragmentActual = parentFragmentManager.findFragmentByTag(tagActual)
-//
-//        transaction
-//            .hide(fragmentActual!!)
-//            .add(R.id.container_main, fragmentAjustes, tagAjustes)
-//
-//        transaction.commit()
         val transaction = parentFragmentManager.beginTransaction()
         val fragmentAjustes = AjustesFragment.newInstance()
         transaction.replace(R.id.container_main, fragmentAjustes)

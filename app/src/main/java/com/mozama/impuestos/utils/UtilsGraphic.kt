@@ -43,16 +43,36 @@ class UtilsGraphic {
         return porcentaje
     }
 
-    fun getPercentCedularSpinner(spin: Spinner): Double{
-        val percent = when( spin.selectedItemPosition ){
-           0 -> 0.0
-           1 -> 0.02
-           2 -> 0.03
-           3 -> 0.04
-           4 -> 0.05
-           else -> -1.0
+    fun getPercentCedularSpinner(spin: Spinner): Double {
+        return when (spin.selectedItemPosition) {
+            0 -> 0.0
+            1 -> 0.02
+            2 -> 0.03
+            3 -> 0.04
+            4 -> 0.05
+            else -> -1.0
         }
-        return percent
+    }
+
+    fun getStringShareCedular(configLocales:Int, cedular:Double, spinCedular:Spinner, txtPercentCedular:EditText):String{
+        var cedularString = ""
+        if(configLocales == 1){
+            val valCedular = round2Dec(cedular)
+
+            val optionCedular = spinCedular.selectedItemPosition
+            if(optionCedular != 0){
+                cedularString = if(optionCedular == 5){
+                    val valPercent = txtPercentCedular.text.toString().toFloatOrNull()
+                    "\n Imp. local $valPercent% $ $valCedular"
+                }
+                else{
+                    val valPercent = getPercentCedularSpinner(spinCedular)
+                    val percent = round0Dec(valPercent * 100)
+                    "\n Cedular $percent%:  $ $valCedular"
+                }
+            }
+        }
+        return cedularString
     }
 
     // -1.0 is value not valid
@@ -62,6 +82,7 @@ class UtilsGraphic {
             val valEditText: Double? = editText.text.toString().toDoubleOrNull()
             if(valEditText != null) percent = valEditText/100
         }else{
+            editText.requestFocus()
             showToast(context.resources.getString(R.string.verifica_cedular), context)
         }
 
@@ -90,6 +111,11 @@ class UtilsGraphic {
 
     fun round2Dec(valor: Double): String {
         val formato = DecimalFormat("###,###,###,###,###,###,##0.00")
+        return formato.format(valor)
+    }
+
+    fun round0Dec(valor: Double): String {
+        val formato = DecimalFormat("###,###,###,###,###,###,##0.##")
         return formato.format(valor)
     }
 

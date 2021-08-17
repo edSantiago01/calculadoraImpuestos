@@ -101,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:textSize="@dimen/sp_3"
-                        android:maxLength="21"
+                        android:maxLength="5"
                         android:gravity="end"
                         android:inputType="numberDecimal"
                         />

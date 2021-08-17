@@ -8,8 +8,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SwitchCompat
 import com.mozama.impuestos.R
 
@@ -49,11 +49,6 @@ class AjustesFragment : Fragment() {
         configLocales = sharedPref?.getInt(configKeyLocales, 0)!!
 
         activity?.setTitle(R.string.ajustes)
-//        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-//            override fun handleOnBackPressed() {
-//                regresarFragment()
-//            }
-//        })
         setHasOptionsMenu(true)
     }
 
@@ -65,6 +60,12 @@ class AjustesFragment : Fragment() {
         switchLocales.setOnClickListener {
             saveConfigLocal(switchLocales.isChecked)
         }
+
+        val txtVersion: TextView = view.findViewById(R.id.txtVersion)
+        val version = resources.getString(R.string.app_version)
+        val versionString = resources.getString(R.string.app_name_ver, version)
+        txtVersion.text = versionString
+
     }
 
     override fun onCreateView(
@@ -85,23 +86,6 @@ class AjustesFragment : Fragment() {
         editSharePreferences?.putInt(configKeyLocales, valorLocal)
         editSharePreferences?.apply()
     }
-
-
-//    fun regresarFragment(){
-//        val tagActual = resources.getString(R.string.ajustes)
-//        val tagPrincipal = resources.getString(R.string.principal)
-//
-//        val principalFragment = parentFragmentManager.findFragmentByTag(tagPrincipal)
-//        val ajustesFragment = parentFragmentManager.findFragmentByTag(tagActual)
-//
-//        if (principalFragment != null && ajustesFragment != null){
-//            principalFragment.onResume()
-//            val transaction = parentFragmentManager.beginTransaction()
-//            transaction.remove(ajustesFragment).show(principalFragment)
-//            transaction.commit()
-//            activity?.setTitle(R.string.app_name)
-//        }
-//    }
 
     companion object {
         @JvmStatic

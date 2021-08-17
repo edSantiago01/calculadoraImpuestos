@@ -179,8 +179,8 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:textSize="@dimen/sp_3"
-                        android:maxLength="21"
                         android:gravity="end"
+                        android:maxLength="5"
                         android:inputType="numberDecimal"
                         />
                 </com.google.android.material.textfield.TextInputLayout>

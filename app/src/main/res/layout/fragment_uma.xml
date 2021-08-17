@@ -51,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
-                    android:textSize="@dimen/sp_3"
+                    android:textSize="@dimen/sp_1"
                     android:maxLength="21"
                     android:gravity="end"
                     android:inputType="numberDecimal"

@@ -18,12 +18,6 @@ class Operations {
         return total * percent
     }
 
-    fun calcValSubtotalTotal(total: Double, percent: Double): Double {
-        // subtotal (16 %) = (100/116) * total
-        val denominador = (percent * 100) + 100
-        return (total * 100) / denominador
-    }
-
     fun calcValSubtotalIva(iva: Double, percent: Double): Double {
         val constant = 100 / (percent * 100)
         return iva * constant
@@ -69,22 +63,24 @@ class Operations {
         return map
     }
 
-    fun calcAllRetenciones(subtotal:Double, percentIva:Double, percentIvaRetenido:Double, percentIsrRetenido:Double): Map<String,Double>{
+    fun calcAllRetenciones(subtotal:Double, percentIva:Double, percentIvaRetenido:Double, percentIsrRetenido:Double, percentCedular: Double): Map<String,Double>{
         val iva = calcValPercentTotal( subtotal, percentIva )
         val ivaR = calcValPercentTotal( subtotal, percentIvaRetenido )
         val isrR = calcValPercentTotal( subtotal, percentIsrRetenido )
-        val total = subtotal + iva - ivaR - isrR
+        val cedular = calcValPercentTotal( subtotal, percentCedular )
+        val total = subtotal + iva - ivaR - isrR - cedular
 
         return mapOf(
             "iva" to iva,
             "ivaR" to ivaR,
             "isrR" to isrR,
+            "cedular" to cedular,
             "total" to total,
             "subtotal" to subtotal
         )
     }
 
-    fun calSubtotalRetencionesTotal(total:Double, percentIva:Double, percentIvaRetenido:Double, percentIsrRetenido:Double): Map<String,Double>?{
+    fun calSubtotalRetencionesTotal(total:Double, percentIva:Double, percentIvaRetenido:Double, percentIsrRetenido:Double, percentCedular:Double): Map<String,Double>?{
         var subtotal = total + 1
         var map: Map<String, Double>? = null
         var totalCiclo = 0.0
@@ -95,7 +91,7 @@ class Operations {
 
         while ( total != totalCiclo  && flag == 0){
 
-            map = calcAllRetenciones( subtotal, percentIva, percentIvaRetenido, percentIsrRetenido )
+            map = calcAllRetenciones( subtotal, percentIva, percentIvaRetenido, percentIsrRetenido, percentCedular )
             totalCiclo = map["total"]!!
 
             diferencia = total - totalCiclo

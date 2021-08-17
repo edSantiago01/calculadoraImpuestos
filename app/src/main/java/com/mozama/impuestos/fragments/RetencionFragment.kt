@@ -1,10 +1,22 @@
-/*
- * This is the source code of Calculadora de Impuestos v. 1.x.x.
- * It is licensed under GNU GPL v. 3 or later.
- * You should have received a copy of the license in this archive (see LICENSE).
- *
- * Copyright Edgar Santiago, 2021.
- */
+/**
+* RetencionesFragment, Fragment of cal tax and values to invoice whit tax Retenidos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*
+* Copyright (C) 2021  Edgar Santiago
+*/
+
 
 package com.mozama.impuestos.fragments
 import android.content.Context
@@ -17,6 +29,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
@@ -51,10 +64,13 @@ class RetencionFragment : Fragment() {
     private lateinit var fieldCedular: TextInputLayout
     private lateinit var fieldPercentCedular: TextInputLayout
     private lateinit var txtPercentCedular: EditText
+    private lateinit var txtCedular: EditText
     private lateinit var txtTotal: EditText
     private lateinit var spinIva : Spinner
     private lateinit var mAdView : AdView
     private lateinit var icInfoRetenciones: ImageView
+
+    private var configLocales = 0
 
     private var IN_OPTION = 0
     private val IN_SUBTOTAL = 1
@@ -112,6 +128,7 @@ class RetencionFragment : Fragment() {
         fieldCedular = view.findViewById(R.id.fieldCedular)
         fieldPercentCedular = view.findViewById(R.id.fieldPercentCedular)
         txtPercentCedular = view.findViewById(R.id.txtPercentCedular)
+        txtCedular = view.findViewById(R.id.txtCedular)
 
         setItemIva()
         setItemCedular()
@@ -145,6 +162,7 @@ class RetencionFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        verificViewCedular()
         hideKeyboard()
     }
 
@@ -153,7 +171,7 @@ class RetencionFragment : Fragment() {
             getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val configKeyLocales = resources.getString(R.string.imp_config)
 
-        val configLocales = sharedPref?.getInt(configKeyLocales, 0)
+        configLocales = sharedPref!!.getInt(configKeyLocales, 0)
         if(configLocales == 0){
             lyCedular.visibility = View.GONE
         }else{
@@ -192,6 +210,19 @@ class RetencionFragment : Fragment() {
             }
         }
 
+        txtPercentCedular.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (txtPercentCedular.text.toString().isNotEmpty()) {
+                    val valorString = txtPercentCedular.text.toString()
+                    val valorF: Float?  = valorString.toFloatOrNull()
+                    valorF?.let { calc(IN_OPTION) }
+                        ?:run{UtilsGraphic().showToast(resources.getString(R.string.verifica_cedular), requireContext())}
+                }else UtilsGraphic().showToast(resources.getString(R.string.verifica_cedular), requireContext())
+                hideKeyboard()
+            }
+            false
+        }
+
         txtSubtotal.tag = TAG_USER
         txtIva.tag = TAG_USER
         txtIsrR.tag = TAG_USER
@@ -211,6 +242,7 @@ class RetencionFragment : Fragment() {
     fun calc( option:Int ){
         IN_OPTION = option
         percentIva = UtilsGraphic().getIvaPercentSpinner(spinIva)
+        percentCedular = getTaxPercentCedular()
         when (IN_OPTION){
             IN_SUBTOTAL ->calcInputSubtotal()
             IN_TOTAL -> cacInputTotal()
@@ -229,10 +261,11 @@ class RetencionFragment : Fragment() {
             val temp = textNotComma.toDoubleOrNull()
             if( temp != null){
                 total = temp
-                val map = Operations().calSubtotalRetencionesTotal(total, percentIva, percentIvaRetenido, percentIsrRetenido )
+                val map = Operations().calSubtotalRetencionesTotal(total, percentIva, percentIvaRetenido, percentIsrRetenido, percentCedular )
                 iva = map?.get("iva")!!
                 ivaR = map["ivaR"]!!
                 isrR = map["isrR"]!!
+                cedular = map["cedular"]!!
                 subtotal = map["subtotal"]!!
                 setValuesEditText()
             }else cleaner()
@@ -250,15 +283,30 @@ class RetencionFragment : Fragment() {
             val temp = textNotComma.toDoubleOrNull()
             if( temp != null){
                 subtotal = temp
-                val map = Operations().calcAllRetenciones(subtotal, percentIva, percentIvaRetenido, percentIsrRetenido )
+                val map = Operations().calcAllRetenciones(subtotal, percentIva, percentIvaRetenido, percentIsrRetenido, percentCedular )
                 iva = map["iva"]!!
                 ivaR = map["ivaR"]!!
                 isrR = map["isrR"]!!
+                cedular = map["cedular"]!!
                 total = map["total"]!!
                 setValuesEditText()
             }else cleaner()
         }else cleaner()
 
+    }
+
+    private fun getTaxPercentCedular(): Double{
+        var percent: Double
+
+        if( configLocales == 0 ) percent = 0.0
+        else{
+            percent = UtilsGraphic().getPercentCedularSpinner(spinCedular)
+
+            if( percent == -1.0){
+                percent = UtilsGraphic().getPercentCedularEditText( txtPercentCedular, requireContext() )
+            }
+        }
+        return percent
     }
 
     private fun setValuesEditText(){
@@ -293,7 +341,7 @@ class RetencionFragment : Fragment() {
             txtTotal.setText( totalString )
             txtTotal.tag = TAG_USER
         }
-
+        txtCedular.setText( UtilsGraphic().round2Dec(cedular) )
     }
     
     private fun cleaner(){
@@ -327,6 +375,7 @@ class RetencionFragment : Fragment() {
             txtTotal.setText( "" )
             txtTotal.tag = TAG_USER
         }
+        txtCedular.setText( "" )
     }
 
     private fun showDialogInfo(){
@@ -386,7 +435,9 @@ class RetencionFragment : Fragment() {
         val ivaRRound = UtilsGraphic().round2Dec(ivaR)
         val totalRound = UtilsGraphic().round2Dec(total)
 
-        val text = "Subtotal: $ $subtotalRound \n\n IVA $valIvaInt%: $ $ivaRound \n ISR ret:   $ $isrRRound \n IVA ret:   $ $ivaRRound\n\n TOTAL:  $ $totalRound"
+        val cedularString = UtilsGraphic().getStringShareCedular(configLocales, cedular, spinCedular, txtPercentCedular)
+
+        val text = "Subtotal: $ $subtotalRound \n\n IVA $valIvaInt%: $ $ivaRound \n ISR ret:   $ $isrRRound \n IVA ret:   $ $ivaRRound $cedularString\n\n TOTAL:  $ $totalRound"
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, text)

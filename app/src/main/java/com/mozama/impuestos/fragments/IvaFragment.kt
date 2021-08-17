@@ -13,7 +13,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -187,7 +186,6 @@ class IvaFragment : Fragment() {
                     5 -> UtilsGraphic().showOtroCedular( fieldPercentCedular, fieldCedular )
                     else -> UtilsGraphic().showCedular( fieldPercentCedular, fieldCedular )
                 }
-                if (IN_OPTION == 0) IN_OPTION == IN_SUBTOTAL
                 calc(IN_OPTION)
                 hideKeyboard()
             }
@@ -382,7 +380,9 @@ class IvaFragment : Fragment() {
         val ivaRound = UtilsGraphic().round2Dec(iva)
         val totalRound = UtilsGraphic().round2Dec(total)
 
-        val text = "Subtotal: $ $subtotalRound \n IVA $valIvaInt%:  $ $ivaRound \n\n TOTAL:  $ $totalRound"
+        val cedularString = UtilsGraphic().getStringShareCedular(configLocales, cedular, spinCedular, txtPercentCedular)
+
+        val text = "Subtotal: $ $subtotalRound \n IVA $valIvaInt%:  $ $ivaRound $cedularString \n\n TOTAL:  $ $totalRound"
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, text)
