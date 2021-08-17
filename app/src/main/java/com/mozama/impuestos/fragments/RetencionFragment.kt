@@ -47,11 +47,6 @@ import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
 
-/**
- * Fragment principal para procesar los elementos del primer elemento del TabLayout
- * Retenciones
- */
-
 class RetencionFragment : Fragment() {
     private lateinit var txtSubtotal: EditText
     private lateinit var fieldIva : TextInputLayout    

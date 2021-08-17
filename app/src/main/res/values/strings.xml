@@ -28,8 +28,8 @@
     <string name="verifica_cedular">Igrese el porcentaje del impuesto</string>
 
     <string name="hexatext">Cifrado HexaText</string>
-    <string name="trigonometria">Calculadora Trigonométrica</string>
-    <string name="recta">Línea Recta</string>
+    <string name="trigonometria">📐 Calculadora Trigonométrica</string>
+    <string name="recta">📏 Línea Recta</string>
 
     <string name="uma_info">Referencia en pesos para determinar la cuantía del pago de obligaciones previstas en las leyes federales, como multas o impuestos. \n \nValor de UMA diario 2021: \n\n $%1$s</string>
     <string name="retencion_info">Si eres persona física con actividad empresarial - profesional y emites factura a una persona moral. \n \nNota: valor de la tasa del ISR retenido: 0.106667 </string>
@@ -42,4 +42,5 @@
     <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ads_iva">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ads_uma">ca-app-pub-3940256099942544/6300978111</string>
+
 </resources>

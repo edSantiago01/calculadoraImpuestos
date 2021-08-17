@@ -9,10 +9,10 @@
         <menu>
             <item android:id="@+id/menu_hexa"
                 android:title="@string/hexatext" />
-            <item android:id="@+id/menu_trigonometria"
-                android:title="@string/trigonometria" />
             <item android:id="@+id/menu_recta"
                 android:title="@string/recta" />
+            <item android:id="@+id/menu_trigonometria"
+                android:title="@string/trigonometria" />
         </menu>
     </item>
 </menu>
