@@ -25,6 +25,7 @@
     <string name="imp_locales">Impuestos locales</string>
     <string name="imp_cedulares">Impuestos cedulares u otros</string>
     <string name="imp_config">IMP_LOCALES</string>
+    <string name="verifica_cedular">Igrese el porcentaje del impuesto cedular</string>
 
     <string name="hexatext">Cifrado HexaText</string>
     <string name="trigonometria">Calculadora Trigonométrica</string>
@@ -35,7 +36,7 @@
     <string name="iva_info">Si eres persona física y emites factura a otra persona física. </string>
     <string name="titulo_dialog">Utiliza esta sección</string>
 
-    <string name="app_name_v">📑 Calculadora de Impuestos v2.1</string>
+    <string name="app_name_v"> Calculadora de Impuestos v2.1</string>
 
     <string name="ads_id_app">ca-app-pub-3940256099942544~3347511713</string>
     <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>

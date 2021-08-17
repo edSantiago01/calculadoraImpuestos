@@ -19,6 +19,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.EditText
@@ -65,8 +66,11 @@ class IvaFragment : Fragment() {
     private lateinit var fieldCedular: TextInputLayout
     private lateinit var fieldPercentCedular: TextInputLayout
     private lateinit var txtPercentCedular: EditText
+    private lateinit var txtCedular: EditText
     private lateinit var mAdView : AdView
     private lateinit var icInfoIva: ImageView
+
+    private var configLocales = 0
 
     private var IN_OPTION = 0
     private val IN_SUBTOTAL = 1
@@ -111,6 +115,7 @@ class IvaFragment : Fragment() {
         fieldCedular = view.findViewById(R.id.fieldCedularI)
         fieldPercentCedular = view.findViewById(R.id.fieldPercentCedularI)
         txtPercentCedular = view.findViewById(R.id.txtPercentCedularI)
+        txtCedular = view.findViewById(R.id.txtCedular)
         icInfoIva = view.findViewById(R.id.icInfoIva)
 
         setItemIva()
@@ -145,6 +150,7 @@ class IvaFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        verificViewCedular()
         hideKeyboard()
     }
 
@@ -153,7 +159,7 @@ class IvaFragment : Fragment() {
             getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val configKeyLocales = resources.getString(R.string.imp_config)
 
-        val configLocales = sharedPref?.getInt(configKeyLocales, 0)
+        configLocales = sharedPref!!.getInt(configKeyLocales, 0)
         if(configLocales == 0){
             lyCedular.visibility = View.GONE
         }else{
@@ -181,11 +187,25 @@ class IvaFragment : Fragment() {
                     5 -> UtilsGraphic().showOtroCedular( fieldPercentCedular, fieldCedular )
                     else -> UtilsGraphic().showCedular( fieldPercentCedular, fieldCedular )
                 }
+                if (IN_OPTION == 0) IN_OPTION == IN_SUBTOTAL
                 calc(IN_OPTION)
                 hideKeyboard()
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
+        }
+
+        txtPercentCedular.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (txtPercentCedular.text.toString().isNotEmpty()) {
+                    val valorString = txtPercentCedular.text.toString()
+                    val valorF: Float?  = valorString.toFloatOrNull()
+                    valorF?.let { calc(IN_OPTION) }
+                        ?:run{UtilsGraphic().showToast(resources.getString(R.string.verifica_cedular), requireContext())}
+                }else UtilsGraphic().showToast(resources.getString(R.string.verifica_cedular), requireContext())
+                hideKeyboard()
+            }
+            false
         }
 
         txtSubtotal.tag = TAG_USER
@@ -202,26 +222,31 @@ class IvaFragment : Fragment() {
 
     fun calc( option:Int){
         IN_OPTION = option
-        percentIva = UtilsGraphic().getIvaSpinner(spinIva)
+        percentIva = UtilsGraphic().getIvaPercentSpinner(spinIva)
+        percentCedular = getTaxPercentCedular()
         when (IN_OPTION){
             IN_SUBTOTAL ->calcInputSubtotal()
             IN_IVA -> calcInputIva()
             IN_TOTAL -> calcInputTotal()
+            else -> calcInputSubtotal()
         }
     }
 
     private fun calcInputSubtotal(){
-        if (txtSubtotal.text.isNotEmpty()){
-            val text = txtSubtotal.text.toString()
-            val textNotComma = UtilsGraphic().deleteComma(text)
-            val temp = textNotComma.toDoubleOrNull()
-            if( temp != null){
-                subtotal = temp
-                iva = Operations().calcValPercentTotal( subtotal, percentIva )
-                total = subtotal + iva
-                setValuesEditText()
+        if (txtSubtotal.text.isNotEmpty() ){
+            if (percentCedular != -1.0){
+                val text = txtSubtotal.text.toString()
+                val textNotComma = UtilsGraphic().deleteComma(text)
+                val temp = textNotComma.toDoubleOrNull()
+                if( temp != null){
+                    subtotal = temp
+                    iva = Operations().calcValPercentTotal( subtotal, percentIva )
+                    cedular = Operations().calcValPercentTotal( subtotal, percentCedular )
+                    total = subtotal + iva - cedular
+                    setValuesEditText()
+                }
+                else cleaner()
             }
-            else cleaner()
         }else cleaner()
     }
 
@@ -247,14 +272,29 @@ class IvaFragment : Fragment() {
             val temp = subNotComma.toDoubleOrNull()
             if( temp != null ){
                 total = temp
-                subtotal = Operations().calcValSubtotalTotal(total, percentIva)
-                iva = Operations().calcValPercentTotal( subtotal, percentIva )
+                val map = Operations().calSubtotalIvaTotal(total, percentIva, percentCedular)
+                subtotal = map?.get("subtotal")!!
+                iva      = map["iva"]!!
+                cedular  = map["cedular"]!!
                 setValuesEditText()
             }
             else cleaner()
         }else cleaner()
     }
+    
+    private fun getTaxPercentCedular(): Double{
+        var percent: Double
 
+        if( configLocales == 0 ) percent = 0.0
+        else{
+            percent = UtilsGraphic().getPercentCedularSpinner(spinCedular)
+
+            if( percent == -1.0){
+                percent = UtilsGraphic().getPercentCedularEditText( txtPercentCedular, requireContext() )
+            }
+        }
+        return percent
+    }
 
 
     private fun setValuesEditText(){
@@ -276,6 +316,7 @@ class IvaFragment : Fragment() {
             txtTotal.setText( totalString )
             txtTotal.tag = TAG_USER
         }
+        txtCedular.setText( UtilsGraphic().round2Dec(cedular) )
     }
 
     private fun cleaner(){
@@ -297,6 +338,7 @@ class IvaFragment : Fragment() {
             txtTotal.setText( "" )
             txtTotal.tag = TAG_USER
         }
+        txtCedular.setText( "" )
     }
 
     private fun showDialogInfo(){

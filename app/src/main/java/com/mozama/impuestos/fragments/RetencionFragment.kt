@@ -210,7 +210,7 @@ class RetencionFragment : Fragment() {
 
     fun calc( option:Int ){
         IN_OPTION = option
-        percentIva = UtilsGraphic().getIvaSpinner(spinIva)
+        percentIva = UtilsGraphic().getIvaPercentSpinner(spinIva)
         when (IN_OPTION){
             IN_SUBTOTAL ->calcInputSubtotal()
             IN_TOTAL -> cacInputTotal()

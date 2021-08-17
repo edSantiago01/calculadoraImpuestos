@@ -29,6 +29,46 @@ class Operations {
         return iva * constant
     }
 
+    fun calcAllIva(subtotal:Double, percentIva:Double, percentCedular:Double): Map<String,Double>{
+        val iva = calcValPercentTotal( subtotal, percentIva )
+        val cedular = calcValPercentTotal( subtotal, percentCedular )
+        val total = subtotal + iva - cedular
+
+        return mapOf(
+            "iva" to iva,
+            "cedular" to cedular,
+            "total" to total,
+            "subtotal" to subtotal
+        )
+    }
+
+    fun calSubtotalIvaTotal(total:Double, percentIva:Double, percentCedular:Double): Map<String,Double>?{
+        var subtotal = total + 1
+        var map: Map<String, Double>? = null
+        var totalCiclo = 0.0
+        var diferencia: Double
+        var diferenciaAnterior = 0.0
+        var flag = 0
+        var dif: Double
+
+        while ( total != totalCiclo  && flag == 0){
+
+            map = calcAllIva( subtotal, percentIva, percentCedular )
+            totalCiclo = map["total"]!!
+
+            diferencia = total - totalCiclo
+            subtotal += diferencia
+            dif = diferenciaAnterior + diferencia
+
+            if ( diferencia > 0 && diferencia <= 0.001 ) flag = 1
+            else if ( diferencia < 0 && diferencia >= -0.001 ) flag = 1
+            if ( dif == 0.0) flag = 1
+
+            diferenciaAnterior = diferencia
+        }
+        return map
+    }
+
     fun calcAllRetenciones(subtotal:Double, percentIva:Double, percentIvaRetenido:Double, percentIsrRetenido:Double): Map<String,Double>{
         val iva = calcValPercentTotal( subtotal, percentIva )
         val ivaR = calcValPercentTotal( subtotal, percentIvaRetenido )
