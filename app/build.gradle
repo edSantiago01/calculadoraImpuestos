@@ -11,7 +11,7 @@ android {
         applicationId "com.mozama.impuestos"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 8
+        versionCode 9
         versionName "2.12"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
