@@ -10,6 +10,8 @@
         android:title="@string/limpiar"
         app:showAsAction="ifRoom" />
 
+    <item android:id="@+id/menu_ajustes"
+        android:title="@string/ajustes" />
     <item android:id="@+id/calificar"
         android:title="@string/calificar" />
     <item android:id="@+id/comparirApp"
@@ -25,6 +27,4 @@
                 android:title="@string/trigonometria" />
         </menu>
     </item>
-    <item android:id="@+id/menu_ajustes"
-        android:title="@string/ajustes" />
 </menu>
