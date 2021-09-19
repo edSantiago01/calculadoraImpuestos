@@ -19,6 +19,9 @@ import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 
 class UmaFragment : Fragment() {
     private lateinit var txtUma: EditText
@@ -35,11 +38,14 @@ class UmaFragment : Fragment() {
     private var uma = 0.0
     private var pesos = 0.0
 
+    private lateinit var mAdView : AdView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
         setHasOptionsMenu(true)
+        MobileAds.initialize(requireContext()) {}
     }
 
     override fun onCreateView(
@@ -57,6 +63,10 @@ class UmaFragment : Fragment() {
         icInfo = view.findViewById(R.id.icInfo)
 
         setChangeElements()
+
+        mAdView = view.findViewById(R.id.adUma)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
     override fun onResume() {

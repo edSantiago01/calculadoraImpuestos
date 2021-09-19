@@ -66,15 +66,15 @@
                 android:src="@drawable/ic_info" />
         </LinearLayout>
     </ScrollView>
-<!--    <com.google.android.gms.ads.AdView-->
-<!--        xmlns:ads="http://schemas.android.com/apk/res-auto"-->
-<!--        android:id="@+id/adUma"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_marginTop="4dp"-->
-<!--        ads:adSize="BANNER"-->
-<!--        ads:adUnitId="@string/ads_uma">-->
-<!--    </com.google.android.gms.ads.AdView>-->
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adUma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="4dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/ads_uma">
+    </com.google.android.gms.ads.AdView>
 </RelativeLayout>

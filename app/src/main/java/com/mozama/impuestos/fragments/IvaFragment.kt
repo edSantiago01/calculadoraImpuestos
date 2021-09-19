@@ -32,6 +32,10 @@ import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
+
 
 /*
 import android.view.LayoutInflater
@@ -84,11 +88,14 @@ class IvaFragment : Fragment() {
     private val TAG_SYSTEM = "system"
     private val TAG_USER = "user"
 
+    private lateinit var mAdView : AdView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
         setHasOptionsMenu(true)
+        MobileAds.initialize(requireContext()) {}
     }
 
     override fun onCreateView(
@@ -120,6 +127,9 @@ class IvaFragment : Fragment() {
 
         verificViewCedular()
 
+        mAdView = view.findViewById(R.id.adIva)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

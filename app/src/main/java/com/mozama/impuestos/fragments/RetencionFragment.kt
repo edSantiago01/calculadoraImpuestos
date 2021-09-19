@@ -43,6 +43,9 @@ import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 
 class RetencionFragment : Fragment() {
     private lateinit var txtSubtotal: EditText
@@ -84,12 +87,15 @@ class RetencionFragment : Fragment() {
     private val TAG_SYSTEM = "system"
     private val TAG_USER = "user"
 
+    private lateinit var mAdView : AdView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
         //recibir devoluciones de llamada relacionadas con el menú.
         setHasOptionsMenu(true)
+        MobileAds.initialize(requireContext()) {}
     }
 
     override fun onCreateView(
@@ -127,6 +133,10 @@ class RetencionFragment : Fragment() {
         hideKeyboard()
 
         verificViewCedular()
+
+        mAdView = view.findViewById(R.id.adRetenciones)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
