@@ -15,9 +15,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
@@ -27,7 +24,6 @@ class UmaFragment : Fragment() {
     private lateinit var txtUma: EditText
     private lateinit var txtPesos: EditText
     private lateinit var icInfo: ImageView
-    private lateinit var mAdView : AdView
     private val valorUma = 89.62
 
     private var IN_OPTION = 0
@@ -59,11 +55,6 @@ class UmaFragment : Fragment() {
         txtUma = view.findViewById(R.id.txtUma)
         txtPesos = view.findViewById(R.id.txtPesos)
         icInfo = view.findViewById(R.id.icInfo)
-
-        MobileAds.initialize(requireContext()) {}
-        mAdView = view.findViewById(R.id.adUma)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
 
         setChangeElements()
     }

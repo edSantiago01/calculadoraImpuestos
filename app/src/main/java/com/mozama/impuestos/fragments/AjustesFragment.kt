@@ -11,9 +11,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SwitchCompat
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import com.mozama.impuestos.R
 
 /**
@@ -40,7 +37,6 @@ class AjustesFragment : Fragment() {
     private lateinit var switchLocales: SwitchCompat
     private lateinit var configKeyLocales: String
     private var sharedPref: SharedPreferences? = null
-    private lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,11 +65,6 @@ class AjustesFragment : Fragment() {
         val version = resources.getString(R.string.app_version)
         val versionString = resources.getString(R.string.app_name_ver, version)
         txtVersion.text = versionString
-
-        MobileAds.initialize(requireContext()) {}
-        mAdView = view.findViewById(R.id.adAjustes)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
     }
 
     override fun onCreateView(

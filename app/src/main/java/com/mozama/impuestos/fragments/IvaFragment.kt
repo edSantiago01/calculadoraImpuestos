@@ -27,9 +27,6 @@ import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import com.google.android.material.textfield.TextInputLayout
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
@@ -66,7 +63,6 @@ class IvaFragment : Fragment() {
     private lateinit var fieldPercentCedular: TextInputLayout
     private lateinit var txtPercentCedular: EditText
     private lateinit var txtCedular: EditText
-    private lateinit var mAdView : AdView
     private lateinit var icInfoIva: ImageView
 
     private var configLocales = 0
@@ -124,10 +120,6 @@ class IvaFragment : Fragment() {
 
         verificViewCedular()
 
-        MobileAds.initialize(requireContext()) {}
-        mAdView = view.findViewById(R.id.adIva)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

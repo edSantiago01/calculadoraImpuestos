@@ -38,9 +38,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import com.google.android.material.textfield.TextInputLayout
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
@@ -62,7 +59,6 @@ class RetencionFragment : Fragment() {
     private lateinit var txtCedular: EditText
     private lateinit var txtTotal: EditText
     private lateinit var spinIva : Spinner
-    private lateinit var mAdView : AdView
     private lateinit var icInfoRetenciones: ImageView
 
     private var configLocales = 0
@@ -131,11 +127,6 @@ class RetencionFragment : Fragment() {
         hideKeyboard()
 
         verificViewCedular()
-
-        MobileAds.initialize(requireContext()) {}
-        mAdView = view.findViewById(R.id.adRetenciones)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
