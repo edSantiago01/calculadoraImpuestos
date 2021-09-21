@@ -11,6 +11,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SwitchCompat
+import com.huawei.hms.ads.AdParam
+import com.huawei.hms.ads.HwAds
+import com.huawei.hms.ads.banner.BannerView
 import com.mozama.impuestos.R
 
 /**
@@ -50,6 +53,7 @@ class AjustesFragment : Fragment() {
 
         activity?.setTitle(R.string.ajustes)
 //        setHasOptionsMenu(true)
+        HwAds.init(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,6 +69,11 @@ class AjustesFragment : Fragment() {
         val version = resources.getString(R.string.app_version)
         val versionString = resources.getString(R.string.app_name_ver, version)
         txtVersion.text = versionString
+
+        val bannerView: BannerView? = view.findViewById(R.id.adUma)
+        bannerView!!.setBannerRefresh(30)
+        val adParam = AdParam.Builder().build()
+        bannerView.loadAd(adParam)
     }
 
     override fun onCreateView(

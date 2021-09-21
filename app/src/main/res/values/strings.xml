@@ -41,9 +41,9 @@
 
     <string name="app_version">v2.2</string>
 
-    <string name="ads_id_app">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ads_iva">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ads_uma">ca-app-pub-3940256099942544/6300978111</string>
+<!--    <string name="ads_id_app">ca-app-pub-3940256099942544~3347511713</string>-->
+    <string name="ads_retenciones">testw6vs28auh3</string>
+    <string name="ads_iva">testw6vs28auh3</string>
+    <string name="ads_uma">testw6vs28auh3</string>
 
 </resources>

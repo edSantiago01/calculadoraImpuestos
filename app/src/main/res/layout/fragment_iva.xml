@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:hwads="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.IvaFragment">
     
     <ScrollView
@@ -173,5 +174,12 @@
 <!--        ads:adSize="BANNER"-->
 <!--        ads:adUnitId= "@string/ads_iva">-->
 <!--    </com.google.android.gms.ads.AdView>-->
-
+    <com.huawei.hms.ads.banner.BannerView
+        android:id="@+id/adIva"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        hwads:adId="@string/ads_iva"
+        hwads:bannerSize="BANNER_SIZE_320_50"/>
 </RelativeLayout>

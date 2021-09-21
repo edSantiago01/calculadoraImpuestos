@@ -39,6 +39,9 @@ import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
+import com.huawei.hms.ads.AdParam
+import com.huawei.hms.ads.HwAds
+import com.huawei.hms.ads.banner.BannerView
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
@@ -90,6 +93,7 @@ class RetencionFragment : Fragment() {
         }
         //recibir devoluciones de llamada relacionadas con el menú.
         setHasOptionsMenu(true)
+        HwAds.init(requireContext())
     }
 
     override fun onCreateView(
@@ -127,6 +131,11 @@ class RetencionFragment : Fragment() {
         hideKeyboard()
 
         verificViewCedular()
+
+        val bannerView: BannerView? = view.findViewById(R.id.adRetenciones)
+        bannerView!!.setBannerRefresh(30)
+        val adParam = AdParam.Builder().build()
+        bannerView.loadAd(adParam)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
