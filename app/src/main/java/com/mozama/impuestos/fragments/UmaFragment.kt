@@ -49,6 +49,7 @@ class UmaFragment : Fragment() {
     private var pesos = 0.0
     private var nSalario = 0.0
     private var pesosSalario = 0.0
+    private var valSalario = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,10 +106,20 @@ class UmaFragment : Fragment() {
 
     private fun shareInfo() {
         //compartir el contenido de texto
-        val valUma = UtilsGraphic().round2Dec(uma)
-        val valPesos = UtilsGraphic().round2Dec(pesos)
+        var text = ""
 
-        val text = "UMA: $valUma \nPESOS:  $ $valPesos \n\nValor UMA 2021: $$valorUma"
+        if(txtUma.text.isNotEmpty()){
+            val valUma = UtilsGraphic().round2Dec(uma)
+            val valPesos = UtilsGraphic().round2Dec(pesos)
+            text += "UMA: $valUma \nPESOS:  $ $valPesos \n\nValor UMA 2021: $$valorUma"
+        }
+
+        if (txtSalario.text.isNotEmpty()){
+            val valNSalario = UtilsGraphic().round2Dec(nSalario)
+            val valPesosSalario = UtilsGraphic().round2Dec(pesosSalario)
+            text += "\n\nSalarios Mínimos: $valNSalario \nPESOS:  $ $valPesosSalario \n\nValor SMG: $$valSalario"
+        }
+
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, text)
@@ -146,7 +157,6 @@ class UmaFragment : Fragment() {
 
     fun calc( option:Int){
         IN_OPTION = option
-        Log.d("CALC***", IN_OPTION.toString())
         when (IN_OPTION){
             IN_UMA ->calcInputUma()
             IN_PESOS -> calcInputPesos()
@@ -166,7 +176,7 @@ class UmaFragment : Fragment() {
             val temp = textNotComma.toDoubleOrNull()
             if( temp != null){
                 nSalario = temp
-                val valSalario = UtilsGraphic().getValSalarioMinimoSpinner(spinSalario, valorSMG, valorSMG_ZLFN)
+                valSalario = UtilsGraphic().getValSalarioMinimoSpinner(spinSalario, valorSMG, valorSMG_ZLFN)
                 pesosSalario = Operations().calPesosSalario( nSalario, valSalario )
                 Log.d("CALC***",pesosSalario.toString())
                 setValuesEditTextSalarios()
@@ -182,7 +192,7 @@ class UmaFragment : Fragment() {
             val temp = textNotComma.toDoubleOrNull()
             if( temp != null){
                 pesosSalario = temp
-                val valSalario = UtilsGraphic().getValSalarioMinimoSpinner(spinSalario, valorSMG, valorSMG_ZLFN)
+                valSalario = UtilsGraphic().getValSalarioMinimoSpinner(spinSalario, valorSMG, valorSMG_ZLFN)
                 nSalario = Operations().calSalarioPesos( pesosSalario, valSalario )
                 setValuesEditTextSalarios()
             }
