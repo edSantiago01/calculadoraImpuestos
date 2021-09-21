@@ -49,7 +49,7 @@ class AjustesFragment : Fragment() {
         configLocales = sharedPref?.getInt(configKeyLocales, 0)!!
 
         activity?.setTitle(R.string.ajustes)
-        setHasOptionsMenu(true)
+//        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,9 +75,9 @@ class AjustesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_ajustes, container, false)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_ajustes, menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.menu_ajustes, menu)
+//    }
 
     private fun saveConfigLocal(valor: Boolean){
         val editSharePreferences = sharedPref?.edit()
