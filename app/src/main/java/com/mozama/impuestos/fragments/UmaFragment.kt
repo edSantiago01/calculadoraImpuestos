@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -12,8 +13,10 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
@@ -24,16 +27,29 @@ class UmaFragment : Fragment() {
     private lateinit var txtUma: EditText
     private lateinit var txtPesos: EditText
     private lateinit var icInfo: ImageView
+
+    private lateinit var spinSalario : Spinner
+    private lateinit var txtSalario: EditText
+    private lateinit var txtPesosSalario: EditText
+    private lateinit var icInfoSalario: ImageView
+
     private val valorUma = 89.62
+    private val valorSMG_ZLFN = 213.39
+    private val valorSMG = 141.7
 
     private var IN_OPTION = 0
     private val IN_UMA = 1
     private val IN_PESOS = 2
+    private val IN_SALARIO = 3
+    private val IN_PESOS_SALARIO = 4
     private val TAG_SYSTEM = "system"
     private val TAG_USER = "user"
 
     private var uma = 0.0
     private var pesos = 0.0
+    private var nSalario = 0.0
+    private var pesosSalario = 0.0
+    private var valSalario = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +72,12 @@ class UmaFragment : Fragment() {
         txtPesos = view.findViewById(R.id.txtPesos)
         icInfo = view.findViewById(R.id.icInfo)
 
+        spinSalario = view.findViewById(R.id.spinSalario)
+        txtSalario = view.findViewById(R.id.txtSalario)
+        txtPesosSalario = view.findViewById(R.id.txtPesosSmg)
+        icInfoSalario = view.findViewById(R.id.icInfoSalario)
+        setItemSalario()
+
         setChangeElements()
     }
 
@@ -71,6 +93,7 @@ class UmaFragment : Fragment() {
                 IN_OPTION = 0
                 hideKeyboard()
                 cleaner()
+                cleanerSalario()
                 true
             }
             R.id.menu_share -> {
@@ -83,10 +106,20 @@ class UmaFragment : Fragment() {
 
     private fun shareInfo() {
         //compartir el contenido de texto
-        val valUma = UtilsGraphic().round2Dec(uma)
-        val valPesos = UtilsGraphic().round2Dec(pesos)
+        var text = ""
 
-        val text = "UMA: $valUma \nPESOS:  $ $valPesos \n\nValor UMA 2021: $$valorUma"
+        if(txtUma.text.isNotEmpty()){
+            val valUma = UtilsGraphic().round2Dec(uma)
+            val valPesos = UtilsGraphic().round2Dec(pesos)
+            text += "UMA: $valUma \nPESOS:  $ $valPesos \n\nValor UMA 2021: $$valorUma"
+        }
+
+        if (txtSalario.text.isNotEmpty()){
+            val valNSalario = UtilsGraphic().round2Dec(nSalario)
+            val valPesosSalario = UtilsGraphic().round2Dec(pesosSalario)
+            text += "\n\nSalarios Mínimos: $valNSalario \nPESOS:  $ $valPesosSalario \n\nValor SMG: $$valSalario"
+        }
+
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, text)
@@ -100,11 +133,26 @@ class UmaFragment : Fragment() {
     private fun setChangeElements(){
         txtUma.tag = TAG_USER
         txtPesos.tag = TAG_USER
+        txtSalario.tag = TAG_USER
+        txtPesosSalario.tag = TAG_USER
 
         txtUma.addTextChangedListener(generalTextWatcher)
         txtPesos.addTextChangedListener(generalTextWatcher)
 
-        icInfo.setOnClickListener{ showDialogInfo() }
+        txtSalario.addTextChangedListener(generalTextWatcher)
+        txtPesosSalario.addTextChangedListener(generalTextWatcher)
+
+        icInfo.setOnClickListener{ showDialogInfo("uma") }
+        icInfoSalario.setOnClickListener{ showDialogInfo("salario") }
+
+        spinSalario.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                hideKeyboard()
+                calc(IN_SALARIO)
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
     }
 
     fun calc( option:Int){
@@ -112,7 +160,44 @@ class UmaFragment : Fragment() {
         when (IN_OPTION){
             IN_UMA ->calcInputUma()
             IN_PESOS -> calcInputPesos()
+            IN_SALARIO -> calcInputSalario()
+            IN_PESOS_SALARIO -> calcInputPesosSalario()
         }
+    }
+
+    private fun setItemSalario(){
+        UtilsGraphic().setItemSpin(requireContext(), R.array.item_salarios, spinSalario)
+    }
+
+    private fun calcInputSalario(){
+        if (txtSalario.text.isNotEmpty()){
+            val text = txtSalario.text.toString()
+            val textNotComma = UtilsGraphic().deleteComma(text)
+            val temp = textNotComma.toDoubleOrNull()
+            if( temp != null){
+                nSalario = temp
+                valSalario = UtilsGraphic().getValSalarioMinimoSpinner(spinSalario, valorSMG, valorSMG_ZLFN)
+                pesosSalario = Operations().calPesosSalario( nSalario, valSalario )
+                Log.d("CALC***",pesosSalario.toString())
+                setValuesEditTextSalarios()
+            }
+            else cleanerSalario()
+        }else cleanerSalario()
+    }
+
+    private fun calcInputPesosSalario(){
+        if (txtPesosSalario.text.isNotEmpty()){
+            val text = txtPesosSalario.text.toString()
+            val textNotComma = UtilsGraphic().deleteComma(text)
+            val temp = textNotComma.toDoubleOrNull()
+            if( temp != null){
+                pesosSalario = temp
+                valSalario = UtilsGraphic().getValSalarioMinimoSpinner(spinSalario, valorSMG, valorSMG_ZLFN)
+                nSalario = Operations().calSalarioPesos( pesosSalario, valSalario )
+                setValuesEditTextSalarios()
+            }
+            else cleanerSalario()
+        }else cleanerSalario()
     }
 
     private fun calcInputUma(){
@@ -143,10 +228,20 @@ class UmaFragment : Fragment() {
         }else cleaner()
     }
 
-    private fun showDialogInfo(){
-        val tit = resources.getString(R.string.unidad_ma)
-        val umaString = valorUma.toString()
-        val mensaje = resources.getString(R.string.uma_info,umaString)
+    private fun showDialogInfo(tipo:String){
+        var tit = ""
+        var mensaje = ""
+
+        if (tipo == "uma") {
+            tit =  resources.getString(R.string.unidad_ma)
+            val umaString = valorUma.toString()
+            mensaje = resources.getString(R.string.uma_info,umaString)
+        }else  {
+            tit =  resources.getString(R.string.smg)
+            val smgString = valorSMG.toString()
+            val smgZFString = valorSMG_ZLFN.toString()
+            mensaje = resources.getString(R.string.salario_info, smgZFString, smgString)
+        }
 
         context?.let {
             DialogFragment().showDialogNeutral(it, tit, mensaje)
@@ -161,10 +256,25 @@ class UmaFragment : Fragment() {
             txtUma.tag = TAG_USER
         }
         if(IN_OPTION != IN_PESOS){
-            val ivaStrig = UtilsGraphic().round2Dec(pesos)
+            val pesos = UtilsGraphic().round2Dec(pesos)
             txtPesos.tag = TAG_SYSTEM
-            txtPesos.setText( ivaStrig )
+            txtPesos.setText( pesos )
             txtPesos.tag = TAG_USER
+        }
+    }
+
+    private fun setValuesEditTextSalarios(){
+        if( IN_OPTION != IN_PESOS_SALARIO ){
+            val pesos = UtilsGraphic().round2Dec(pesosSalario)
+            txtPesosSalario.tag = TAG_SYSTEM
+            txtPesosSalario.setText( pesos )
+            txtPesosSalario.tag = TAG_USER
+        }
+        if( IN_OPTION != IN_SALARIO ){
+            val salario = UtilsGraphic().round2Dec(nSalario)
+            txtSalario.tag = TAG_SYSTEM
+            txtSalario.setText( salario )
+            txtSalario.tag = TAG_USER
         }
     }
 
@@ -183,6 +293,21 @@ class UmaFragment : Fragment() {
         }
     }
 
+    private fun cleanerSalario(){
+        if( IN_OPTION != IN_SALARIO ){
+            pesosSalario = 0.0
+            txtSalario.tag = TAG_SYSTEM //La app es quien modifica el valor
+            txtSalario.setText("")
+            txtSalario.tag = TAG_USER // Regresa al supuesto de que el usuario modificará el siguiente valor
+        }
+        if( IN_OPTION != IN_PESOS_SALARIO ){
+            uma = 0.0
+            txtPesosSalario.tag = TAG_SYSTEM
+            txtPesosSalario.setText("")
+            txtPesosSalario.tag = TAG_USER
+        }
+    }
+
     private val generalTextWatcher: TextWatcher = object : TextWatcher {
         override fun onTextChanged( s: CharSequence, start: Int, before: Int,count: Int) {
         }
@@ -193,8 +318,11 @@ class UmaFragment : Fragment() {
                 calc(IN_UMA)
             } else if (txtPesos.text.hashCode() == s.hashCode() && txtPesos.tag == TAG_USER) {
                 calc(IN_PESOS)
+            }else if (txtSalario.text.hashCode() == s.hashCode() && txtSalario.tag == TAG_USER) {
+                calc(IN_SALARIO)
+            }else if (txtPesosSalario.text.hashCode() == s.hashCode() && txtPesosSalario.tag == TAG_USER){
+                calc(IN_PESOS_SALARIO)
             }
-
         }
     }
 
