@@ -114,4 +114,12 @@ class Operations {
     fun calUmaPesos(pesos:Double, valorUma:Double):Double{
         return pesos / valorUma
     }
+
+    fun calPesosSalario(nSalarios:Double, valorSalario:Double):Double{
+        return nSalarios * valorSalario
+    }
+
+    fun calSalarioPesos(pesos:Double, valorSalario:Double):Double{
+        return pesos / valorSalario
+    }
 }
