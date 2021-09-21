@@ -89,7 +89,7 @@ class MainFragment : Fragment() {
             when(position){
                 0 ->tab.text = resources.getString(R.string.retenciones)
                 1 ->tab.text = resources.getString(R.string.iva)
-                2 ->tab.text = resources.getString(R.string.uma)
+                2 ->tab.text = resources.getString(R.string.uma_smg)
             }
         }.attach()
     }

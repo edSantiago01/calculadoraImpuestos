@@ -54,6 +54,14 @@ class UtilsGraphic {
         }
     }
 
+    fun getValSalarioMinimoSpinner(spin: Spinner, SMG: Double, ZLFN:Double): Double {
+        return when (spin.selectedItemPosition) {
+            0 -> SMG
+            1 -> ZLFN
+            else -> 0.0
+        }
+    }
+
     fun getStringShareCedular(configLocales:Int, cedular:Double, spinCedular:Spinner, txtPercentCedular:EditText):String{
         var cedularString = ""
         if(configLocales == 1){
