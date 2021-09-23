@@ -28,3 +28,4 @@ local.properties
 *.wmv
 
 /app/release
+/app/agconnect-services.json
