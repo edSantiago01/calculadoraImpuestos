@@ -11,8 +11,8 @@ android {
         applicationId "com.mozama.impuestos"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 10
-        versionName "2.2"
+        versionCode 11
+        versionName "2.21"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
