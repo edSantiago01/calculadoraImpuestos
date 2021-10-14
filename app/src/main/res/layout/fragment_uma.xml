@@ -7,6 +7,7 @@
     tools:context=".fragments.UmaFragment">
 
     <ScrollView
+        android:layout_marginBottom="@dimen/banner_h"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -15,8 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginHorizontal="@dimen/margin_double"
-            android:paddingBottom="@dimen/banner_h"
-            android:paddingTop="@dimen/margin_double">
+            android:padding="@dimen/margin_double">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
