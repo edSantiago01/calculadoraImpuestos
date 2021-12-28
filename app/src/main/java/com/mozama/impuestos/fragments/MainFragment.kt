@@ -114,6 +114,10 @@ class MainFragment : Fragment() {
                 shareApp()
                 true
             }
+            R.id.menu_mcm -> {
+                abrirEnlacePlay("com.mozama.mcm_mcd")
+                true
+            }
             R.id.menu_hexa -> {
                 abrirEnlacePlay("mx.com.mozama.hexatext")
                 true

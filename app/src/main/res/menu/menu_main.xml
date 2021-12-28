@@ -21,6 +21,8 @@
         <menu>
             <item android:id="@+id/menu_hexa"
                 android:title="@string/hexatext" />
+            <item android:id="@+id/menu_mcm"
+                android:title="@string/mcm" />
             <item android:id="@+id/menu_recta"
                 android:title="@string/recta" />
             <item android:id="@+id/menu_trigonometria"
