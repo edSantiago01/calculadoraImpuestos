@@ -7,6 +7,7 @@
     tools:context=".fragments.AjustesFragment">
 
     <ScrollView
+        android:layout_marginBottom="@dimen/banner_h"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -14,8 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="@dimen/banner_h"
-            android:paddingBottom="@dimen/margin_double">
+            android:padding="@dimen/margin_double">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
         android:id="@+id/adUma"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         hwads:adId="@string/ads_uma"
         hwads:bannerSize="BANNER_SIZE_320_50"/>
