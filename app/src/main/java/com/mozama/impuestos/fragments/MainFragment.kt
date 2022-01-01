@@ -126,6 +126,10 @@ class MainFragment : Fragment() {
                 abrirEnlacePlay("com.mozama.trigonometria")
                 true
             }
+            R.id.menu_circunferencia -> {
+                abrirEnlacePlay("com.mozama.circumference_equation")
+                true
+            }
             R.id.menu_recta -> {
                 abrirEnlacePlay("com.mozama.lineaRecta")
                 true
