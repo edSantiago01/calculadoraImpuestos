@@ -33,7 +33,7 @@ class UmaFragment : Fragment() {
     private lateinit var txtPesosSalario: EditText
     private lateinit var icInfoSalario: ImageView
 
-    private val valorUma = 89.62
+    private val valorUma = 96.22
     private val valorSMG_ZLFN = 260.34
     private val valorSMG = 172.87
 
