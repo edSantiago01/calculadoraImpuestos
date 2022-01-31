@@ -114,6 +114,10 @@ class MainFragment : Fragment() {
                 shareApp()
                 true
             }
+            R.id.menu_productosNot->{
+                abrirEnlacePlay("com.mozama.notable_products")
+                true
+            }
             R.id.menu_mcm -> {
                 abrirEnlacePlay("com.mozama.mcm_mcd")
                 true
