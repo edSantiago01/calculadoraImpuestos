@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "981573601612",
+    "project_id": "cimpuestos-47a5b",
+    "storage_bucket": "cimpuestos-47a5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:981573601612:android:8f36738faebf12b1da67e9",
+        "android_client_info": {
+          "package_name": "com.mozama.impuestos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "981573601612-0tgl720t1ts4445ik4tcbhbnm5n5v2ot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGua9_2kvpvJmeKItBRvUVf79H0ogZt0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "981573601612-0tgl720t1ts4445ik4tcbhbnm5n5v2ot.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-6400425881601749~9354556089"
+    }
+  ],
+  "configuration_version": "1"
+}
