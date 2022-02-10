@@ -1,21 +1,20 @@
 package com.mozama.impuestos.fragments
 
 import android.content.Context
-import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.material.textfield.TextInputLayout
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
+import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
 
 /**
@@ -41,8 +40,11 @@ class ResicoFragment : Fragment() {
 
     private lateinit var txtSubtotal: EditText
     private lateinit var fieldIva : TextInputLayout
+    private lateinit var fieldIvaRResico: TextInputLayout
     private lateinit var txtIva: EditText
     private lateinit var txtIsrR: EditText
+    private lateinit var fieldIvaR: TextInputLayout
+    private lateinit var txtIvaR: EditText
     private lateinit var lyCedular: LinearLayout
     private lateinit var spinCedular : Spinner
     private lateinit var fieldCedular: TextInputLayout
@@ -51,6 +53,7 @@ class ResicoFragment : Fragment() {
     private lateinit var txtCedular: EditText
     private lateinit var txtTotal: EditText
     private lateinit var spinIva : Spinner
+    private lateinit var spinIvaR: Spinner
     private lateinit var icInfoRetenciones: ImageView
 
     private var configLocales = 0
@@ -59,6 +62,7 @@ class ResicoFragment : Fragment() {
     private val IN_SUBTOTAL = 1
     private val IN_IVA = 2
     private val IN_ISR_R = 3
+    private val IN_IVA_R = 4
     private val IN_TOTAL = 5
     private var percentIva = 0.0
     private var percentCedular = 0.0
@@ -66,11 +70,15 @@ class ResicoFragment : Fragment() {
     private var subtotal = 0.0
     private var iva = 0.0
     private var isrR = 0.0
+    private var ivaR = 0.0
     private var cedular = 0.0
     private var total = 0.0
 
     private val TAG_SYSTEM = "system"
     private val TAG_USER = "user"
+
+    private val percentIsrRetenido = .0125
+    private var isIvaRetenido = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,14 +100,40 @@ class ResicoFragment : Fragment() {
         setup(view)
     }
 
+    override fun onResume() {
+        super.onResume()
+        verificViewCedular()
+        hideKeyboard()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Detectar la opción del menú seleccionado por el usuario
+        return when (item.itemId) {
+            R.id.menu_delete -> {
+                IN_OPTION = 0
+                hideKeyboard()
+                cleaner()
+                true
+            }
+            R.id.menu_share -> {
+                shareInfo()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun setup(view: View){
         fieldIva = view.findViewById(R.id.fieldIvaResico)
 
         txtSubtotal = view.findViewById(R.id.txtSubtotalResico)
         txtIva = view.findViewById(R.id.txtIvaResico)
         txtIsrR = view.findViewById(R.id.txtIsrResico)
+        txtIvaR = view.findViewById(R.id.txtIvaRResico)
         txtTotal = view.findViewById(R.id.txtTotalResico)
         spinIva = view.findViewById(R.id.spinIvaResico)
+        spinIvaR = view.findViewById(R.id.spinIVARResico)
+        fieldIvaRResico = view.findViewById(R.id.fieldIvaRResico)
         icInfoRetenciones = view.findViewById(R.id.icInfoResico)
 
         lyCedular    = view.findViewById(R.id.lyCedularResico)
@@ -110,6 +144,7 @@ class ResicoFragment : Fragment() {
         txtCedular = view.findViewById(R.id.txtCedularResico)
 
         setItemIva()
+        setItemIvaRetn()
         setItemCedular()
         changeElements()
         hideKeyboard()
@@ -118,10 +153,11 @@ class ResicoFragment : Fragment() {
         txtSubtotal.tag = TAG_USER
         txtIva.tag = TAG_USER
         txtIsrR.tag = TAG_USER
+        txtIvaR.tag = TAG_USER
         txtTotal.tag = TAG_USER
 
-//        txtSubtotal.addTextChangedListener(generalTextWatcher)
-//        txtTotal.addTextChangedListener(generalTextWatcher)
+        txtSubtotal.addTextChangedListener(generalTextWatcher)
+        txtTotal.addTextChangedListener(generalTextWatcher)
 
         icInfoRetenciones.setOnClickListener{ showDialogInfo() }
         txtIva.setOnClickListener{hideKeyboard()}
@@ -142,8 +178,12 @@ class ResicoFragment : Fragment() {
         }
     }
 
+    private fun setItemIvaRetn(){
+        UtilsGraphic().setItemSpin(requireContext(), R.array.item_iva_resico, spinIvaR)
+    }
+
     private fun setItemIva(){
-        UtilsGraphic().setItemSpin(requireContext(), R.array.item_iva_r, spinIva)
+        UtilsGraphic().setItemSpin(requireContext(), R.array.item_iva, spinIva)
     }
 
     private fun setItemCedular(){
@@ -151,14 +191,85 @@ class ResicoFragment : Fragment() {
     }
 
     private fun calc(option:Int ){
+        IN_OPTION = option
+        percentIva = UtilsGraphic().getIvaPercentSpinner(spinIva)
+        percentCedular = getTaxPercentCedular()
+        when (IN_OPTION){
+            IN_SUBTOTAL ->calcInputSubtotal()
+//            IN_TOTAL -> cacInputTotal()
+        }
+    }
 
+    private fun calcInputSubtotal( ){
+        //IVA retenido a 2/3
+        val percentIvaRetenido = ( percentIva / 3 ) * 2 * isIvaRetenido
+
+        if(txtSubtotal.text.toString().isNotEmpty() ){
+            val text = txtSubtotal.text.toString()
+            val textNotComma = UtilsGraphic().deleteComma(text)
+            val temp = textNotComma.toDoubleOrNull()
+            if( temp != null){
+                subtotal = temp
+                val map = Operations().calcTotalResicoSubtotal(subtotal, percentIva, percentIvaRetenido, percentIsrRetenido, percentCedular )
+                iva = map["iva"]!!
+                ivaR = map["ivaR"]!!
+                isrR = map["isrR"]!!
+                cedular = map["cedular"]!!
+                total = map["total"]!!
+                setValuesEditText()
+            }else cleaner()
+        }else cleaner()
+
+    }
+
+    private fun setValuesEditText(){
+        if(IN_OPTION != IN_SUBTOTAL){
+            val subtotalStrig = UtilsGraphic().round2Dec(subtotal)
+            txtSubtotal.tag = TAG_SYSTEM
+            txtSubtotal.setText( subtotalStrig )
+            txtSubtotal.tag = TAG_USER
+        }
+        if(IN_OPTION != IN_IVA){
+            val ivaStrig    = UtilsGraphic().round2Dec(iva)
+            txtIva.tag = TAG_SYSTEM
+            txtIva.setText( ivaStrig )
+            txtIva.tag = TAG_USER
+        }
+        if(IN_OPTION != IN_ISR_R){
+            val isrRStrig   = UtilsGraphic().round2Dec(isrR)
+            txtIsrR.tag = TAG_SYSTEM
+            txtIsrR.setText( isrRStrig )
+            txtIsrR.tag = TAG_USER
+        }
+        if(IN_OPTION != IN_IVA_R){
+            val ivaRStrig   = UtilsGraphic().round2Dec(ivaR)
+            txtIvaR.tag = TAG_SYSTEM
+            txtIvaR.setText( ivaRStrig )
+            txtIvaR.tag = TAG_USER
+        }
+        if(IN_OPTION != IN_TOTAL ) {
+            val totalString = UtilsGraphic().round2Dec(total)
+            txtTotal.tag = TAG_SYSTEM
+            txtTotal.setText( totalString )
+            txtTotal.tag = TAG_USER
+        }
+        txtCedular.setText( UtilsGraphic().round2Dec(cedular) )
     }
 
     private fun changeElements(){
         spinIva.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                if (position == 2) hideIva()
-                else showIva()
+                calc(IN_OPTION)
+                hideKeyboard()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) { //Another interface callback
+            }
+        }
+
+        spinIvaR.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                if (position == 1) hideIvaR()
+                else showIvaR()
                 calc(IN_OPTION)
                 hideKeyboard()
             }
@@ -199,18 +310,100 @@ class ResicoFragment : Fragment() {
 
     }
 
-    private fun hideIva(){
-        fieldIva.visibility = View.GONE
-        iva = 0.0
+    private fun getTaxPercentCedular(): Double{
+        var percent: Double
+
+        if( configLocales == 0 ) percent = 0.0
+        else{
+            percent = UtilsGraphic().getPercentCedularSpinner(spinCedular)
+
+            if( percent == -1.0){
+                percent = UtilsGraphic().getPercentCedularEditText( txtPercentCedular, requireContext() )
+            }
+        }
+        return percent
     }
 
-    private fun showIva(){
-        fieldIva.visibility = View.VISIBLE
+    private fun cleaner(){
+        if(IN_OPTION != IN_SUBTOTAL){
+            subtotal = 0.0
+            txtSubtotal.tag = TAG_SYSTEM
+            txtSubtotal.setText( "" )
+            txtSubtotal.tag = TAG_USER
+        }
+        if(IN_OPTION != IN_IVA){
+            iva = 0.0
+            txtIva.tag = TAG_SYSTEM
+            txtIva.setText( "" )
+            txtIva.tag = TAG_USER
+        }
+        if(IN_OPTION != IN_ISR_R){
+            isrR = 0.0
+            txtIsrR.tag = TAG_SYSTEM
+            txtIsrR.setText( "" )
+            txtIsrR.tag = TAG_USER
+        }
+        if(IN_OPTION != IN_TOTAL ) {
+            total = 0.0
+            txtTotal.tag = TAG_SYSTEM
+            txtTotal.setText( "" )
+            txtTotal.tag = TAG_USER
+        }
+        txtCedular.setText( "" )
+    }
+
+    private val generalTextWatcher: TextWatcher = object : TextWatcher {
+        override fun onTextChanged( s: CharSequence, start: Int, before: Int,count: Int) {
+        }
+        override fun beforeTextChanged( s: CharSequence, start: Int, count: Int,after: Int ) {
+        }
+        override fun afterTextChanged(s: Editable) {
+            if (txtSubtotal.text.hashCode() == s.hashCode() && txtSubtotal.tag == TAG_USER) {
+                calc(IN_SUBTOTAL)
+            } else if (txtTotal.text.hashCode() == s.hashCode() && txtTotal.tag == TAG_USER) {
+                calc(IN_TOTAL)
+            }
+
+        }
+    }
+
+    private fun shareInfo(){
+        //compartir el contenido de texto
+        val valIva = percentIva * 100
+        val valIvaInt = valIva.toInt()
+        val subtotalRound = UtilsGraphic().round2Dec(subtotal)
+        val ivaRound = UtilsGraphic().round2Dec(iva)
+        val isrRRound = UtilsGraphic().round2Dec(isrR)
+        val totalRound = UtilsGraphic().round2Dec(total)
+
+        val cedularString = UtilsGraphic().getStringShareCedular(configLocales, cedular, spinCedular, txtPercentCedular)
+
+        val text = "Subtotal: $ $subtotalRound \n\n IVA $valIvaInt%: $ $ivaRound \n ISR ret:   $ $isrRRound \n $cedularString\n\n TOTAL:  $ $totalRound"
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, text)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+    }
+
+    private fun hideIvaR(){
+        fieldIvaRResico.visibility = View.GONE
+        isIvaRetenido = 0.0
+    }
+
+    private fun showIvaR(){
+        fieldIvaRResico.visibility = View.VISIBLE
+        isIvaRetenido = 1.0
     }
 
     private fun showDialogInfo(){
         val tit = resources.getString(R.string.titulo_dialog)
-        val mensaje = resources.getString(R.string.resico_info)
+        val tasaIsr = percentIsrRetenido * 100F
+        val tasaIsrS = "${tasaIsr.toString()} %"
+        val mensaje = resources.getString(R.string.resico_info, tasaIsrS )
 
         context?.let {
             DialogFragment().showDialogNeutral(it, tit, mensaje)
@@ -234,7 +427,7 @@ class ResicoFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             ResicoFragment().apply {
                 arguments = Bundle().apply {
                 }
