@@ -2,15 +2,16 @@
     <string name="app_name">Calculadora Impuestos</string>
     <string name="app_name_ver">Calculadora de Impuestos %1$s</string>
     <string name="preference_file_key">com.mozama.impuestos</string>
-    <string name="copyright">© Mozama 2021</string>
+    <string name="copyright">© Mozama 2021–2022</string>
 
-    <string name="retenciones">Retenciones</string>
+    <string name="retenciones">RSP</string>
+    <string name="resico">RESICO</string>
     <string name="iva">IVA</string>
     <string name="subtotal">Subtotal</string>
     <string name="total">TOTAL</string>
     <string name="isr_r">ISR Retenido</string>
     <string name="iva_r">IVA Retenido</string>
-    <string name="uma_smg">UMA / SMG</string>
+    <string name="uma_smg">UMA-SMG</string>
     <string name="uma">UMA</string>
     <string name="smg">Salarío Mínimo General</string>
     <string name="Cedular">Cedular</string>
@@ -38,6 +39,7 @@
     <string name="salario_info">Salario Mínimo en la Zona Libre de la Frontera Norte (ZLFN): \n\n $%1$s \n\nSalarío Mínimo General resto del país: \n\n $%2$s \n\nVigencia: 01 ene 2022</string>
     <string name="uma_info">Referencia en pesos para determinar la cuantía del pago de obligaciones previstas en las leyes federales, como multas o impuestos. \n \nValor de UMA diario 2022: \n\n $%1$s</string>
     <string name="retencion_info">Si eres persona física con actividad empresarial - profesional y emites factura a una persona moral. \n \nNota: valor de la tasa del ISR retenido: 0.106667 </string>
+    <string name="resico_info">Si eres persona física en el Régimen Simplificado de Confianza - RESICO y emites factura a una persona moral. \n \nNota: valor de la tasa del ISR retenido: 1.25% </string>
     <string name="iva_info">Si eres persona física y emites factura a otra persona física. </string>
     <string name="titulo_dialog">Utiliza esta sección</string>
 
