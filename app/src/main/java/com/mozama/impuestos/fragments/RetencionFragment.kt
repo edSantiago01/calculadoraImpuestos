@@ -24,7 +24,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -40,6 +39,10 @@ import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
+import com.huawei.hms.ads.AdListener
+import com.huawei.hms.ads.AdParam
+import com.huawei.hms.ads.HwAds
+import com.huawei.hms.ads.InterstitialAd
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
@@ -48,6 +51,7 @@ import com.mozama.impuestos.utils.UtilsGraphic
 class RetencionFragment : Fragment() {
     private var nResultados = 0
     private val limiteAds = 4
+    private var interstitialAd: InterstitialAd? = null
 
     private lateinit var txtSubtotal: EditText
     private lateinit var fieldIva : TextInputLayout    
@@ -96,6 +100,7 @@ class RetencionFragment : Fragment() {
         }
         //recibir devoluciones de llamada relacionadas con el menú.
         setHasOptionsMenu(true)
+        HwAds.init(requireContext())
     }
 
     override fun onCreateView(
@@ -468,10 +473,46 @@ class RetencionFragment : Fragment() {
         }
     }
     private fun loadInterstitial() {
-        Log.d("ADS***", "LOAD***")
+//        Log.d("ADS***", "LOAD***")
+        interstitialAd = InterstitialAd(requireContext())
+        interstitialAd!!.adId = resources.getString(R.string.ads_inter_rsp)
+        interstitialAd!!.adListener = adListener
+        // Load an interstitial ad.
+        val adParam = AdParam.Builder().build()
+        interstitialAd!!.loadAd(adParam)
     }
     private fun showInterstitial() {
-        Log.d("ADS***", "SHOW***")
+//        Log.d("ADS***", "SHOW***")
+        if (interstitialAd != null && interstitialAd!!.isLoaded) {
+            interstitialAd!!.show(requireActivity())
+        }
+    }
+    private val adListener: AdListener = object : AdListener() {
+        override fun onAdLoaded() {
+            super.onAdLoaded()
+        }
+        override fun onAdFailed(errorCode: Int) {
+//            Log.d("ADS**", "Ad load failed with error code: " + errorCode);
+        }
+        override fun onAdClosed() {
+            super.onAdClosed()
+        }
+        override fun onAdClicked() {
+            // Called when an ad is clicked.
+            super.onAdClicked();
+        }
+        override fun onAdLeave() {
+            // Called when an ad leaves an app.
+            super.onAdLeave()
+        }
+        override fun onAdOpened() {
+            // Called when an ad is opened.
+            super.onAdOpened()
+        }
+        override fun onAdImpression() {
+            // Called when an ad impression occurs.
+            super.onAdImpression()
+        }
     }
 
     private fun Fragment.hideKeyboard() {

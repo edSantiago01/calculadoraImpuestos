@@ -8,7 +8,6 @@
     tools:context=".fragments.UmaFragment">
 
     <ScrollView
-        android:layout_marginBottom="@dimen/banner_h"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

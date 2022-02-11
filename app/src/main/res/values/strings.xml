@@ -45,11 +45,10 @@
 
     <string name="app_version">v3.0</string>
 
-<!--    <string name="ads_id_app">ca-app-pub-3940256099942544~3347511713</string>-->
     <string name="ads_retenciones">testw6vs28auh3</string>
 
-    <string name="ads_inter_rsp" translatable="false">j1a71ocedc</string>
-    <string name="ads_inter_resico" translatable="false">j1a71ocedc</string>
-    <string name="ads_inter_iva" translatable="false">j1a71ocedc</string>
-    <string name="ads_inter_uma" translatable="false">j1a71ocedc</string>
+    <string name="ads_inter_rsp" translatable="false">testb4znbuh3n2</string>
+    <string name="ads_inter_resico" translatable="false">testb4znbuh3n2</string>
+    <string name="ads_inter_iva" translatable="false">testb4znbuh3n2</string>
+    <string name="ads_inter_uma" translatable="false">testb4znbuh3n2</string>
 </resources>
