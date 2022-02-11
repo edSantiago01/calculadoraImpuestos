@@ -3,7 +3,7 @@
     <string-array name="item_iva_r">
         <item>16% IVA</item>
         <item>8% IVA</item>
-        <item>No aplica IVA</item>
+        <item>Exento de IVA</item>
     </string-array>
 
 </resources>

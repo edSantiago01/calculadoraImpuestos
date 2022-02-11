@@ -13,6 +13,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -28,9 +29,6 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
-import com.huawei.hms.ads.AdParam
-import com.huawei.hms.ads.HwAds
-import com.huawei.hms.ads.banner.BannerView
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
@@ -56,6 +54,9 @@ import android.widget.Spinner
  */
 
 class IvaFragment : Fragment() {
+    private var nResultados = 0
+    private val limiteAds = 4
+
     private lateinit var txtSubtotal: EditText
     private lateinit var txtIva: EditText
     private lateinit var txtTotal: EditText
@@ -92,7 +93,6 @@ class IvaFragment : Fragment() {
         arguments?.let {
         }
         setHasOptionsMenu(true)
-        HwAds.init(requireContext())
     }
 
     override fun onCreateView(
@@ -117,6 +117,7 @@ class IvaFragment : Fragment() {
         txtCedular = view.findViewById(R.id.txtCedular)
         icInfoIva = view.findViewById(R.id.icInfoIva)
 
+        setup()
         setItemIva()
         setItemCedular()
         setChangeElements()
@@ -124,10 +125,35 @@ class IvaFragment : Fragment() {
 
         verificViewCedular()
 
-        val bannerView: BannerView? = view.findViewById(R.id.adIva)
-        bannerView!!.setBannerRefresh(30)
-        val adParam = AdParam.Builder().build()
-        bannerView.loadAd(adParam)
+    }
+
+    private fun setup(){
+        txtSubtotal.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
+
+        txtIva.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
+
+        txtTotal.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -394,6 +420,20 @@ class IvaFragment : Fragment() {
 
         val shareIntent = Intent.createChooser(sendIntent, null)
         startActivity(shareIntent)
+    }
+
+    private fun validarIntersticial(){
+        if( nResultados == limiteAds-1) loadInterstitial()
+        else if ( nResultados == limiteAds ) {
+            showInterstitial()
+            nResultados = 0
+        }
+    }
+    private fun loadInterstitial() {
+        Log.d("ADS***", "LOAD***")
+    }
+    private fun showInterstitial() {
+        Log.d("ADS***", "SHOW***")
     }
 
     private fun Fragment.hideKeyboard() {

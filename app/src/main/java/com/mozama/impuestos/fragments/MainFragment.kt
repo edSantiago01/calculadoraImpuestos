@@ -1,22 +1,3 @@
-/**
- * This is the source code of Calculadora de Impuestos v. 2.2
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- *
- * Copyright (C) 2021  Edgar Santiago
- */
-
 package com.mozama.impuestos.fragments
 
 import android.content.Intent
@@ -34,6 +15,9 @@ import com.mozama.impuestos.R
 import com.mozama.impuestos.adapters.ViewPageAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.huawei.hms.ads.AdParam
+import com.huawei.hms.ads.HwAds
+import com.huawei.hms.ads.banner.BannerView
 
 /**
  * Fragment principal para visualizar el ViewPager2 y TabLayout
@@ -66,6 +50,7 @@ class MainFragment : Fragment() {
         }
         setHasOptionsMenu(true)
         activity?.title = resources.getString(R.string.app_name)
+        HwAds.init(requireContext())
     }
 
     override fun onCreateView(
@@ -88,10 +73,16 @@ class MainFragment : Fragment() {
         TabLayoutMediator(tabView, viewPager) { tab, position ->
             when(position){
                 0 ->tab.text = resources.getString(R.string.retenciones)
-                1 ->tab.text = resources.getString(R.string.iva)
-                2 ->tab.text = resources.getString(R.string.uma_smg)
+                1 ->tab.text = resources.getString(R.string.resico)
+                2 ->tab.text = resources.getString(R.string.iva)
+                3 ->tab.text = resources.getString(R.string.uma_smg)
             }
         }.attach()
+
+        val bannerView: BannerView? = view.findViewById(R.id.adRetenciones)
+        bannerView!!.setBannerRefresh(30)
+        val adParam = AdParam.Builder().build()
+        bannerView.loadAd(adParam)
     }
 
     override fun onResume() {
@@ -114,18 +105,26 @@ class MainFragment : Fragment() {
                 shareApp()
                 true
             }
-            R.id.menu_hexa -> {
-                abrirEnlacePlay("mx.com.mozama.hexatext")
-                true
-            }
-            R.id.menu_trigonometria -> {
-                abrirEnlacePlay("com.mozama.trigonometria")
-                true
-            }
-            R.id.menu_recta -> {
-                abrirEnlacePlay("com.mozama.lineaRecta")
-                true
-            }
+//            R.id.menu_productosNot->{
+//                abrirEnlacePlay("com.mozama.notable_products")
+//                true
+//            }
+//            R.id.menu_mcm -> {
+//                abrirEnlacePlay("com.mozama.mcm_mcd")
+//                true
+//            }
+//            R.id.menu_hexa -> {
+//                abrirEnlacePlay("mx.com.mozama.hexatext")
+//                true
+//            }
+//            R.id.menu_trigonometria -> {
+//                abrirEnlacePlay("com.mozama.trigonometria")
+//                true
+//            }
+//            R.id.menu_recta -> {
+//                abrirEnlacePlay("com.mozama.lineaRecta")
+//                true
+//            }
             R.id.menu_ajustes->{
                 mostrarAjustes()
                 true

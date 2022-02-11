@@ -63,7 +63,12 @@ class Operations {
         return map
     }
 
-    fun calcAllRetenciones(subtotal:Double, percentIva:Double, percentIvaRetenido:Double, percentIsrRetenido:Double, percentCedular: Double): Map<String,Double>{
+    /**
+     * RSP
+     * RESICO
+     */
+
+    fun calcTotalRetencionesSubtotal(subtotal:Double, percentIva:Double, percentIvaRetenido:Double, percentIsrRetenido:Double, percentCedular: Double): Map<String,Double>{
         val iva = calcValPercentTotal( subtotal, percentIva )
         val ivaR = calcValPercentTotal( subtotal, percentIvaRetenido )
         val isrR = calcValPercentTotal( subtotal, percentIsrRetenido )
@@ -91,7 +96,7 @@ class Operations {
 
         while ( total != totalCiclo  && flag == 0){
 
-            map = calcAllRetenciones( subtotal, percentIva, percentIvaRetenido, percentIsrRetenido, percentCedular )
+            map = calcTotalRetencionesSubtotal( subtotal, percentIva, percentIvaRetenido, percentIsrRetenido, percentCedular )
             totalCiclo = map["total"]!!
 
             diferencia = total - totalCiclo
@@ -106,6 +111,7 @@ class Operations {
         }
         return map
     }
+
 
     fun calPesosUma(nUma:Double, valorUma:Double):Double{
         return nUma * valorUma

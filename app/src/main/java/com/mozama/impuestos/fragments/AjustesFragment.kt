@@ -53,7 +53,6 @@ class AjustesFragment : Fragment() {
 
         activity?.setTitle(R.string.ajustes)
 //        setHasOptionsMenu(true)
-        HwAds.init(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,10 +69,6 @@ class AjustesFragment : Fragment() {
         val versionString = resources.getString(R.string.app_name_ver, version)
         txtVersion.text = versionString
 
-        val bannerView: BannerView? = view.findViewById(R.id.adUma)
-        bannerView!!.setBannerRefresh(30)
-        val adParam = AdParam.Builder().build()
-        bannerView.loadAd(adParam)
     }
 
     override fun onCreateView(
