@@ -63,6 +63,11 @@ class Operations {
         return map
     }
 
+    /**
+     * RSP
+     * RESICO
+     */
+
     fun calcTotalRetencionesSubtotal(subtotal:Double, percentIva:Double, percentIvaRetenido:Double, percentIsrRetenido:Double, percentCedular: Double): Map<String,Double>{
         val iva = calcValPercentTotal( subtotal, percentIva )
         val ivaR = calcValPercentTotal( subtotal, percentIvaRetenido )
@@ -107,25 +112,6 @@ class Operations {
         return map
     }
 
-    /**
-     * input subtotal RESICO
-     */
-    fun calcTotalResicoSubtotal(subtotal:Double, percentIva:Double, percentIvaRetenido:Double, percentIsrRetenido:Double, percentCedular: Double): Map<String,Double>{
-        val iva = calcValPercentTotal( subtotal, percentIva )
-        val ivaR = calcValPercentTotal( subtotal, percentIvaRetenido )
-        val isrR = calcValPercentTotal( subtotal, percentIsrRetenido )
-        val cedular = calcValPercentTotal( subtotal, percentCedular )
-        val total = subtotal + iva - ivaR - isrR - cedular
-
-        return mapOf(
-            "iva" to iva,
-            "ivaR" to ivaR,
-            "isrR" to isrR,
-            "cedular" to cedular,
-            "total" to total,
-            "subtotal" to subtotal
-        )
-    }
 
     fun calPesosUma(nUma:Double, valorUma:Double):Double{
         return nUma * valorUma

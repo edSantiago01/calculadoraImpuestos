@@ -424,7 +424,7 @@ class RetencionFragment : Fragment() {
 
         val cedularString = UtilsGraphic().getStringShareCedular(configLocales, cedular, spinCedular, txtPercentCedular)
 
-        val text = "Subtotal: $ $subtotalRound \n\n IVA $valIvaInt%: $ $ivaRound \n ISR ret:   $ $isrRRound \n IVA ret:   $ $ivaRRound $cedularString\n\n TOTAL:  $ $totalRound"
+        val text = "Subtotal: $ $subtotalRound \n\n IVA $valIvaInt%: $ $ivaRound \n ISR retn:   $ $isrRRound \n IVA retn:   $ $ivaRRound $cedularString\n\n TOTAL:  $ $totalRound"
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, text)

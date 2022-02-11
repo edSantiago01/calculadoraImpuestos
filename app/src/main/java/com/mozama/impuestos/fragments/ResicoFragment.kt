@@ -196,8 +196,30 @@ class ResicoFragment : Fragment() {
         percentCedular = getTaxPercentCedular()
         when (IN_OPTION){
             IN_SUBTOTAL ->calcInputSubtotal()
-//            IN_TOTAL -> cacInputTotal()
+            IN_TOTAL -> cacInputTotal()
         }
+    }
+
+    private fun cacInputTotal() {
+        //IVA retenido a 2/3
+        //val percentIvaRetenido = ( percentIva / 3 ) * 2
+        val percentIvaRetenido = percentIva  * 0.6667 * isIvaRetenido
+
+        if(txtTotal.text.toString().isNotEmpty() ){
+            val text = txtTotal.text.toString()
+            val textNotComma = UtilsGraphic().deleteComma(text)
+            val temp = textNotComma.toDoubleOrNull()
+            if( temp != null){
+                total = temp
+                val map = Operations().calSubtotalRetencionesTotal(total, percentIva, percentIvaRetenido, percentIsrRetenido, percentCedular )
+                iva = map?.get("iva")!!
+                ivaR = map["ivaR"]!!
+                isrR = map["isrR"]!!
+                cedular = map["cedular"]!!
+                subtotal = map["subtotal"]!!
+                setValuesEditText()
+            }else cleaner()
+        }else cleaner()
     }
 
     private fun calcInputSubtotal( ){
@@ -210,7 +232,7 @@ class ResicoFragment : Fragment() {
             val temp = textNotComma.toDoubleOrNull()
             if( temp != null){
                 subtotal = temp
-                val map = Operations().calcTotalResicoSubtotal(subtotal, percentIva, percentIvaRetenido, percentIsrRetenido, percentCedular )
+                val map = Operations().calcTotalRetencionesSubtotal(subtotal, percentIva, percentIvaRetenido, percentIsrRetenido, percentCedular )
                 iva = map["iva"]!!
                 ivaR = map["ivaR"]!!
                 isrR = map["isrR"]!!
@@ -221,6 +243,8 @@ class ResicoFragment : Fragment() {
         }else cleaner()
 
     }
+
+
 
     private fun setValuesEditText(){
         if(IN_OPTION != IN_SUBTOTAL){
@@ -369,16 +393,22 @@ class ResicoFragment : Fragment() {
 
     private fun shareInfo(){
         //compartir el contenido de texto
+        val utilGraphic = UtilsGraphic()
         val valIva = percentIva * 100
         val valIvaInt = valIva.toInt()
-        val subtotalRound = UtilsGraphic().round2Dec(subtotal)
-        val ivaRound = UtilsGraphic().round2Dec(iva)
-        val isrRRound = UtilsGraphic().round2Dec(isrR)
-        val totalRound = UtilsGraphic().round2Dec(total)
+        val subtotalRound = utilGraphic.round2Dec(subtotal)
+        val ivaRound = utilGraphic.round2Dec(iva)
+        val isrRRound = utilGraphic.round2Dec(isrR)
+        val totalRound = utilGraphic.round2Dec(total)
+
+        val ivaRetn = if( isIvaRetenido == 0.0) "" else {
+            val ivaRtnRound = utilGraphic.round2Dec(ivaR)
+            "\n IVA retn:  $ $ivaRtnRound "
+        }
 
         val cedularString = UtilsGraphic().getStringShareCedular(configLocales, cedular, spinCedular, txtPercentCedular)
 
-        val text = "Subtotal: $ $subtotalRound \n\n IVA $valIvaInt%: $ $ivaRound \n ISR ret:   $ $isrRRound \n $cedularString\n\n TOTAL:  $ $totalRound"
+        val text = "Subtotal: $ $subtotalRound \n\n IVA $valIvaInt%: $ $ivaRound \n ISR retn:  $ $isrRRound $ivaRetn \n $cedularString\n\n TOTAL:  $ $totalRound"
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, text)
