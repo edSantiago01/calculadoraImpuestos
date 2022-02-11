@@ -386,7 +386,7 @@ class UmaFragment : Fragment() {
     private fun loadInterstitial() {
 //        Log.d("ADS***", "LOAD***")
         val adRequest = AdRequest.Builder().build()
-        val idAds = resources.getString(R.string.p_inter_uma)
+        val idAds = resources.getString(R.string.imp_inter_uma)
 
         InterstitialAd.load(
             requireContext(), idAds, adRequest,
