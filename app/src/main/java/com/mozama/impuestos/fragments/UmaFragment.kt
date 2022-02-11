@@ -5,12 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
@@ -18,15 +18,23 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 
 class UmaFragment : Fragment() {
+    private var nResultados = 0
+    private val limiteAds = 4
+    private var mInterstitialAd: InterstitialAd? = null
+    private var mAdIsLoading: Boolean = false
+
     private lateinit var txtUma: EditText
     private lateinit var txtPesos: EditText
     private lateinit var icInfo: ImageView
@@ -54,14 +62,11 @@ class UmaFragment : Fragment() {
     private var pesosSalario = 0.0
     private var valSalario = 0.0
 
-    private lateinit var mAdView : AdView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
         setHasOptionsMenu(true)
-        MobileAds.initialize(requireContext()) {}
     }
 
     override fun onCreateView(
@@ -85,10 +90,7 @@ class UmaFragment : Fragment() {
         setItemSalario()
 
         setChangeElements()
-
-        mAdView = view.findViewById(R.id.adUma)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+        setup()
     }
 
     override fun onResume() {
@@ -111,6 +113,44 @@ class UmaFragment : Fragment() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setup(){
+        txtUma.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
+
+        txtPesos.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
+
+        txtSalario.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
+
+        txtPesosSalario.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
         }
     }
 
@@ -188,7 +228,7 @@ class UmaFragment : Fragment() {
                 nSalario = temp
                 valSalario = UtilsGraphic().getValSalarioMinimoSpinner(spinSalario, valorSMG, valorSMG_ZLFN)
                 pesosSalario = Operations().calPesosSalario( nSalario, valSalario )
-                Log.d("CALC***",pesosSalario.toString())
+//                Log.d("CALC***",pesosSalario.toString())
                 setValuesEditTextSalarios()
             }
             else cleanerSalario()
@@ -333,6 +373,57 @@ class UmaFragment : Fragment() {
             }else if (txtPesosSalario.text.hashCode() == s.hashCode() && txtPesosSalario.tag == TAG_USER){
                 calc(IN_PESOS_SALARIO)
             }
+        }
+    }
+
+    private fun validarIntersticial(){
+        if( nResultados == limiteAds-1) loadInterstitial()
+        else if ( nResultados == limiteAds ) {
+            showInterstitial()
+            nResultados = 0
+        }
+    }
+    private fun loadInterstitial() {
+//        Log.d("ADS***", "LOAD***")
+        val adRequest = AdRequest.Builder().build()
+        val idAds = resources.getString(R.string.p_inter_uma)
+
+        InterstitialAd.load(
+            requireContext(), idAds, adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+//                    Log.d(TAG, adError?.message)
+                    mInterstitialAd = null
+                    mAdIsLoading = false
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+//                    Log.d(TAG, "Ad was loaded.")
+                    mInterstitialAd = interstitialAd
+                    mAdIsLoading = false
+                }
+            }
+        )
+    }
+    private fun showInterstitial() {
+//        Log.d("ADS***", "SHOW***")
+        if ( mInterstitialAd != null) {
+            mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+//                    Log.d(TAG, "Ad was dismissed.")
+                    mInterstitialAd = null
+                }
+
+                override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+//                    Log.d(TAG, "Ad failed to show.")
+                    mInterstitialAd = null
+                }
+
+                override fun onAdShowedFullScreenContent() {
+//                    Log.d("ADS***", "Ad showed fullscreen content.")
+                }
+            }
+            mInterstitialAd?.show(requireActivity())
         }
     }
 

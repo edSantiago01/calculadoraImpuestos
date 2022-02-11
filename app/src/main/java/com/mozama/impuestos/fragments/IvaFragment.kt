@@ -27,14 +27,17 @@ import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.textfield.TextInputLayout
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 
 
 /*
@@ -57,6 +60,11 @@ import android.widget.Spinner
  */
 
 class IvaFragment : Fragment() {
+    private var nResultados = 0
+    private val limiteAds = 4
+    private var mInterstitialAd: InterstitialAd? = null
+    private var mAdIsLoading: Boolean = false
+
     private lateinit var txtSubtotal: EditText
     private lateinit var txtIva: EditText
     private lateinit var txtTotal: EditText
@@ -88,14 +96,11 @@ class IvaFragment : Fragment() {
     private val TAG_SYSTEM = "system"
     private val TAG_USER = "user"
 
-    private lateinit var mAdView : AdView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
         setHasOptionsMenu(true)
-        MobileAds.initialize(requireContext()) {}
     }
 
     override fun onCreateView(
@@ -120,6 +125,7 @@ class IvaFragment : Fragment() {
         txtCedular = view.findViewById(R.id.txtCedular)
         icInfoIva = view.findViewById(R.id.icInfoIva)
 
+        setup()
         setItemIva()
         setItemCedular()
         setChangeElements()
@@ -127,9 +133,35 @@ class IvaFragment : Fragment() {
 
         verificViewCedular()
 
-        mAdView = view.findViewById(R.id.adIva)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+    }
+
+    private fun setup(){
+        txtSubtotal.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
+
+        txtIva.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
+
+        txtTotal.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -396,6 +428,57 @@ class IvaFragment : Fragment() {
 
         val shareIntent = Intent.createChooser(sendIntent, null)
         startActivity(shareIntent)
+    }
+
+    private fun validarIntersticial(){
+        if( nResultados == limiteAds-1) loadInterstitial()
+        else if ( nResultados == limiteAds ) {
+            showInterstitial()
+            nResultados = 0
+        }
+    }
+    private fun loadInterstitial() {
+//        Log.d("ADS***", "LOAD***")
+        val adRequest = AdRequest.Builder().build()
+        val idAds = resources.getString(R.string.p_inter_iva)
+
+        InterstitialAd.load(
+            requireContext(), idAds, adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+//                    Log.d(TAG, adError?.message)
+                    mInterstitialAd = null
+                    mAdIsLoading = false
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+//                    Log.d(TAG, "Ad was loaded.")
+                    mInterstitialAd = interstitialAd
+                    mAdIsLoading = false
+                }
+            }
+        )
+    }
+    private fun showInterstitial() {
+//        Log.d("ADS***", "SHOW***")
+        if ( mInterstitialAd != null) {
+            mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+//                    Log.d(TAG, "Ad was dismissed.")
+                    mInterstitialAd = null
+                }
+
+                override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+//                    Log.d(TAG, "Ad failed to show.")
+                    mInterstitialAd = null
+                }
+
+                override fun onAdShowedFullScreenContent() {
+//                    Log.d("ADS***", "Ad showed fullscreen content.")
+                }
+            }
+            mInterstitialAd?.show(requireActivity())
+        }
     }
 
     private fun Fragment.hideKeyboard() {

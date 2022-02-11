@@ -1,22 +1,3 @@
-/**
- * This is the source code of Calculadora de Impuestos v. 2.2
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- *
- * Copyright (C) 2021  Edgar Santiago
- */
-
 package com.mozama.impuestos.fragments
 
 import android.content.Intent
@@ -30,6 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.mozama.impuestos.R
 import com.mozama.impuestos.adapters.ViewPageAdapter
 import com.google.android.material.tabs.TabLayout
@@ -60,12 +44,15 @@ class MainFragment : Fragment() {
     private lateinit var viewPager: ViewPager2
     private lateinit var viewPageAdapter: ViewPageAdapter
 
+    private lateinit var mAdView : AdView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
         setHasOptionsMenu(true)
         activity?.title = resources.getString(R.string.app_name)
+        MobileAds.initialize(requireContext()) {}
     }
 
     override fun onCreateView(
@@ -88,10 +75,15 @@ class MainFragment : Fragment() {
         TabLayoutMediator(tabView, viewPager) { tab, position ->
             when(position){
                 0 ->tab.text = resources.getString(R.string.retenciones)
-                1 ->tab.text = resources.getString(R.string.iva)
-                2 ->tab.text = resources.getString(R.string.uma_smg)
+                1 ->tab.text = resources.getString(R.string.resico)
+                2 ->tab.text = resources.getString(R.string.iva)
+                3 ->tab.text = resources.getString(R.string.uma_smg)
             }
         }.attach()
+
+        mAdView = view.findViewById(R.id.adRetenciones)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
     override fun onResume() {
