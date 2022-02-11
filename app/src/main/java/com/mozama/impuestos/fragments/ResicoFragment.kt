@@ -5,11 +5,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.AdapterView
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.mozama.impuestos.R
@@ -37,6 +46,8 @@ import com.mozama.impuestos.utils.UtilsGraphic
  */
 
 class ResicoFragment : Fragment() {
+    private var nResultados = 0
+    private val limiteAds = 4
 
     private lateinit var txtSubtotal: EditText
     private lateinit var fieldIva : TextInputLayout
@@ -163,6 +174,24 @@ class ResicoFragment : Fragment() {
         txtIva.setOnClickListener{hideKeyboard()}
         txtIsrR.setOnClickListener{hideKeyboard()}
         txtCedular.setOnClickListener{hideKeyboard()}
+
+        txtSubtotal.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
+
+        txtTotal.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
     }
 
     private fun verificViewCedular(){
@@ -438,6 +467,20 @@ class ResicoFragment : Fragment() {
         context?.let {
             DialogFragment().showDialogNeutral(it, tit, mensaje)
         }
+    }
+
+    private fun validarIntersticial(){
+        if( nResultados == limiteAds-1) loadInterstitial()
+        else if ( nResultados == limiteAds ) {
+            showInterstitial()
+            nResultados = 0
+        }
+    }
+    private fun loadInterstitial() {
+        Log.d("ADS***", "LOAD***")
+    }
+    private fun showInterstitial() {
+        Log.d("ADS***", "SHOW***")
     }
 
     private fun Fragment.hideKeyboard() {

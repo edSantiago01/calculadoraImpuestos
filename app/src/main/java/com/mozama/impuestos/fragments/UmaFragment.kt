@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
@@ -24,6 +25,9 @@ import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
 
 class UmaFragment : Fragment() {
+    private var nResultados = 0
+    private val limiteAds = 4
+
     private lateinit var txtUma: EditText
     private lateinit var txtPesos: EditText
     private lateinit var icInfo: ImageView
@@ -79,6 +83,7 @@ class UmaFragment : Fragment() {
         setItemSalario()
 
         setChangeElements()
+        setup()
     }
 
     override fun onResume() {
@@ -101,6 +106,44 @@ class UmaFragment : Fragment() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setup(){
+        txtUma.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
+
+        txtPesos.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
+
+        txtSalario.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
+
+        txtPesosSalario.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
         }
     }
 
@@ -324,6 +367,20 @@ class UmaFragment : Fragment() {
                 calc(IN_PESOS_SALARIO)
             }
         }
+    }
+
+    private fun validarIntersticial(){
+        if( nResultados == limiteAds-1) loadInterstitial()
+        else if ( nResultados == limiteAds ) {
+            showInterstitial()
+            nResultados = 0
+        }
+    }
+    private fun loadInterstitial() {
+        Log.d("ADS***", "LOAD***")
+    }
+    private fun showInterstitial() {
+        Log.d("ADS***", "SHOW***")
     }
 
     private fun Fragment.hideKeyboard() {

@@ -24,6 +24,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -45,6 +46,9 @@ import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
 
 class RetencionFragment : Fragment() {
+    private var nResultados = 0
+    private val limiteAds = 4
+
     private lateinit var txtSubtotal: EditText
     private lateinit var fieldIva : TextInputLayout    
     private lateinit var txtIva: EditText
@@ -123,6 +127,7 @@ class RetencionFragment : Fragment() {
         txtPercentCedular = view.findViewById(R.id.txtPercentCedular)
         txtCedular = view.findViewById(R.id.txtCedular)
 
+        setup()
         setItemIva()
         setItemCedular()
         changeElements()
@@ -152,6 +157,26 @@ class RetencionFragment : Fragment() {
         super.onResume()
         verificViewCedular()
         hideKeyboard()
+    }
+
+    private fun setup(){
+        txtSubtotal.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
+
+        txtTotal.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                hideKeyboard()
+                nResultados++
+                validarIntersticial()
+                true
+            }else false
+        }
     }
 
     private fun verificViewCedular(){
@@ -433,6 +458,20 @@ class RetencionFragment : Fragment() {
 
         val shareIntent = Intent.createChooser(sendIntent, null)
         startActivity(shareIntent)
+    }
+
+    private fun validarIntersticial(){
+        if( nResultados == limiteAds-1) loadInterstitial()
+        else if ( nResultados == limiteAds ) {
+            showInterstitial()
+            nResultados = 0
+        }
+    }
+    private fun loadInterstitial() {
+        Log.d("ADS***", "LOAD***")
+    }
+    private fun showInterstitial() {
+        Log.d("ADS***", "SHOW***")
     }
 
     private fun Fragment.hideKeyboard() {
