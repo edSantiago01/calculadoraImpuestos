@@ -48,10 +48,10 @@
 
     <string name="ads_id_app">ca-app-pub-3940256099942544~3347511713</string>
     <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="p_inter_rsp" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="p_inter_resico" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="p_inter_iva" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="p_inter_uma" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="imp_inter_rsp" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="imp_inter_resico" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="imp_inter_iva" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="imp_inter_uma" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
 
 
 </resources>
