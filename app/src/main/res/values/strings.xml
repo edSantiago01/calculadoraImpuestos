@@ -29,6 +29,18 @@
     <string name="imp_cedulares">Impuestos cedulares u otros</string>
     <string name="imp_config">IMP_LOCALES</string>
     <string name="verifica_cedular">Igrese el porcentaje del impuesto</string>
+    <string name="rfc">RFC</string>
+    <string name="persona_fisica">Persona Física</string>
+    <string name="persona_moral">Persona Moral</string>
+    <string name="primer_nombre">Primer Nombre</string>
+    <string name="segundo_nombre">Segundo Nombre</string>
+    <string name="primer_apellido">Primer Apellido</string>
+    <string name="segundo_apellido">Segundo Apellido</string>
+    <string name="fecha_nacimiento">Fecha Nacimiento</string>
+
+    <string name="nombre_moral">Denominación/Razón Social</string>
+    <string name="fecha_constitucion">Fecha Constitución</string>
+    <string name="info_faltante">Ingrese valor</string>
 
     <string name="hexatext">Cifrado HexaText</string>
     <string name="trigonometria">📐 Calculadora Trigonométrica</string>
@@ -49,5 +61,7 @@
     <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ads_iva">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ads_uma">ca-app-pub-3940256099942544/6300978111</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
