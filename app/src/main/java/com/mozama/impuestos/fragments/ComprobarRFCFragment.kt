@@ -4,13 +4,12 @@ package com.mozama.impuestos.fragments
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.RadioButton
@@ -68,6 +67,7 @@ class ComprobarRFCFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -82,6 +82,96 @@ class ComprobarRFCFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initialize(view)
         listener()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_rfc, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Detectar la opción del menú seleccionado
+        return when (item.itemId) {
+            R.id.menu_share -> {
+                shareInfo()
+                true
+            }
+            R.id.menu_delete -> {
+                limpiar()
+                true
+            }
+            R.id.calificar -> {
+                abrirEnlacePlay("com.mozama.impuestos")
+                true
+            }
+            R.id.comparirApp -> {
+                shareApp()
+                true
+            }
+            R.id.menu_productosNot->{
+                abrirEnlacePlay("com.mozama.notable_products")
+                true
+            }
+            R.id.menu_mcm -> {
+                abrirEnlacePlay("com.mozama.mcm_mcd")
+                true
+            }
+            R.id.menu_hexa -> {
+                abrirEnlacePlay("mx.com.mozama.hexatext")
+                true
+            }
+            R.id.menu_trigonometria -> {
+                abrirEnlacePlay("com.mozama.trigonometria")
+                true
+            }
+            R.id.menu_recta -> {
+                abrirEnlacePlay("com.mozama.lineaRecta")
+                true
+            }
+            R.id.menu_ajustes->{
+                mostrarAjustes()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun shareInfo() {
+        val valorRFC = tvRFC.text
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, valorRFC)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+    }
+
+    private fun mostrarAjustes() {
+        val transaction = parentFragmentManager.beginTransaction()
+        val fragmentAjustes = AjustesFragment.newInstance()
+        transaction.replace(R.id.container_main, fragmentAjustes)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    private fun abrirEnlacePlay(idApp:String) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(
+                "https://play.google.com/store/apps/details?id=$idApp")
+            setPackage("com.android.vending")
+        }
+        startActivity(intent)
+    }
+
+    private fun shareApp(){
+        val url = "https://play.google.com/store/apps/details?id=com.mozama.impuestos&hl=es"
+        val share = Intent.createChooser(Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, url)
+            type = "text/plain"
+        }, null)
+        startActivity(share)
     }
 
     private fun initialize(view:View){

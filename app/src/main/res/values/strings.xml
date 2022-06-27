@@ -41,6 +41,7 @@
     <string name="nombre_moral">Denominación/Razón Social</string>
     <string name="fecha_constitucion">Fecha Constitución</string>
     <string name="info_faltante">Ingrese valor</string>
+    <string name="aviso_rfc">Sólo la Secretaría de Hacienda y Crédito Público, a través del Servicio de Administración Tributaria, es la única instancia que oficialmente asigna las claves de RFC a los contribuyentes que así lo soliciten, a partir de la aplicación de este procedimiento a la base de datos del Padrón de Contribuyentes, con la finalidad de identificar homonimias y evitar la duplicidad de registros.</string>
 
     <string name="hexatext">Cifrado HexaText</string>
     <string name="trigonometria">📐 Calculadora Trigonométrica</string>
