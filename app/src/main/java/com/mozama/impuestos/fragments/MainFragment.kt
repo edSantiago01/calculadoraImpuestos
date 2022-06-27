@@ -134,8 +134,20 @@ class MainFragment : Fragment() {
                 mostrarAjustes()
                 true
             }
+            R.id.menu_rfc->{
+                mostrarComprobarRFC()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun mostrarComprobarRFC() {
+        val transaction = parentFragmentManager.beginTransaction()
+        val fragmentRFC = ComprobarRFCFragment.newInstance()
+        transaction.replace(R.id.container_main, fragmentRFC)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     private fun mostrarAjustes() {

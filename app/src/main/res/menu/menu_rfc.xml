@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_rfc"
-        android:title="@string/rfc"
-        app:showAsAction="ifRoom" />
+
     <item android:id="@+id/menu_share"
         android:icon="@drawable/ic_share"
         android:title="@string/compartir"
@@ -30,8 +28,6 @@
                 android:title="@string/mcm" />
             <item android:id="@+id/menu_recta"
                 android:title="@string/recta" />
-            <item android:id="@+id/menu_circunferencia"
-                android:title="@string/circunferencia" />
             <item android:id="@+id/menu_trigonometria"
                 android:title="@string/trigonometria" />
         </menu>
