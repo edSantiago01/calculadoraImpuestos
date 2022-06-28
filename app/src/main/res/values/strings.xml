@@ -65,6 +65,7 @@
     <string name="imp_inter_resico" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
     <string name="imp_inter_iva" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
     <string name="imp_inter_uma" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="imp_inter_rfc" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
     <string name="ads_iva">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ads_uma">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ads_rfc">ca-app-pub-3940256099942544/6300978111</string>
