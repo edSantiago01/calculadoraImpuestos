@@ -47,7 +47,6 @@ private lateinit var radioFisica: RadioButton
 private lateinit var radioMoral: RadioButton
 private lateinit var txtPrimerNombre: TextInputEditText
 private lateinit var fielPrimerNombre: TextInputLayout
-private lateinit var txtSegundoNombre: TextInputEditText
 private lateinit var txtPrimerApellido: TextInputEditText
 private lateinit var fielPrimerApellido: TextInputLayout
 private lateinit var txtSegundoApellido: TextInputEditText
@@ -179,7 +178,6 @@ class ComprobarRFCFragment : Fragment() {
         radioMoral = view.findViewById(R.id.rdoMoral)
         txtPrimerNombre = view.findViewById(R.id.txtPrimerNombre)
         fielPrimerNombre = view.findViewById(R.id.fielPrimerNombre)
-        txtSegundoNombre = view.findViewById(R.id.txtSegundoNombre)
         txtPrimerApellido = view.findViewById(R.id.txtPrimerApellido)
         fielPrimerApellido = view.findViewById(R.id.fielPrimerApellido)
         txtSegundoApellido = view.findViewById(R.id.txtSegundoApellido)
@@ -198,15 +196,26 @@ class ComprobarRFCFragment : Fragment() {
         mostrarFisica()
     }
 
+    private fun getFecha(): String {
+        return if(!txtFecha.text.isNullOrEmpty()){
+            val fechaIngresada = txtFecha.text.toString()
+            UtilsGraphic().fechaStringAInt(fechaIngresada)
+        }else {
+            UtilsGraphic().getFechaActual()
+        }
+    }
+
     private fun listener(){
+        var fecha = ""
         txtFecha.setOnClickListener{
-            val fechaActual = UtilsGraphic().getFechaActual()
-            mostrarDatePickerFecha(requireActivity(), txtFecha, fechaActual)
+            fecha = getFecha()
+            mostrarDatePickerFecha(requireActivity(), txtFecha, fecha)
         }
         txtFecha.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                val fechaActual = UtilsGraphic().getFechaActual()
-                mostrarDatePickerFecha(requireActivity(), txtFecha, fechaActual)
+                hideKeyboard()
+                fecha = getFecha()
+                mostrarDatePickerFecha(requireActivity(), txtFecha, fecha)
             }
         }
 
@@ -259,12 +268,6 @@ class ComprobarRFCFragment : Fragment() {
     private fun validarIngresoFisica(): Boolean{
         return if(txtPrimerNombre.text.isNullOrEmpty()) {
             fielPrimerNombre.error = resources.getString(R.string.info_faltante)
-            false
-        } else if(txtPrimerApellido.text.isNullOrEmpty()) {
-            fielPrimerApellido.error = resources.getString(R.string.info_faltante)
-            false
-        } else if(txtSegundoApellido.text.isNullOrEmpty()) {
-            fielSegundoApellido.error = resources.getString(R.string.info_faltante)
             false
         }else true
     }
@@ -323,7 +326,6 @@ class ComprobarRFCFragment : Fragment() {
 
     private fun limpiar(){
         txtPrimerNombre.setText("")
-        txtSegundoNombre.setText("")
         txtPrimerApellido.setText("")
         txtSegundoApellido.setText("")
         txtNombreMoral.setText("")

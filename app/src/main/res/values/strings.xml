@@ -32,7 +32,7 @@
     <string name="rfc">RFC</string>
     <string name="persona_fisica">Persona Física</string>
     <string name="persona_moral">Persona Moral</string>
-    <string name="primer_nombre">Primer Nombre</string>
+    <string name="primer_nombre">Nombre(s)</string>
     <string name="segundo_nombre">Segundo Nombre</string>
     <string name="primer_apellido">Primer Apellido</string>
     <string name="segundo_apellido">Segundo Apellido</string>
