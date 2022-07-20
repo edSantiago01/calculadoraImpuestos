@@ -67,6 +67,7 @@ class ComprobarRFCFragment : Fragment() {
         arguments?.let {
         }
         setHasOptionsMenu(true)
+        activity?.title = resources.getString(R.string.rfc)
     }
 
     override fun onCreateView(
