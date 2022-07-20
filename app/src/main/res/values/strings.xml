@@ -29,6 +29,19 @@
     <string name="imp_cedulares">Impuestos cedulares u otros</string>
     <string name="imp_config">IMP_LOCALES</string>
     <string name="verifica_cedular">Igrese el porcentaje del impuesto</string>
+    <string name="rfc">RFC</string>
+    <string name="persona_fisica">Persona Física</string>
+    <string name="persona_moral">Persona Moral</string>
+    <string name="primer_nombre">Nombre(s)</string>
+    <string name="segundo_nombre">Segundo Nombre</string>
+    <string name="primer_apellido">Primer Apellido</string>
+    <string name="segundo_apellido">Segundo Apellido</string>
+    <string name="fecha_nacimiento">Fecha Nacimiento</string>
+
+    <string name="nombre_moral">Denominación/Razón Social</string>
+    <string name="fecha_constitucion">Fecha Constitución</string>
+    <string name="info_faltante">Ingrese valor</string>
+    <string name="aviso_rfc">Sólo la Secretaría de Hacienda y Crédito Público, a través del Servicio de Administración Tributaria, es la única instancia que oficialmente asigna las claves de RFC a los contribuyentes que así lo soliciten, a partir de la aplicación de este procedimiento a la base de datos del Padrón de Contribuyentes, con la finalidad de identificar homonimias y evitar la duplicidad de registros.</string>
 
     <string name="hexatext">Cifrado HexaText</string>
     <string name="trigonometria">📐 Calculadora Trigonométrica</string>
@@ -46,9 +59,11 @@
     <string name="app_version">v3.0</string>
 
     <string name="ads_retenciones">testw6vs28auh3</string>
+    <string name="ads_rfc">testw6vs28auh3</string>
 
     <string name="ads_inter_rsp" translatable="false">testb4znbuh3n2</string>
     <string name="ads_inter_resico" translatable="false">testb4znbuh3n2</string>
     <string name="ads_inter_iva" translatable="false">testb4znbuh3n2</string>
     <string name="ads_inter_uma" translatable="false">testb4znbuh3n2</string>
+    <string name="ads_inter_rfc" translatable="false">testb4znbuh3n2</string>
 </resources>
