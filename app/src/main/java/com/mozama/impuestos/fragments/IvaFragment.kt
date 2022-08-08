@@ -10,6 +10,7 @@ package com.mozama.impuestos.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -96,6 +97,8 @@ class IvaFragment : Fragment() {
     private val TAG_SYSTEM = "system"
     private val TAG_USER = "user"
 
+    private lateinit var lyCatalogo: LinearLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -124,6 +127,7 @@ class IvaFragment : Fragment() {
         txtPercentCedular = view.findViewById(R.id.txtPercentCedularI)
         txtCedular = view.findViewById(R.id.txtCedular)
         icInfoIva = view.findViewById(R.id.icInfoIva)
+        lyCatalogo = view.findViewById(R.id.lyCatalogos)
 
         setup()
         setItemIva()
@@ -162,6 +166,10 @@ class IvaFragment : Fragment() {
                 true
             }else false
         }
+
+        lyCatalogo.setOnClickListener {
+            goEnlacePlay("com.mozama.catalogossat")
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -185,6 +193,15 @@ class IvaFragment : Fragment() {
         super.onResume()
         verificViewCedular()
         hideKeyboard()
+    }
+
+    private fun goEnlacePlay(idApp:String) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(
+                "https://play.google.com/store/apps/details?id=$idApp")
+            setPackage("com.android.vending")
+        }
+        startActivity(intent)
     }
 
     private fun verificViewCedular(){

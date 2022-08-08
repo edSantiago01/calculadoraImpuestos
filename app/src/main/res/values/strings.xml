@@ -49,6 +49,7 @@
     <string name="mcm">Calcula MCM MCD</string>
     <string name="circunferencia">⚪ Circunferencia Ecuación</string>
     <string name="productos_notables">Productos Notables Álgebra</string>
+    <string name="catalogos_sat">Buscador de claves SAT</string>
 
     <string name="salario_info">Salario Mínimo en la Zona Libre de la Frontera Norte (ZLFN): \n\n $%1$s \n\nSalarío Mínimo General resto del país: \n\n $%2$s \n\nVigencia: 01 ene 2022</string>
     <string name="uma_info">Referencia en pesos para determinar la cuantía del pago de obligaciones previstas en las leyes federales, como multas o impuestos. \n \nValor de UMA diario 2022: \n\n $%1$s</string>

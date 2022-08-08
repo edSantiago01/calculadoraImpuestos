@@ -233,6 +233,8 @@
                 android:layout_gravity="end"
                 android:src="@drawable/ic_info" />
 
+            <include layout="@layout/item_enlace_catalogos"/>
+
         </LinearLayout>
 
     </ScrollView>

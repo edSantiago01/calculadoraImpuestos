@@ -133,8 +133,9 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_info" />
 
-        </LinearLayout>
+            <include layout="@layout/item_enlace_catalogos"/>
 
+        </LinearLayout>
 
 
 

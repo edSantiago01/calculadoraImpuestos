@@ -12,8 +12,8 @@ android {
         applicationId "com.mozama.impuestos"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 19
-        versionName "3.11"
+        versionCode 20
+        versionName "3.12"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
@@ -51,7 +51,7 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:29.0.3')
     implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.firebase:firebase-messaging:23.0.6'
+    implementation 'com.google.firebase:firebase-messaging:23.0.7'
 }
 
 repositories {

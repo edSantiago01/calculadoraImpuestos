@@ -21,6 +21,7 @@
 package com.mozama.impuestos.fragments
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -71,6 +72,7 @@ class RetencionFragment : Fragment() {
     private lateinit var txtTotal: EditText
     private lateinit var spinIva : Spinner
     private lateinit var icInfoRetenciones: ImageView
+    private lateinit var lyCatalogo: LinearLayout
 
     private var configLocales = 0
 
@@ -133,6 +135,7 @@ class RetencionFragment : Fragment() {
         fieldPercentCedular = view.findViewById(R.id.fieldPercentCedular)
         txtPercentCedular = view.findViewById(R.id.txtPercentCedular)
         txtCedular = view.findViewById(R.id.txtCedular)
+        lyCatalogo = view.findViewById(R.id.lyCatalogos)
 
         setup()
         setItemIva()
@@ -141,6 +144,15 @@ class RetencionFragment : Fragment() {
         hideKeyboard()
 
         verificViewCedular()
+    }
+
+    private fun goEnlacePlay(idApp:String) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(
+                "https://play.google.com/store/apps/details?id=$idApp")
+            setPackage("com.android.vending")
+        }
+        startActivity(intent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -183,6 +195,10 @@ class RetencionFragment : Fragment() {
                 validarIntersticial()
                 true
             }else false
+        }
+
+        lyCatalogo.setOnClickListener {
+            goEnlacePlay("com.mozama.catalogossat")
         }
     }
 

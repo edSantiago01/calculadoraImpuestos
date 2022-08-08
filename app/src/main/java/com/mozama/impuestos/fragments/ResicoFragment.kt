@@ -2,6 +2,7 @@ package com.mozama.impuestos.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -97,6 +98,8 @@ class ResicoFragment : Fragment() {
 
     private val percentIsrRetenido = .0125
     private var isIvaRetenido = 0.0
+
+    private lateinit var lyCatalogo: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -199,6 +202,20 @@ class ResicoFragment : Fragment() {
                 true
             }else false
         }
+
+        lyCatalogo = view.findViewById(R.id.lyCatalogos)
+        lyCatalogo.setOnClickListener {
+            goEnlacePlay("com.mozama.catalogossat")
+        }
+    }
+
+    private fun goEnlacePlay(idApp:String) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(
+                "https://play.google.com/store/apps/details?id=$idApp")
+            setPackage("com.android.vending")
+        }
+        startActivity(intent)
     }
 
     private fun verificViewCedular(){

@@ -2,6 +2,7 @@ package com.mozama.impuestos.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,10 +14,7 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Spinner
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -62,6 +60,8 @@ class UmaFragment : Fragment() {
     private var pesosSalario = 0.0
     private var valSalario = 0.0
 
+    private lateinit var lyCatalogo: LinearLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -87,6 +87,7 @@ class UmaFragment : Fragment() {
         txtSalario = view.findViewById(R.id.txtSalario)
         txtPesosSalario = view.findViewById(R.id.txtPesosSmg)
         icInfoSalario = view.findViewById(R.id.icInfoSalario)
+        lyCatalogo = view.findViewById(R.id.lyCatalogos)
         setItemSalario()
 
         setChangeElements()
@@ -152,6 +153,19 @@ class UmaFragment : Fragment() {
                 true
             }else false
         }
+
+        lyCatalogo.setOnClickListener {
+            goEnlacePlay("com.mozama.catalogossat")
+        }
+    }
+
+    private fun goEnlacePlay(idApp:String) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(
+                "https://play.google.com/store/apps/details?id=$idApp")
+            setPackage("com.android.vending")
+        }
+        startActivity(intent)
     }
 
     private fun shareInfo() {

@@ -5,15 +5,18 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.21296296296296297" />
         <entry key="app/src/main/res/drawable/ic_dollar.xml" value="0.21296296296296297" />
+        <entry key="app/src/main/res/drawable/ic_info.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/ic_launch.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/drawable/ic_share.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/layout/fragment_ajustes.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_comprobar_rfc.xml" value="0.16267942583732056" />
+        <entry key="app/src/main/res/layout/fragment_comprobar_rfc.xml" value="0.21" />
         <entry key="app/src/main/res/layout/fragment_iva.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_resico.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_retencion.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_retencion.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_uma.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/item_enlace_catalogos.xml" value="0.33" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.10833333333333334" />
         <entry key="app/src/main/res/menu/menu_ajustes.xml" value="0.23854166666666668" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.25" />

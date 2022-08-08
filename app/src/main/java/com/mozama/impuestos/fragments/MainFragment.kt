@@ -106,6 +106,10 @@ class MainFragment : Fragment() {
                 shareApp()
                 true
             }
+            R.id.menu_claves_sat->{
+                abrirEnlacePlay("com.mozama.catalogossat")
+                true
+            }
             R.id.menu_productosNot->{
                 abrirEnlacePlay("com.mozama.notable_products")
                 true
