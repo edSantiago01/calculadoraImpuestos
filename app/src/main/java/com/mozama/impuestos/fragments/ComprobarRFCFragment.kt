@@ -76,6 +76,7 @@ class ComprobarRFCFragment : Fragment() {
         arguments?.let {
         }
         setHasOptionsMenu(true)
+        activity?.title = resources.getString(R.string.rfc)
     }
 
     override fun onCreateView(
@@ -392,8 +393,7 @@ class ComprobarRFCFragment : Fragment() {
                     mInterstitialAd = null
                 }
 
-                override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
-//                    Log.d(TAG, "Ad failed to show.")
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
                     mInterstitialAd = null
                 }
 

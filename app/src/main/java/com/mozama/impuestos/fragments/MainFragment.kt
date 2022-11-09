@@ -99,39 +99,15 @@ class MainFragment : Fragment() {
         // Detectar la opción del menú seleccionado
         return when (item.itemId) {
             R.id.calificar -> {
-                abrirEnlacePlay("com.mozama.impuestos")
+                abrirEnlacePlay("details?id=com.mozama.impuestos")
                 true
             }
             R.id.comparirApp -> {
                 shareApp()
                 true
             }
-            R.id.menu_claves_sat->{
-                abrirEnlacePlay("com.mozama.catalogossat")
-                true
-            }
-            R.id.menu_productosNot->{
-                abrirEnlacePlay("com.mozama.notable_products")
-                true
-            }
-            R.id.menu_mcm -> {
-                abrirEnlacePlay("com.mozama.mcm_mcd")
-                true
-            }
-            R.id.menu_hexa -> {
-                abrirEnlacePlay("mx.com.mozama.hexatext")
-                true
-            }
-            R.id.menu_trigonometria -> {
-                abrirEnlacePlay("com.mozama.trigonometria")
-                true
-            }
-            R.id.menu_circunferencia -> {
-                abrirEnlacePlay("com.mozama.circumference_equation")
-                true
-            }
-            R.id.menu_recta -> {
-                abrirEnlacePlay("com.mozama.lineaRecta")
+            R.id.masHerramientas ->{
+                abrirEnlacePlay("dev?id=6969660804547788680")
                 true
             }
             R.id.menu_ajustes->{
@@ -165,7 +141,7 @@ class MainFragment : Fragment() {
     private fun abrirEnlacePlay(idApp:String) {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse(
-                "https://play.google.com/store/apps/details?id=$idApp")
+                "https://play.google.com/store/apps/$idApp")
             setPackage("com.android.vending")
         }
         startActivity(intent)
