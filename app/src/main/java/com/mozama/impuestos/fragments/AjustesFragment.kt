@@ -1,13 +1,11 @@
 package com.mozama.impuestos.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SwitchCompat
@@ -81,6 +79,44 @@ class AjustesFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_ajustes, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Detectar la opción del menú seleccionado
+        return when (item.itemId) {
+            R.id.calificar -> {
+                abrirEnlacePlay("details?id=com.mozama.impuestos")
+                true
+            }
+            R.id.comparirApp -> {
+                shareApp()
+                true
+            }
+            R.id.masHerramientas ->{
+                abrirEnlacePlay("dev?id=6969660804547788680")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun shareApp(){
+        val url = "https://play.google.com/store/apps/details?id=com.mozama.impuestos&hl=es"
+        val share = Intent.createChooser(Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, url)
+            type = "text/plain"
+        }, null)
+        startActivity(share)
+    }
+
+    private fun abrirEnlacePlay(idApp:String) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(
+                "https://play.google.com/store/apps/$idApp")
+            setPackage("com.android.vending")
+        }
+        startActivity(intent)
     }
 
     private fun saveConfigLocal(valor: Boolean){

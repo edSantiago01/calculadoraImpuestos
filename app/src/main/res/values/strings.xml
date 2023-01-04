@@ -2,7 +2,7 @@
     <string name="app_name">Calculadora Impuestos</string>
     <string name="app_name_ver">Calculadora de Impuestos %1$s</string>
     <string name="preference_file_key">com.mozama.impuestos</string>
-    <string name="copyright">© Mozama 2021–2022</string>
+    <string name="copyright">© Mozama 2021–2023</string>
 
     <string name="retenciones">RSP</string>
     <string name="resico">RESICO</string>
@@ -47,18 +47,17 @@
     <string name="trigonometria">📐 Calculadora Trigonométrica</string>
     <string name="recta">📏 Línea Recta</string>
     <string name="mcm">Calcula MCM MCD</string>
-    <string name="circunferencia">⚪ Circunferencia Ecuación</string>
     <string name="productos_notables">Productos Notables Álgebra</string>
     <string name="catalogos_sat">Buscador de claves SAT</string>
 
-    <string name="salario_info">Salario Mínimo en la Zona Libre de la Frontera Norte (ZLFN): \n\n $%1$s \n\nSalarío Mínimo General resto del país: \n\n $%2$s \n\nVigencia: 01 ene 2022</string>
+    <string name="salario_info">Salario Mínimo en la Zona Libre de la Frontera Norte (ZLFN): \n\n $%1$s \n\nSalarío Mínimo General resto del país: \n\n $%2$s \n\nVigencia: 01 ene 2023</string>
     <string name="uma_info">Referencia en pesos para determinar la cuantía del pago de obligaciones previstas en las leyes federales, como multas o impuestos. \n \nValor de UMA diario 2022: \n\n $%1$s</string>
     <string name="retencion_info">Si eres persona física con actividad empresarial - profesional y emites factura a una persona moral. \n \nNota: valor de la tasa del ISR retenido: 0.106667 </string>
     <string name="resico_info">Si eres persona física en el Régimen Simplificado de Confianza, RESICO y emites factura a una Persona Moral (con retención de IVA) o a una Persona Física (sin retención de IVA). \n \nNota: valor de la tasa del ISR retenido: %1$s </string>
     <string name="iva_info">Si eres persona física y emites factura a otra persona física. </string>
     <string name="titulo_dialog">Utiliza esta sección</string>
 
-    <string name="app_version">v3.1</string>
+    <string name="app_version">v3.14</string>
 
     <string name="ads_id_app">ca-app-pub-3940256099942544~3347511713</string>
     <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>
