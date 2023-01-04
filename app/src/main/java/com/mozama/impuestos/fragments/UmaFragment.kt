@@ -38,8 +38,8 @@ class UmaFragment : Fragment() {
     private lateinit var icInfoSalario: ImageView
 
     private val valorUma = 96.22
-    private val valorSMG_ZLFN = 260.34
-    private val valorSMG = 172.87
+    private val valorSMG_ZLFN = 312.41
+    private val valorSMG = 207.44
 
     private var IN_OPTION = 0
     private val IN_UMA = 1
