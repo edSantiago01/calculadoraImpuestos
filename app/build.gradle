@@ -10,10 +10,10 @@ android {
 
     defaultConfig {
         applicationId "com.mozama.impuestos"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 33
-        versionCode 22
-        versionName "3.14"
+        versionCode 23
+        versionName "3.15"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
