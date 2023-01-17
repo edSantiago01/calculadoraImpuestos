@@ -204,7 +204,7 @@ class ComprobarRFCFragment : Fragment() {
     }
 
     private fun listener(){
-        var fecha = ""
+        var fecha: String
         txtFecha.setOnClickListener{
             fecha = getFecha()
             mostrarDatePickerFecha(requireActivity(), txtFecha, fecha)
@@ -227,7 +227,7 @@ class ComprobarRFCFragment : Fragment() {
     }
 
     fun mostrarDatePickerFecha(activity: Activity, campoFecha: TextInputEditText, fecha:String ) {
-        var fechaSeleccion = ""
+        var fechaSeleccion: String
 
         val arrayFecha = fecha.split("-")
         val anio = arrayFecha[0].toInt()
