@@ -7,12 +7,29 @@
  */
 package com.mozama.impuestos.utils
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Date
+
 
 /**
  * Clase con la lógica y operaciones matemáticas para obtener los montos
  */
 
 class Operations {
+
+    fun fechaMayorA(dia:String, mes:String, anio:String): Boolean {
+
+        val dateString = "$dia $mes $anio"
+
+        val formatter = DateTimeFormatter.ofPattern("dd MM yyyy")
+        val dateValidation = LocalDate.parse(dateString, formatter)
+
+        val dateNow = LocalDate.now()
+        return dateNow >= dateValidation
+    }
 
     fun calcValPercentTotal(total: Double, percent: Double): Double {
         return total * percent

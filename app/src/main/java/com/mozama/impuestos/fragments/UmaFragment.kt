@@ -37,7 +37,9 @@ class UmaFragment : Fragment() {
     private lateinit var txtPesosSalario: EditText
     private lateinit var icInfoSalario: ImageView
 
-    private val valorUma = 96.22
+    private val umaEnCurso = 103.74
+    private val umaAnterior = 96.22
+    private var valorUma = umaAnterior
     private val valorSMG_ZLFN = 312.41
     private val valorSMG = 207.44
 
@@ -110,6 +112,7 @@ class UmaFragment : Fragment() {
     }
 
     private fun setup(){
+        validaValorUma()
         txtUma.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE){
                 hideKeyboard()
@@ -145,6 +148,12 @@ class UmaFragment : Fragment() {
                 true
             }else false
         }
+    }
+
+    private fun validaValorUma(){
+        valorUma = if(Operations().fechaMayorA("01", "02", "2023")){
+            umaEnCurso
+        }else umaAnterior
     }
 
     private fun shareInfo() {
@@ -272,8 +281,8 @@ class UmaFragment : Fragment() {
     }
 
     private fun showDialogInfo(tipo:String){
-        var tit = ""
-        var mensaje = ""
+        var tit: String
+        var mensaje: String
 
         if (tipo == "uma") {
             tit =  resources.getString(R.string.unidad_ma)
