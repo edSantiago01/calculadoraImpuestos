@@ -50,12 +50,13 @@
     <string name="productos_notables">Productos Notables Álgebra</string>
     <string name="catalogos_sat">Buscador de claves SAT</string>
 
-    <string name="salario_info">Salario Mínimo en la Zona Libre de la Frontera Norte (ZLFN): \n\n $%1$s \n\nSalarío Mínimo General resto del país: \n\n $%2$s \n\nVigencia: 01 ene 2023</string>
-    <string name="uma_info">Referencia en pesos para determinar la cuantía del pago de obligaciones previstas en las leyes federales, como multas o impuestos. \n \nValor de UMA diario 2022: \n\n $%1$s</string>
+    <string name="salario_info">Salario Mínimo en la Zona Libre de la Frontera Norte (ZLFN): \n\n $%1$s \n\nSalarío Mínimo General resto del país: \n\n $%2$s \n\nVigencia: 01 ene %3$s</string>
+    <string name="uma_info">Referencia en pesos para determinar la cuantía del pago de obligaciones previstas en las leyes federales, como multas o impuestos. \n \nValor de UMA diario %1$s: \n\n $%2$s</string>
     <string name="retencion_info">Si eres persona física con actividad empresarial - profesional y emites factura a una persona moral. \n \nNota: valor de la tasa del ISR retenido: 0.106667 </string>
     <string name="resico_info">Si eres persona física en el Régimen Simplificado de Confianza, RESICO y emites factura a una Persona Moral (con retención de IVA) o a una Persona Física (sin retención de IVA). \n \nNota: valor de la tasa del ISR retenido: %1$s </string>
     <string name="iva_info">Si eres persona física y emites factura a otra persona física. </string>
     <string name="titulo_dialog">Utiliza esta sección</string>
+    <string name="ver_valores">Ver valores actualizados</string>
 
     <string name="app_version">v3.15</string>
 
