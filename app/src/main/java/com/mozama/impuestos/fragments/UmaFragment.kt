@@ -18,6 +18,7 @@ import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.huawei.hms.ads.AdListener
 import com.huawei.hms.ads.AdParam
@@ -36,18 +37,27 @@ class UmaFragment : Fragment() {
 
     private lateinit var txtUma: EditText
     private lateinit var txtPesos: EditText
-    private lateinit var icInfo: ImageView
+    private lateinit var icInfo: TextView
 
     private lateinit var spinSalario : Spinner
     private lateinit var txtSalario: EditText
     private lateinit var txtPesosSalario: EditText
-    private lateinit var icInfoSalario: ImageView
+    private lateinit var icInfoSalario: TextView
 
-    private val umaEnCurso = 103.74
-    private val umaAnterior = 96.22
+    private val anioCurso = 2024
+    private val anioAnterior = 2023
+
+    private val umaEnCurso = 0
+    private val umaAnterior = 103.74
+    private var anioVigenciaUMA = 0
     private var valorUma = umaAnterior
-    private val valorSMG_ZLFN = 312.41
-    private val valorSMG = 207.44
+
+    private val valorSMG_ZLFN_ANTERIOR = 312.41
+    private var valorSMG_ZLFN = 374.89
+    private val valorSMG_ANTERIOR = 207.44
+    private var valorSMG = 248.93
+    private var anioVigenciaSMG = anioCurso
+
 
     private var IN_OPTION = 0
     private val IN_UMA = 1
@@ -120,6 +130,7 @@ class UmaFragment : Fragment() {
 
     private fun setup(){
         validaValorUma()
+        validaValorSalarioMinimo()
         txtUma.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE){
                 hideKeyboard()
@@ -158,9 +169,21 @@ class UmaFragment : Fragment() {
     }
 
     private fun validaValorUma(){
-        valorUma = if(Operations().fechaMayorA("01", "02", "2023")){
-            umaEnCurso
-        }else umaAnterior
+        if(!Operations().fechaMayorA("01", "02", "2024")){
+            valorUma = umaAnterior
+            anioVigenciaUMA = anioAnterior
+        }else {
+            valorUma = umaEnCurso.toDouble()
+            anioVigenciaUMA = anioCurso
+        }
+    }
+
+    private fun validaValorSalarioMinimo(){
+        if(!Operations().fechaMayorA("01", "01", "2024")){
+            valorSMG_ZLFN = valorSMG_ZLFN_ANTERIOR
+            valorSMG = valorSMG_ANTERIOR
+            anioVigenciaSMG = anioAnterior
+        }
     }
 
     private fun shareInfo() {
@@ -294,12 +317,12 @@ class UmaFragment : Fragment() {
         if (tipo == "uma") {
             tit =  resources.getString(R.string.unidad_ma)
             val umaString = valorUma.toString()
-            mensaje = resources.getString(R.string.uma_info,umaString)
+            mensaje = resources.getString(R.string.uma_info, anioVigenciaUMA.toString(), umaString )
         }else  {
             tit =  resources.getString(R.string.smg)
             val smgString = valorSMG.toString()
             val smgZFString = valorSMG_ZLFN.toString()
-            mensaje = resources.getString(R.string.salario_info, smgZFString, smgString)
+            mensaje = resources.getString(R.string.salario_info, smgZFString, smgString, anioVigenciaSMG.toString())
         }
 
         context?.let {
