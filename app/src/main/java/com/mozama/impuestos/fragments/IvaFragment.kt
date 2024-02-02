@@ -293,7 +293,7 @@ class IvaFragment : Fragment() {
     }
 
     private fun calcInputTotal() {
-        if (txtTotal.text.isNotEmpty()){
+        if (txtTotal.text.toString().isNotEmpty()){
             val text = txtTotal.text.toString()
             val subNotComma = UtilsGraphic().deleteComma(text)
             val temp = subNotComma.toDoubleOrNull()
