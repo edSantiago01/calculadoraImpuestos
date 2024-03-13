@@ -118,7 +118,8 @@ class UtilsGraphic {
     }
 
     fun deleteComma(value:String):String{
-        return value.replace(",", "")
+        val regex = "[^0-9.]".toRegex()
+        return value.replace(regex, "")
     }
 
     fun round2Dec(valor: Double): String {

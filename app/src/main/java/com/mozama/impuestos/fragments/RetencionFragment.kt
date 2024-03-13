@@ -268,21 +268,25 @@ class RetencionFragment : Fragment() {
         //val percentIvaRetenido = ( percentIva / 3 ) * 2
         val percentIvaRetenido = percentIva  * 0.6667
 
-        if(txtTotal.text.toString().isNotEmpty() ){
-            val text = txtTotal.text.toString()
-            val textNotComma = UtilsGraphic().deleteComma(text)
-            val temp = textNotComma.toDoubleOrNull()
-            if( temp != null){
-                total = temp
-                val map = Operations().calSubtotalRetencionesTotal(total, percentIva, percentIvaRetenido, percentIsrRetenido, percentCedular )
-                iva = map?.get("iva")!!
-                ivaR = map["ivaR"]!!
-                isrR = map["isrR"]!!
-                cedular = map["cedular"]!!
-                subtotal = map["subtotal"]!!
-                setValuesEditText()
+        try {
+            if(txtTotal.text.toString().isNotEmpty() ){
+                val text = txtTotal.text.toString()
+                val textNotComma = UtilsGraphic().deleteComma(text)
+                val temp = textNotComma.toDoubleOrNull()
+                if( temp != null){
+                    total = temp
+                    val map = Operations().calSubtotalRetencionesTotal(total, percentIva, percentIvaRetenido, percentIsrRetenido, percentCedular )
+                    iva = map?.get("iva")!!
+                    ivaR = map["ivaR"]!!
+                    isrR = map["isrR"]!!
+                    cedular = map["cedular"]!!
+                    subtotal = map["subtotal"]!!
+                    setValuesEditText()
+                }else cleaner()
             }else cleaner()
-        }else cleaner()
+        }catch (e:Exception){
+            cleaner()
+        }
     }
 
     private fun calcInputSubtotal( ){
