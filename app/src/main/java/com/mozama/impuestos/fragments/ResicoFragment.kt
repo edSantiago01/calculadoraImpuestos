@@ -27,6 +27,9 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.crashlytics.ktx.setCustomKeys
+import com.google.firebase.ktx.Firebase
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
@@ -274,6 +277,12 @@ class ResicoFragment : Fragment() {
                 }else cleaner()
             }else cleaner()
         }catch (e:Exception){
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKeys {
+                key("value_input", txtTotal.text.toString()) // String value
+                key("screen", "Resico")
+                key("exception_message", e.message.toString())
+            }
             cleaner()
         }
     }
