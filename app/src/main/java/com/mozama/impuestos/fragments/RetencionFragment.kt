@@ -31,7 +31,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
-import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.EditText
@@ -39,6 +38,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -150,12 +150,23 @@ class RetencionFragment : Fragment() {
     }
 
     private fun goEnlacePlay(idApp:String) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(
-                "https://play.google.com/store/apps/details?id=$idApp")
-            setPackage("com.android.vending")
+        try{
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(
+                    "https://play.google.com/store/apps/details?id=$idApp")
+                setPackage("com.android.vending")
+            }
+            startActivity(intent)
+
+        }catch (e: Exception){
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKeys {
+                key("screen", "goEnlacePlay $idApp")
+                key("exception_message", e.message.toString()+" "+e.cause.toString())
+            }
+            UtilsGraphic().showToast("Problemas al abrir enlace", requireContext())
         }
-        startActivity(intent)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -486,14 +497,26 @@ class RetencionFragment : Fragment() {
         val cedularString = UtilsGraphic().getStringShareCedular(configLocales, cedular, spinCedular, txtPercentCedular)
 
         val text = "Subtotal: $ $subtotalRound \n\n IVA $valIvaInt%: $ $ivaRound \n ISR retn:   $ $isrRRound \n IVA retn:   $ $ivaRRound $cedularString\n\n TOTAL:  $ $totalRound"
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, text)
-            type = "text/plain"
+
+        try {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, text)
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }catch (e: Exception){
+
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKeys {
+                key("screen", "compartir Retencion")
+                key("exception_message", e.message.toString()+" "+e.cause.toString())
+            }
+            UtilsGraphic().showToast("Problemas al compartir información", requireContext())
         }
 
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
     }
 
     private fun validarIntersticial(){

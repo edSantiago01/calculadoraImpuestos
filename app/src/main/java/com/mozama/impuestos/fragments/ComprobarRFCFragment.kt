@@ -21,6 +21,9 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.crashlytics.ktx.setCustomKeys
+import com.google.firebase.ktx.Firebase
 import com.josketres.rfcfacil.Rfc
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.UtilsGraphic
@@ -153,22 +156,43 @@ class ComprobarRFCFragment : Fragment() {
     }
 
     private fun abrirEnlacePlay(idApp:String) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(
-                "https://play.google.com/store/apps/$idApp")
-            setPackage("com.android.vending")
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(
+                    "https://play.google.com/store/apps/$idApp")
+                setPackage("com.android.vending")
+            }
+            startActivity(intent)
+        }catch (e: Exception){
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKeys {
+                key("screen", "abrir $idApp Comprobar RFC")
+                key("exception_message", e.message.toString()+" "+e.cause.toString())
+            }
+            UtilsGraphic().showToast("Problemas al abrir enlace", requireContext())
         }
-        startActivity(intent)
+
     }
 
     private fun shareApp(){
-        val url = "https://play.google.com/store/apps/details?id=com.mozama.impuestos&hl=es"
-        val share = Intent.createChooser(Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, url)
-            type = "text/plain"
-        }, null)
-        startActivity(share)
+        try {
+            val url = "https://play.google.com/store/apps/details?id=com.mozama.impuestos&hl=es"
+            val share = Intent.createChooser(Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, url)
+                type = "text/plain"
+            }, null)
+            startActivity(share)
+        }catch (e: Exception){
+
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKeys {
+                key("screen", "compartir RFC")
+                key("exception_message", e.message.toString()+" "+e.cause.toString())
+            }
+            UtilsGraphic().showToast("Problemas al compartir información", requireContext())
+        }
+
     }
 
     private fun initialize(view:View){

@@ -5,14 +5,20 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SwitchCompat
+import androidx.fragment.app.Fragment
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.crashlytics.ktx.setCustomKeys
+import com.google.firebase.ktx.Firebase
 import com.mozama.impuestos.R
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
+import com.mozama.impuestos.utils.UtilsGraphic
 
 /**
 * AjustesFragment, View and register the preferences of users
@@ -101,22 +107,42 @@ class AjustesFragment : Fragment() {
     }
 
     private fun shareApp(){
-        val url = "https://play.google.com/store/apps/details?id=com.mozama.impuestos&hl=es"
-        val share = Intent.createChooser(Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, url)
-            type = "text/plain"
-        }, null)
-        startActivity(share)
+        try {
+            val url = "https://play.google.com/store/apps/details?id=com.mozama.impuestos&hl=es"
+            val share = Intent.createChooser(Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, url)
+                type = "text/plain"
+            }, null)
+            startActivity(share)
+        }catch (e: Exception){
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKeys {
+                key("screen", "compartir Ajustes")
+                key("exception_message", e.message.toString()+" "+e.cause.toString())
+            }
+            UtilsGraphic().showToast("Problemas al compartir información", requireContext())
+        }
+
     }
 
     private fun abrirEnlacePlay(idApp:String) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(
-                "https://play.google.com/store/apps/$idApp")
-            setPackage("com.android.vending")
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(
+                    "https://play.google.com/store/apps/$idApp")
+                setPackage("com.android.vending")
+            }
+            startActivity(intent)
+        }catch (e: Exception){
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKeys {
+                key("screen", "abrir enlace $idApp")
+                key("exception_message", e.message.toString()+" "+e.cause.toString())
+            }
+            UtilsGraphic().showToast("Problemas al abrir enlace", requireContext())
         }
-        startActivity(intent)
+
     }
 
     private fun saveConfigLocal(valor: Boolean){

@@ -57,6 +57,7 @@
     <string name="iva_info">Si eres persona física y emites factura a otra persona física. </string>
     <string name="titulo_dialog">Utiliza esta sección</string>
     <string name="ver_valores">Ver valores actualizados</string>
+    <string name="publicidad">Publicidad:</string>
 
     <string name="app_version">v3.16</string>
 

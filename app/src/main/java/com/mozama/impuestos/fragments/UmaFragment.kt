@@ -26,6 +26,9 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.crashlytics.ktx.setCustomKeys
+import com.google.firebase.ktx.Firebase
 import com.mozama.impuestos.R
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
@@ -177,12 +180,21 @@ class UmaFragment : Fragment() {
     }
 
     private fun goEnlacePlay(idApp:String) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(
-                "https://play.google.com/store/apps/details?id=$idApp")
-            setPackage("com.android.vending")
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(
+                    "https://play.google.com/store/apps/details?id=$idApp")
+                setPackage("com.android.vending")
+            }
+            startActivity(intent)
+        }catch (e: Exception){
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKeys {
+                key("screen", "abrir $idApp UMA")
+                key("exception_message", e.message.toString()+" "+e.cause.toString())
+            }
+            UtilsGraphic().showToast("Problemas al abrir enlace", requireContext())
         }
-        startActivity(intent)
     }
 
     private fun validaValorUma(){
@@ -219,14 +231,25 @@ class UmaFragment : Fragment() {
             text += "\n\nSalarios Mínimos: $valNSalario \nPESOS:  $ $valPesosSalario \n\nValor SMG: $$valSalario"
         }
 
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, text)
-            type = "text/plain"
+        try {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, text)
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+
+        }catch (e: Exception){
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKeys {
+                key("screen", "compartir UMA")
+                key("exception_message", e.message.toString()+" "+e.cause.toString())
+            }
+            UtilsGraphic().showToast("Problemas al compartir información", requireContext())
         }
 
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
     }
 
     private fun setChangeElements(){

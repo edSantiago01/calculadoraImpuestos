@@ -213,12 +213,22 @@ class ResicoFragment : Fragment() {
     }
 
     private fun goEnlacePlay(idApp:String) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(
-                "https://play.google.com/store/apps/details?id=$idApp")
-            setPackage("com.android.vending")
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(
+                    "https://play.google.com/store/apps/details?id=$idApp")
+                setPackage("com.android.vending")
+            }
+            startActivity(intent)
+        }catch (e: Exception){
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKeys {
+                key("screen", "abrir $idApp resico")
+                key("exception_message", e.message.toString()+" "+e.cause.toString())
+            }
+            UtilsGraphic().showToast("Problemas al abrir enlace", requireContext())
         }
-        startActivity(intent)
+
     }
 
     private fun verificViewCedular(){
@@ -474,14 +484,25 @@ class ResicoFragment : Fragment() {
         val cedularString = UtilsGraphic().getStringShareCedular(configLocales, cedular, spinCedular, txtPercentCedular)
 
         val text = "Subtotal: $ $subtotalRound \n\n IVA $valIvaInt%: $ $ivaRound \n ISR retn:  $ $isrRRound $ivaRetn \n $cedularString\n\n TOTAL:  $ $totalRound"
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, text)
-            type = "text/plain"
+
+        try {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, text)
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }catch (e: Exception){
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKeys {
+                key("screen", "compartir resico")
+                key("exception_message", e.message.toString()+" "+e.cause.toString())
+            }
+            UtilsGraphic().showToast("Problemas al compartir información", requireContext())
         }
 
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
     }
 
     private fun hideIvaR(){
