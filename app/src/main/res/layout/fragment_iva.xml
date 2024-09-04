@@ -157,6 +157,7 @@
                 android:src="@drawable/ic_info" />
 
             <include layout="@layout/item_enlace_catalogos"/>
+            <include layout="@layout/item_no_gobernamental"/>
 
         </LinearLayout>
     </ScrollView>

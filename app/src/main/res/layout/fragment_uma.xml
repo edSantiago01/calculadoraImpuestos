@@ -138,6 +138,7 @@
                 android:text="@string/ver_valores"/>
 
             <include layout="@layout/item_enlace_catalogos"/>
+            <include layout="@layout/item_no_gobernamental"/>
 
         </LinearLayout>
 
