@@ -44,18 +44,18 @@ class UmaFragment : Fragment() {
     private lateinit var txtPesosSalario: EditText
     private lateinit var icInfoSalario: TextView
 
-    private val anioCurso = 2024
-    private val anioAnterior = 2023
+    private val anioCurso = 2025
+    private val anioAnterior = 2024
 
     private val umaEnCurso = 108.57
     private val umaAnterior = 103.74
     private var anioVigenciaUMA = 2024
     private var valorUma = umaAnterior
 
-    private val valorSMG_ZLFN_ANTERIOR = 312.41
-    private var valorSMG_ZLFN = 374.89
-    private val valorSMG_ANTERIOR = 207.44
-    private var valorSMG = 248.93
+    private val valorSMG_ZLFN_ANTERIOR = 374.89
+    private var valorSMG_ZLFN = 419.88
+    private val valorSMG_ANTERIOR = 248.93
+    private var valorSMG = 278.80
     private var anioVigenciaSMG = anioCurso
 
 
@@ -169,7 +169,7 @@ class UmaFragment : Fragment() {
     }
 
     private fun validaValorUma(){
-        if(!Operations().fechaMayorA("01", "02", "2024")){
+        if(!Operations().fechaMayorA("01", "02", anioCurso.toString())){
             valorUma = umaAnterior
             anioVigenciaUMA = anioAnterior
         }else {
@@ -179,7 +179,7 @@ class UmaFragment : Fragment() {
     }
 
     private fun validaValorSalarioMinimo(){
-        if(!Operations().fechaMayorA("01", "01", "2024")){
+        if(!Operations().fechaMayorA("01", "01", anioCurso.toString())){
             valorSMG_ZLFN = valorSMG_ZLFN_ANTERIOR
             valorSMG = valorSMG_ANTERIOR
             anioVigenciaSMG = anioAnterior

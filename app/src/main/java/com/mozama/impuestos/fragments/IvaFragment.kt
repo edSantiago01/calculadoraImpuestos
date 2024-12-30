@@ -298,20 +298,24 @@ class IvaFragment : Fragment() {
     }
 
     private fun calcInputTotal() {
-        if (txtTotal.text.toString().isNotEmpty()){
-            val text = txtTotal.text.toString()
-            val subNotComma = UtilsGraphic().deleteComma(text)
-            val temp = subNotComma.toDoubleOrNull()
-            if( temp != null ){
-                total = temp
-                val map = Operations().calSubtotalIvaTotal(total, percentIva, percentCedular)
-                subtotal = map?.get("subtotal")!!
-                iva      = map["iva"]!!
-                cedular  = map["cedular"]!!
-                setValuesEditText()
-            }
-            else cleaner()
-        }else cleaner()
+        try {
+            if (txtTotal.text.toString().isNotEmpty()){
+                val text = txtTotal.text.toString()
+                val subNotComma = UtilsGraphic().deleteComma(text)
+                val temp = subNotComma.toDoubleOrNull()
+                if( temp != null ){
+                    total = temp
+                    val map = Operations().calSubtotalIvaTotal(total, percentIva, percentCedular)
+                    subtotal = map?.get("subtotal")!!
+                    iva      = map["iva"]!!
+                    cedular  = map["cedular"]!!
+                    setValuesEditText()
+                }
+                else cleaner()
+            }else cleaner()
+        }catch (e: Exception){
+            cleaner()
+        }
     }
     
     private fun getTaxPercentCedular(): Double{
