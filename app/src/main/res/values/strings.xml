@@ -45,7 +45,7 @@
     <string name="aviso_rfc">Sólo la Secretaría de Hacienda y Crédito Público, a través del Servicio de Administración Tributaria, es la única instancia que oficialmente asigna las claves de RFC a los contribuyentes que así lo soliciten, a partir de la aplicación de este procedimiento a la base de datos del Padrón de Contribuyentes, con la finalidad de identificar homonimias y evitar la duplicidad de registros.</string>
 
     <string name="catalogos_sat">Buscador de claves para productos y servicios </string>
-    <string name="no_gobernamental">Esta aplicación no representa una entidad gubernamental ni se encuentra vinculada a algún servicios gubernamental.</string>
+    <string name="no_gobernamental">Esta aplicación no representa una entidad gubernamental ni se encuentra vinculada a algún servicio gubernamental.</string>
 
     <string name="salario_info">Salario Mínimo en la Zona Libre de la Frontera Norte (ZLFN): \n\n $%1$s \n\nSalarío Mínimo General resto del país: \n\n $%2$s \n\nVigencia: 01 ene %3$s</string>
     <string name="uma_info">Referencia en pesos para determinar la cuantía del pago de obligaciones previstas en las leyes federales, como multas o impuestos. \n \nValor de UMA diario %1$s: \n\n $%2$s</string>
