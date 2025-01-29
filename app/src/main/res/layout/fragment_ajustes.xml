@@ -54,6 +54,13 @@
                 android:layout_marginVertical="@dimen/margin_double"
                 android:orientation="vertical">
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/gray"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:text="@string/note_responsability" />
+                <TextView
                     android:id="@+id/txtVersion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
