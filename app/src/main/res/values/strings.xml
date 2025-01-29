@@ -3,6 +3,7 @@
     <string name="app_name_ver">Calculadora de Impuestos %1$s</string>
     <string name="preference_file_key">com.mozama.impuestos</string>
     <string name="copyright">© Mozama 2021–2025</string>
+    <string name="note_responsability">Esta aplicación no está afiliada, asociada, no representa ni se encuentra patrocinada por ninguna entidad gubernamental. \n\n La información presentada está basada en información pública y que se encuentra disponible para el uso de los ciudadanos a través de canales oficiales. </string>
 
     <string name="retenciones">RSP</string>
     <string name="resico">RESICO</string>
@@ -57,7 +58,7 @@
     <string name="titulo_dialog">Utiliza esta sección</string>
     <string name="ver_valores">Ver valores actualizados</string>
 
-    <string name="app_version">v3.22</string>
+    <string name="app_version">v3.23</string>
 
     <string name="ads_id_app">ca-app-pub-3940256099942544~3347511713</string>
     <string name="ads_retenciones">ca-app-pub-3940256099942544/6300978111</string>
