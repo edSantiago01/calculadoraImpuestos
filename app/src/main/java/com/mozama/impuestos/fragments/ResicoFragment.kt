@@ -101,6 +101,7 @@ class ResicoFragment : Fragment() {
 
     private val percentIsrRetenido = .0125
     private var isIvaRetenido = 0.0
+    private val IVA_RETENIDO_PERCENT = 0.66667  // 2/3
 
     private lateinit var lyCatalogo: LinearLayout
 
@@ -269,7 +270,7 @@ class ResicoFragment : Fragment() {
     private fun cacInputTotal() {
         //IVA retenido a 2/3
         //val percentIvaRetenido = ( percentIva / 3 ) * 2
-        val percentIvaRetenido = percentIva  * 0.6667 * isIvaRetenido
+        val percentIvaRetenido = percentIva  * IVA_RETENIDO_PERCENT * isIvaRetenido
         try {
             if(txtTotal.text.toString().isNotEmpty() ){
                 val text = txtTotal.text.toString()
@@ -299,7 +300,7 @@ class ResicoFragment : Fragment() {
 
     private fun calcInputSubtotal( ){
         //IVA retenido a 2/3
-        val percentIvaRetenido = ( percentIva / 3 ) * 2 * isIvaRetenido
+        val percentIvaRetenido = ( percentIva * IVA_RETENIDO_PERCENT ) * isIvaRetenido
 
         if(txtSubtotal.text.toString().isNotEmpty() ){
             val text = txtSubtotal.text.toString()
