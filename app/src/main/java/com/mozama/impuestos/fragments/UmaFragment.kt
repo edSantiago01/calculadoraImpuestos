@@ -49,18 +49,18 @@ class UmaFragment : Fragment() {
     private lateinit var txtPesosSalario: EditText
     private lateinit var icInfoSalario: TextView
 
-    private val anioCurso = 2025
-    private val anioAnterior = 2024
+    private val anioCurso = 2026
+    private val anioAnterior = 2025
 
     private val umaEnCurso = 113.14
     private val umaAnterior = 108.57
     private var anioVigenciaUMA = 2025
     private var valorUma = umaAnterior
 
-    private val valorSMG_ZLFN_ANTERIOR = 374.89
-    private var valorSMG_ZLFN = 419.88
-    private val valorSMG_ANTERIOR = 248.93
-    private var valorSMG = 278.80
+    private val valorSMG_ZLFN_ANTERIOR = 419.88
+    private var valorSMG_ZLFN = 440.87
+    private val valorSMG_ANTERIOR = 278.80
+    private var valorSMG = 315.04
     private var anioVigenciaSMG = anioCurso
 
 
@@ -107,7 +107,6 @@ class UmaFragment : Fragment() {
         icInfoSalario = view.findViewById(R.id.icInfoSalario)
         lyCatalogo = view.findViewById(R.id.lyCatalogos)
         setItemSalario()
-
         setChangeElements()
         setup()
     }
