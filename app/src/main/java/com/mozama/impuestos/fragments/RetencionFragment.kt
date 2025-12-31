@@ -93,6 +93,7 @@ class RetencionFragment : Fragment() {
     private val TAG_USER = "user"
 
     private val percentIsrRetenido = 0.10
+    private val IVA_RETENIDO_PERCENT = 0.66667  // 2/3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -271,7 +272,7 @@ class RetencionFragment : Fragment() {
     private fun cacInputTotal() {
         //IVA retenido a 2/3
         //val percentIvaRetenido = ( percentIva / 3 ) * 2
-        val percentIvaRetenido = percentIva  * 0.6667
+        val percentIvaRetenido = percentIva  * IVA_RETENIDO_PERCENT
 
         try {
             if(txtTotal.text.toString().isNotEmpty() ){
@@ -296,7 +297,7 @@ class RetencionFragment : Fragment() {
 
     private fun calcInputSubtotal( ){
         //IVA retenido a 2/3
-        val percentIvaRetenido = ( percentIva / 3 ) * 2
+        val percentIvaRetenido =  percentIva * IVA_RETENIDO_PERCENT
 
         if(txtSubtotal.text.toString().isNotEmpty() ){
             val text = txtSubtotal.text.toString()

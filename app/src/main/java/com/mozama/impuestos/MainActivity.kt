@@ -14,14 +14,15 @@ import com.mozama.impuestos.fragments.MainFragment
 class MainActivity : AppCompatActivity() {
 
         override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+                super.onCreate(savedInstanceState)
+                setContentView(R.layout.activity_main)
 
-        val transaction = this.supportFragmentManager.beginTransaction()
-        val fragmentMain = MainFragment.newInstance()
-        val tag = resources.getString(R.string.principal)
-        transaction.replace(R.id.container_main, fragmentMain, tag)
-        transaction.commit()
-    }
+                val transaction = this.supportFragmentManager.beginTransaction()
+                val fragmentMain = MainFragment.newInstance()
+                val tag = resources.getString(R.string.principal)
+                transaction.replace(R.id.container_main, fragmentMain, tag)
+                transaction.commit()
+        }
+
 
 }

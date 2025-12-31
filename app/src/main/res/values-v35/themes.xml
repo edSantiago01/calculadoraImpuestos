@@ -1,22 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- Tema claro Android 15+ -->
     <style name="Theme.Impuestos" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <!-- Primary brand color. -->
+        <!-- Colores principales -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_dark</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
+
         <item name="colorSecondary">@color/primary</item>
         <item name="colorSecondaryVariant">@color/accent_2</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/primary_dark</item>
-        <!-- Customize your theme here. -->
 
+        <!-- Mantener texto en claro -->
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Colores de texto -->
         <item name="android:textColorPrimary">@color/gray_1</item>
         <item name="android:textColorSecondary">@color/primary_dark</item>
         <item name="android:textColor">@color/gray_1</item>
-
-        <item name="android:windowLightStatusBar">false</item>
     </style>
+
+
 </resources>
