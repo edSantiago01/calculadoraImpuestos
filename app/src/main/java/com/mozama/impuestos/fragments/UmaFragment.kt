@@ -41,9 +41,9 @@ class UmaFragment : Fragment() {
     private val anioCurso = 2026
     private val anioAnterior = 2025
 
-    private val umaEnCurso = 113.14
-    private val umaAnterior = 108.57
-    private var anioVigenciaUMA = 2025
+    private val umaEnCurso = 117.31
+    private val umaAnterior = 113.14
+    private var anioVigenciaUMA = 2026
     private var valorUma = umaAnterior
 
     private val valorSMG_ZLFN_ANTERIOR = 419.88
