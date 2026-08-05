@@ -78,7 +78,6 @@ class UmaFragment : Fragment() {
     private var pesosSalario = 0.0
     private var valSalario = 0.0
 
-    private lateinit var lyCatalogo: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +104,6 @@ class UmaFragment : Fragment() {
         txtSalario = view.findViewById(R.id.txtSalario)
         txtPesosSalario = view.findViewById(R.id.txtPesosSmg)
         icInfoSalario = view.findViewById(R.id.icInfoSalario)
-        lyCatalogo = view.findViewById(R.id.lyCatalogos)
         setItemSalario()
         setChangeElements()
         setup()
@@ -173,9 +171,6 @@ class UmaFragment : Fragment() {
             }else false
         }
 
-        lyCatalogo.setOnClickListener {
-            goEnlacePlay("com.mozama.catalogossat")
-        }
     }
 
     private fun goEnlacePlay(idApp:String) {

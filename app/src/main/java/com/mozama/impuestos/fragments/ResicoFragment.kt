@@ -103,8 +103,6 @@ class ResicoFragment : Fragment() {
     private var isIvaRetenido = 0.0
     private val IVA_RETENIDO_PERCENT = 0.66667  // 2/3
 
-    private lateinit var lyCatalogo: LinearLayout
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -207,10 +205,6 @@ class ResicoFragment : Fragment() {
             }else false
         }
 
-        lyCatalogo = view.findViewById(R.id.lyCatalogos)
-        lyCatalogo.setOnClickListener {
-            goEnlacePlay("com.mozama.catalogossat")
-        }
     }
 
     private fun goEnlacePlay(idApp:String) {

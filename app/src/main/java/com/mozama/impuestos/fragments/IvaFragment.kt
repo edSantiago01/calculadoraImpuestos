@@ -86,8 +86,6 @@ class IvaFragment : Fragment() {
     private val TAG_SYSTEM = "system"
     private val TAG_USER = "user"
 
-    private lateinit var lyCatalogo: LinearLayout
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -116,7 +114,6 @@ class IvaFragment : Fragment() {
         txtPercentCedular = view.findViewById(R.id.txtPercentCedularI)
         txtCedular = view.findViewById(R.id.txtCedular)
         icInfoIva = view.findViewById(R.id.icInfoIva)
-        lyCatalogo = view.findViewById(R.id.lyCatalogos)
 
         setup()
         setItemIva()
@@ -156,9 +153,6 @@ class IvaFragment : Fragment() {
             }else false
         }
 
-        lyCatalogo.setOnClickListener {
-            goEnlacePlay("com.mozama.catalogossat")
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
