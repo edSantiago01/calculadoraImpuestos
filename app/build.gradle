@@ -11,8 +11,8 @@ android {
         applicationId "com.mozama.impuestos"
         minSdk 26
         targetSdk = 36
-        versionCode 37
-        versionName "3.29"
+        versionCode 38
+        versionName "3.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
@@ -26,6 +26,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures{
+        viewBinding = true
+        dataBinding = true
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -46,6 +53,12 @@ dependencies {
     implementation 'com.josketres:rfcfacil:2.0.2'
 
     implementation 'androidx.work:work-runtime-ktx:2.10.2'
+
+    implementation "com.squareup.retrofit2:retrofit:2.12.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.12.0"
+
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.12.0"
 
 }
 
