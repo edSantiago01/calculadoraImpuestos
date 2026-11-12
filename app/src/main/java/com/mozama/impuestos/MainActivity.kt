@@ -17,12 +17,19 @@ class MainActivity : AppCompatActivity() {
                 super.onCreate(savedInstanceState)
                 setContentView(R.layout.activity_main)
 
-                val transaction = this.supportFragmentManager.beginTransaction()
-                val fragmentMain = MainFragment.newInstance()
-                val tag = resources.getString(R.string.principal)
-                transaction.replace(R.id.container_main, fragmentMain, tag)
-                transaction.commit()
+                if (savedInstanceState == null) {
+                        val transaction = this.supportFragmentManager.beginTransaction()
+                        val fragmentMain = MainFragment.newInstance()
+                        val tag = resources.getString(R.string.principal)
+                        transaction.replace(R.id.container_main, fragmentMain, tag)
+                        transaction.commit()
+                }
         }
 
-
+        override fun onStart() {
+                super.onStart()
+                // revisar condiciones al regresar al primer plano no implica llamar al servicio
+                // El repositorio decide usando vigencias y los 60 días para actualizar info de SMG UMA
+                (application as DriodApp).actualizarImpuestosSiCorresponde()
+        }
 }

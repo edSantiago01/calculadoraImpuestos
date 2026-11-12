@@ -10,5 +10,5 @@ import retrofit2.http.POST
 interface ApiService {
     @Headers("Content-Type: application/json")
     @POST("impuestos/appGetImpuestos")
-    suspend fun getBusqueda( @Body request: ImpuestosRequest): Response<ImpuestosResponse>
+    suspend fun getImpuestos(@Body request: ImpuestosRequest): Response<ImpuestosResponse>
 }

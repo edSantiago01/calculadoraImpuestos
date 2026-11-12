@@ -7,17 +7,20 @@ import com.google.gson.annotations.SerializedName
 @Keep
 data class ImpuestosResponse(
     @SerializedName("uma")
-    val uma: Float,
+    val uma: Double? = null,
 
     @SerializedName("umaVigencia")
-    val umaVigencia: String,
+    val umaVigencia: String? = null,
 
     @SerializedName("smg")
-    val smg: Float,
+    val smg: Double? = null,
 
     @SerializedName("zlfn")
-    val zlfn: Float,
+    val zlfn: Double? = null,
 
     @SerializedName("smgVigencia")
-    val smgVigencia: String,
+    val smgVigencia: String? = null,
+
+    @SerializedName("status") val status: String? = null,
+    @SerializedName("message") val message: String? = null
 )

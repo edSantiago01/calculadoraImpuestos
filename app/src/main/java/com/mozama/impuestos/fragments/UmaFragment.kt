@@ -12,18 +12,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
-import androidx.fragment.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.snackbar.Snackbar
+import com.mozama.impuestos.DriodApp
 import com.mozama.impuestos.R
+import com.mozama.impuestos.data.ImpuestosPolitica
+import com.mozama.impuestos.data.model.ImpuestosResponse
 import com.mozama.impuestos.utils.DialogFragment
 import com.mozama.impuestos.utils.Operations
 import com.mozama.impuestos.utils.UtilsGraphic
+import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class UmaFragment : Fragment() {
     private var nResultados = 0
@@ -38,20 +46,25 @@ class UmaFragment : Fragment() {
     private lateinit var txtPesosSalario: EditText
     private lateinit var icInfoSalario: TextView
 
-    private val anioCurso = 2026
-    private val anioAnterior = 2025
+    private var anioCurso = LocalDate.now().year
+    private var anioAnterior = anioCurso - 1
+    private var umaEnCurso = 0.0
+    private var umaAnterior = 0.0
+    private var anioVigenciaUMA = 0
+    private var valorUma = 0.0
+    private var valorSMG_ZLFN_ANTERIOR = 0.0
+    private var valorSMG_ZLFN = 0.0
+    private var valorSMG_ANTERIOR = 0.0
+    private var valorSMG = 0.0
+    private var anioVigenciaSMG = 0
 
-    private val umaEnCurso = 117.31
-    private val umaAnterior = 113.14
-    private var anioVigenciaUMA = 2026
-    private var valorUma = umaAnterior
-
-    private val valorSMG_ZLFN_ANTERIOR = 419.88
-    private var valorSMG_ZLFN = 440.87
-    private val valorSMG_ANTERIOR = 278.80
-    private var valorSMG = 315.04
-    private var anioVigenciaSMG = anioCurso
-
+    //no calcular con ceros provisionales mientras no haya información.
+    private var impuestosLocales: ImpuestosResponse? = null
+    private var datosDisponibles = false
+    private var ultimaEntradaUma = 1
+    private var ultimaEntradaSalario = 3
+    private var avisoImpuestos: Snackbar? = null
+    private var ultimoMensajeImpuestos: String? = null
 
     private var IN_OPTION = 0
     private val IN_UMA = 1
@@ -95,6 +108,7 @@ class UmaFragment : Fragment() {
         setItemSalario()
         setChangeElements()
         setup()
+        observarImpuestos()
     }
 
     override fun onResume() {
@@ -161,21 +175,92 @@ class UmaFragment : Fragment() {
     }
 
     private fun validaValorUma(){
-        if(!Operations().fechaMayorA("01", "02", anioCurso.toString())){
-            valorUma = umaAnterior
-            anioVigenciaUMA = anioAnterior
-        }else {
-            valorUma = umaEnCurso.toDouble()
-            anioVigenciaUMA = anioCurso
-        }
+//        if(!Operations().fechaMayorA("01", "02", anioCurso.toString())){
+//            valorUma = umaAnterior
+//            anioVigenciaUMA = anioAnterior
+//        }else {
+//            valorUma = umaEnCurso.toDouble()
+//            anioVigenciaUMA = anioCurso
+//        }
+        val datos = impuestosLocales ?: return
+        valorUma = requireNotNull(datos.uma)
+        umaEnCurso = valorUma
+        anioVigenciaUMA = requireNotNull(ImpuestosPolitica.fecha(datos.umaVigencia)).year
+        anioCurso = LocalDate.now().year
+        anioAnterior = anioCurso - 1
     }
 
     private fun validaValorSalarioMinimo(){
-        if(!Operations().fechaMayorA("01", "01", anioCurso.toString())){
-            valorSMG_ZLFN = valorSMG_ZLFN_ANTERIOR
-            valorSMG = valorSMG_ANTERIOR
-            anioVigenciaSMG = anioAnterior
+//        if(!Operations().fechaMayorA("01", "01", anioCurso.toString())){
+//            valorSMG_ZLFN = valorSMG_ZLFN_ANTERIOR
+//            valorSMG = valorSMG_ANTERIOR
+//            anioVigenciaSMG = anioAnterior
+//        }
+        val datos = impuestosLocales ?: return
+        valorSMG = requireNotNull(datos.smg)
+        valorSMG_ZLFN = requireNotNull(datos.zlfn)
+        anioVigenciaSMG = requireNotNull(ImpuestosPolitica.fecha(datos.smgVigencia)).year
+    }
+
+    private fun observarImpuestos() {
+        val repository = (requireActivity().application as DriodApp).impuestosRepository
+        habilitarCalculos(false)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                repository.estado.collect { estado ->
+                    val datos = estado.datos
+                    val cambiaron = datos != impuestosLocales
+                    impuestosLocales = datos
+                    datosDisponibles = datos != null
+                    habilitarCalculos(datosDisponibles)
+                    if (datosDisponibles) {
+                        validaValorUma()
+                        validaValorSalarioMinimo()
+                       // recalcular ambos grupos conservando la última dirección
+                        // introducida por el usuario (unidades -> pesos o pesos -> unidades).
+
+                        if (cambiaron) {
+                            val opcion = IN_OPTION
+                            calc(ultimaEntradaUma)
+                            calc(ultimaEntradaSalario)
+                            IN_OPTION = opcion
+                        }
+
+                    }
+                    val mensaje = if (estado.cargando && datos == null)
+                        "Obteniendo valores de UMA y salarios…" else estado.mensaje
+
+                    if (mensaje != ultimoMensajeImpuestos) {
+                        avisoImpuestos?.dismiss()
+                        ultimoMensajeImpuestos = mensaje
+                        avisoImpuestos = mensaje?.let {
+                            Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)
+                                .also { aviso -> aviso.show() }
+                        }
+                    }
+                }
+            }
         }
+    }
+
+    private fun habilitarCalculos(habilitar: Boolean) {
+        txtUma.isEnabled = habilitar
+        txtPesos.isEnabled = habilitar
+        txtSalario.isEnabled = habilitar
+        txtPesosSalario.isEnabled = habilitar
+        spinSalario.isEnabled = habilitar
+        icInfo.isEnabled = habilitar
+        icInfoSalario.isEnabled = habilitar
+    }
+
+    override fun onDestroyView() {
+        // liberar aviso ligado a esta vista y permitir recalcular tras restaurarla.
+        avisoImpuestos?.dismiss()
+        avisoImpuestos = null
+        ultimoMensajeImpuestos = null
+        impuestosLocales = null
+        datosDisponibles = false
+        super.onDestroyView()
     }
 
     private fun shareInfo() {
@@ -230,6 +315,18 @@ class UmaFragment : Fragment() {
     }
 
     fun calc( option:Int){
+//        IN_OPTION = option
+//        when (IN_OPTION){
+//            IN_UMA ->calcInputUma()
+//            IN_PESOS -> calcInputPesos()
+//            IN_SALARIO -> calcInputSalario()
+//            IN_PESOS_SALARIO -> calcInputPesosSalario()
+//        }
+
+        if (!datosDisponibles) return // NUEVO: evita calcular o dividir con valores provisionales.
+        if (option == IN_UMA || option == IN_PESOS) ultimaEntradaUma = option
+        if (option == IN_SALARIO || option == IN_PESOS_SALARIO) ultimaEntradaSalario = option
+
         IN_OPTION = option
         when (IN_OPTION){
             IN_UMA ->calcInputUma()
@@ -303,6 +400,7 @@ class UmaFragment : Fragment() {
     }
 
     private fun showDialogInfo(tipo:String){
+        if (!datosDisponibles) return //información solo con datos disponibles.
         var tit: String
         var mensaje: String
 
@@ -317,6 +415,15 @@ class UmaFragment : Fragment() {
             mensaje = resources.getString(R.string.salario_info, smgZFString, smgString, anioVigenciaSMG.toString())
         }
 
+        //mostrar la fecha exacta y advertir si falta la vigencia esperada.
+        val datos = impuestosLocales
+        if (datos != null) {
+            val vigencia = if (tipo == "uma") datos.umaVigencia else datos.smgVigencia
+            mensaje += "\n\nVigente desde: $vigencia"
+            if (ImpuestosPolitica.vencidos(datos, LocalDate.now())) {
+                mensaje += "\nHay valores pendientes de actualización."
+            }
+        }
         context?.let {
             DialogFragment().showDialogNeutral(it, tit, mensaje)
         }
