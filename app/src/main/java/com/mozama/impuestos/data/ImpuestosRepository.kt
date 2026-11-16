@@ -68,11 +68,9 @@ class ImpuestosRepository(
                 cargando = debeConsultar,
                 pendientes = pendientes,
                 mensaje = when {
-                    datos == null && !debeConsultar ->
-                        "Aún no hay valores guardados. Hay un intento reciente; vuelve a abrir la aplicación después de un minuto."
-
-                    datos == null ->
-                        null // UmaFragment mostrará “Obteniendo valores...”.
+                    // sin datos, consultar() ahora devuelve true.
+                    // UmaFragment mostrará “Obteniendo valores de UMA y salarios…”.
+                    datos == null -> null
 
                     pendientes ->
                         "Valores pendientes de actualización; los cálculos usan los últimos valores guardados."
@@ -158,10 +156,14 @@ class ImpuestosRepository(
             }
 
             // un fallo de red, JSON o disco no borra valores ya disponibles.
-            _estado.value = _estado.value.copy(cargando = false,
-                mensaje = if (_estado.value.datos == null)
-                    "No fue posible obtener los valores. Revisa tu conexión y vuelve a abrir la aplicación."
-                else "No fue posible actualizar. Los cálculos usan los valores guardados; revisa sus vigencias en Información.")
+            _estado.value = _estado.value.copy(
+                cargando = false,
+                mensaje = if (_estado.value.datos != null) {
+                    "Validar conexión a internet para recibir actualizaciones"
+                } else {
+                    "No hay valores guardados. Se necesita conexión a internet para obtenerlos."
+                }
+            )
         } finally {
             _estado.value = _estado.value.copy(cargando = false)
             mutex.unlock()

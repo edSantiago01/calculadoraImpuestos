@@ -41,27 +41,31 @@
             (fecha(datos.umaVigencia) ?: LocalDate.MIN) < umaEsperada(hoy) ||
             (fecha(datos.smgVigencia) ?: LocalDate.MIN) < salarioEsperado(hoy)
 
-        fun consultar(datos: ImpuestosResponse?, ultimaConsultaExitosa: Long,
-                      ultimoIntentoConsulta: Long, ahora: Instant, zona: ZoneId): Boolean {
+        @Suppress("UNUSED_PARAMETER")
+        fun consultar(
+            datos: ImpuestosResponse?,
+            ultimaConsultaExitosa: Long,
+            ultimoIntentoConsulta: Long,
+            ahora: Instant,
+            zona: ZoneId
+        ): Boolean {
             val hoy = ahora.atZone(zona).toLocalDate()
             val utilizables = datos?.takeIf { validos(it, hoy) }
             val ahoraMs = ahora.toEpochMilli()
 
-            //validar que cada 60 días se valide la info
-            val periodoCumplido = ultimaConsultaExitosa <= 0L ||
-                ahoraMs < ultimaConsultaExitosa ||
-                ahoraMs - ultimaConsultaExitosa >= Duration.ofDays(DAYS_TO_UPDATE_TAX).toMillis()
-            if (utilizables != null && !vencidos(utilizables, hoy) && !periodoCumplido) return false
-            if (ultimoIntentoConsulta <= 0L || ahoraMs < ultimoIntentoConsulta) return true
+            // si faltan datos válidos, consultar sin esperar
+            if (utilizables == null) return true
 
-            val fechaIntento = Instant.ofEpochMilli(ultimoIntentoConsulta).atZone(zona).toLocalDate()
-            // Un intento del 31/12 o 31/01 no bloquea la nueva vigencia al día siguiente.
-            if (salarioEsperado(fechaIntento) != salarioEsperado(hoy) ||
-                umaEsperada(fechaIntento) != umaEsperada(hoy)) return true
+            // si falta una vigencia esperada, consultar
+            if (vencidos(utilizables, hoy)) return true
 
-            // Sin datos, permite recuperarse pronto tras conectar a Internet.
-            // Con caché, limita a un intento diario si hay error o el servidor sigue atrasado.
-            val espera = if (utilizables == null) Duration.ofMinutes(1) else Duration.ofHours(24)
-            return ahoraMs - ultimoIntentoConsulta >= espera.toMillis()
+            // Se conserva el intervalo periódico desde la última consulta exitosa.
+            val periodoCumplido =
+                ultimaConsultaExitosa <= 0L ||
+                        ahoraMs < ultimaConsultaExitosa ||
+                        ahoraMs - ultimaConsultaExitosa >=
+                        Duration.ofDays(DAYS_TO_UPDATE_TAX).toMillis()
+
+            return periodoCumplido
         }
     }

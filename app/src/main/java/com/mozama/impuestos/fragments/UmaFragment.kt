@@ -204,15 +204,19 @@ class UmaFragment : Fragment() {
 
     private fun observarImpuestos() {
         val repository = (requireActivity().application as DriodApp).impuestosRepository
-        habilitarCalculos(false)
+        //hasta recibir el estado, no calcular con valores provisionales.
+        habilitarCalculos(datosDisponibles)
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 repository.estado.collect { estado ->
                     val datos = estado.datos
                     val cambiaron = datos != impuestosLocales
                     impuestosLocales = datos
+
                     datosDisponibles = datos != null
                     habilitarCalculos(datosDisponibles)
+
                     if (datosDisponibles) {
                         validaValorUma()
                         validaValorSalarioMinimo()
@@ -221,23 +225,39 @@ class UmaFragment : Fragment() {
 
                         if (cambiaron) {
                             val opcion = IN_OPTION
+
                             calc(ultimaEntradaUma)
                             calc(ultimaEntradaSalario)
+
                             IN_OPTION = opcion
                         }
 
                     }
-                    val mensaje = if (estado.cargando && datos == null)
-                        "Obteniendo valores de UMA y salarios…" else estado.mensaje
+
+                    val mensaje = if (estado.cargando && !datosDisponibles) {
+                        "Obteniendo valores de UMA y salarios…"
+                    } else {
+                        estado.mensaje
+                    }
 
                     if (mensaje != ultimoMensajeImpuestos) {
                         avisoImpuestos?.dismiss()
                         ultimoMensajeImpuestos = mensaje
+
                         avisoImpuestos = mensaje?.let {
-                            Snackbar.make(requireView(), it, Snackbar.LENGTH_INDEFINITE)
+                            // con datos locales, mostrar un aviso temporal.
+                            // Los controles permanecen habilitados.
+                            val duracion = if (datosDisponibles) {
+                                Snackbar.LENGTH_LONG
+                            } else {
+                                Snackbar.LENGTH_INDEFINITE
+                            }
+
+                            Snackbar.make(requireView(), it, duracion)
                                 .also { aviso -> aviso.show() }
                         }
                     }
+
                 }
             }
         }
